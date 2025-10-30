@@ -23,6 +23,7 @@ import com.example.financeapp.ui.components.BalanceSummaryCard
 import com.example.financeapp.ui.components.SectionHeader
 import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.components.TransactionItem
+import com.example.financeapp.ui.components.FinanceBottomBar
 
 @Composable
 fun AccountBalanceScreen(navController: NavController) {
@@ -35,7 +36,7 @@ fun AccountBalanceScreen(navController: NavController) {
             )
         },
         bottomBar = {
-            // The existing Bottom Navigation Bar will be used here
+            FinanceBottomBar(onNavigate = { /* TODO */ })
         }
     ) { innerPadding ->
         LazyColumn(
@@ -100,7 +101,7 @@ fun AccountBalanceScreen(navController: NavController) {
                         title = stringResource(transaction.titleResId),
                         category = stringResource(transaction.categoryResId),
                         date = stringResource(transaction.dateResId),
-                        amount = String.format(java.util.Locale.US, if (transaction.isExpense) "-$%,.2f" else "$%,.2f", transaction.amount),
+                        amount = String.format(java.util.Locale.US, if (transaction.isExpense) "-$%,.2f" else "$%,.2f", kotlin.math.abs(transaction.amount)),
                         isExpense = transaction.isExpense
                     )
                 }

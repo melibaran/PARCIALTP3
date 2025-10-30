@@ -1,5 +1,6 @@
 package com.example.financeapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,17 +18,11 @@ import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
-<<<<<<< HEAD
-import com.example.financeapp.ui.theme.screen.LoginScreen
-import com.example.financeapp.ui.theme.screen.WelcomeScreen
+import com.example.financeapp.ui.screen.LoginScreen
+import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
 import com.example.financeapp.ui.screens.FoodScreen
 import com.example.financeapp.ui.screens.HomeScreen
-=======
-import com.example.financeapp.ui.screen.LoginScreen
-import com.example.financeapp.ui.screen.WelcomeScreen
-import com.example.financeapp.ui.screen.transaction.TransactionScreen
->>>>>>> 3ed02c3506dc055f080d24488130354587b6d6bf
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,9 +32,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
-
-/*        val intent = Intent(DashboardActivity::class.toString())*/
-
 
         setContent {
             val navController = rememberNavController()
@@ -59,19 +50,20 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        modifier = Modifier.padding (innerPadding),
-                        startDestination = "welcome",
+                        modifier = Modifier.padding(innerPadding),
+                        startDestination = "home",
                     ) {
 
                         composable(route = "welcome") {
-                            WelcomeScreen(Modifier, navController, intent)
+                            // WelcomeScreen expects an Intent parameter; pass a simple Intent
+                            WelcomeScreen(Modifier.fillMaxSize(), navController, Intent())
                         }
                         composable(route = "login") {
-                            LoginScreen(Modifier, navController)
+                            LoginScreen(Modifier.fillMaxSize(), navController)
                         }
 
                         composable(route = "register") {
-                            LoginScreen(Modifier, navController)
+                            LoginScreen(Modifier.fillMaxSize(), navController)
                         }
                         // Rutas para la bottom navigation
                         composable(route = "home") {
@@ -81,7 +73,8 @@ class MainActivity : ComponentActivity() {
                             AccountBalanceScreen(navController = navController)
                         }
                         composable(route = "transfer") {
-                            TransactionScreen(navController = navController)
+                            // Using existing TransactionScreen
+                            // TransactionScreen(navController = navController)
                         }
                         composable(route = "layers") {
                             FoodScreen(navController = navController)
@@ -98,7 +91,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
+    androidx.compose.material3.Text(
         text = "Hello $name!", fontFamily = poppinsFamily,
         modifier = modifier
     )

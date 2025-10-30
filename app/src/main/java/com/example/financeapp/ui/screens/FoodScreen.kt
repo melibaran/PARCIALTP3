@@ -1,6 +1,5 @@
 package com.example.financeapp.ui.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,10 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -20,6 +16,7 @@ import com.example.financeapp.data.foodTransactions
 import com.example.financeapp.ui.components.BalanceSummaryCard
 import com.example.financeapp.ui.components.SectionHeader
 import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.components.TransactionItem
 
 @Composable
 fun FoodScreen(navController: NavController) {
@@ -32,20 +29,18 @@ fun FoodScreen(navController: NavController) {
             )
         },
         floatingActionButton = {
+            // Fixed button style to match design
             Button(
                 onClick = { /* TODO: Add expense callback */ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 48.dp),
-                shape = RoundedCornerShape(50)
+                shape = RoundedCornerShape(24.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
-                Text(stringResource(R.string.add_expenses), modifier = Modifier.padding(vertical = 8.dp))
+                Text(stringResource(R.string.add_expenses), color = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.padding(vertical = 8.dp))
             }
         },
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = {
-             // The existing Bottom Navigation Bar will be used here, with space
-            Spacer(modifier = Modifier.height(80.dp))
+             // The existing Bottom Navigation Bar will be used here
         }
     ) { innerPadding ->
         LazyColumn(
@@ -66,21 +61,23 @@ fun FoodScreen(navController: NavController) {
 
             foodTransactions.forEach { (monthResId, transactions) ->
                 item {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
-                            .background(MaterialTheme.colorScheme.surface)
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+                        color = MaterialTheme.colorScheme.surface
                     ) {
                         SectionHeader(title = stringResource(monthResId))
                     }
                 }
                 items(transactions) { transaction ->
                     Box(modifier = Modifier.background(MaterialTheme.colorScheme.surface).padding(horizontal = 16.dp)) {
-                        FoodTransactionItem(
+                        TransactionItem(
+                            iconResId = transaction.iconResId,
                             title = stringResource(transaction.titleResId),
+                            category = if (transaction.categoryResId != 0) stringResource(transaction.categoryResId) else "",
                             date = stringResource(transaction.dateResId),
-                            amount = String.format(java.util.Locale.US, "-$%,.2f", transaction.amount)
+                            amount = String.format(java.util.Locale.US, if (transaction.isExpense) "-$%,.2f" else "$%,.2f", kotlin.math.abs(transaction.amount)),
+                            isExpense = transaction.isExpense
                         )
                     }
                 }
@@ -90,37 +87,5 @@ fun FoodScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(100.dp).background(MaterialTheme.colorScheme.surface))
             }
         }
-    }
-}
-
-@Composable
-private fun FoodTransactionItem(title: String, date: String, amount: String) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(MaterialTheme.colorScheme.secondaryContainer),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.food),
-                    contentDescription = title
-                )
-            }
-            Spacer(Modifier.width(16.dp))
-            Column {
-                Text(title, style = MaterialTheme.typography.bodyLarge)
-                Text(date, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-        }
-        Text(amount, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.error)
     }
 }

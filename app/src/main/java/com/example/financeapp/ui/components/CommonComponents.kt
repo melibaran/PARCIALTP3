@@ -7,8 +7,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,7 +17,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import com.example.financeapp.R
+import com.example.financeapp.ui.theme.Ocean_blue
+import com.example.financeapp.ui.theme.Void
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.graphics.Brush
+import com.example.financeapp.ui.theme.Light_blue
+import com.example.financeapp.ui.theme.Vivid_blue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,28 +38,36 @@ fun TopBar(
     TopAppBar(
         title = {
             Column {
-                Text(text = title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                Text(text = title, style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onBackground), fontWeight = FontWeight.Bold)
                 if (subtitle != null) {
-                    Text(text = subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(text = subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f))
                 }
             }
         },
         navigationIcon = {
             if (showBackButton) {
                 IconButton(onClick = onBackClick) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    Image(painter = painterResource(id = R.drawable.bring_back), contentDescription = "Back")
                 }
             }
         },
         actions = {
             IconButton(onClick = onNotificationClick) {
-                Image(painter = painterResource(id = R.drawable.bell), contentDescription = "Notifications")
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(Color.White),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(painter = painterResource(id = R.drawable.bell), contentDescription = "Notifications", modifier = Modifier.padding(6.dp))
+                }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary,
-            actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+            containerColor = MaterialTheme.colorScheme.background,
+            titleContentColor = MaterialTheme.colorScheme.onBackground,
+            actionIconContentColor = MaterialTheme.colorScheme.onBackground
         )
     )
 }
@@ -92,12 +105,20 @@ fun BalanceSummaryCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(stringResource(R.string.total_balance), color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.bodyMedium)
-                    Text(String.format(java.util.Locale.US, "$%,.2f", totalBalance), color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(painter = painterResource(id = R.drawable.arrow_up), contentDescription = null, modifier = Modifier.size(16.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(stringResource(R.string.total_balance), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodyMedium)
+                    }
+                    Text(String.format(java.util.Locale.US, "$%,.2f", totalBalance), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(stringResource(R.string.total_expense), color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.bodyMedium)
-                    Text(String.format(java.util.Locale.US, "-$%,.2f", totalExpense), color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(painter = painterResource(id = R.drawable.arrow_down), contentDescription = null, modifier = Modifier.size(16.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(stringResource(R.string.total_expense), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodyMedium)
+                    }
+                    Text(String.format(java.util.Locale.US, "-$%,.2f", totalExpense), color = Ocean_blue, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -107,18 +128,18 @@ fun BalanceSummaryCard(
                     .fillMaxWidth()
                     .height(20.dp)
                     .clip(RoundedCornerShape(10.dp)),
-                color = MaterialTheme.colorScheme.onPrimary,
-                trackColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                color = MaterialTheme.colorScheme.onBackground,
+                trackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f)
             )
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("${(progress * 100).toInt()}%", color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.bodySmall)
-                Text(String.format(java.util.Locale.US, "$%,.2f", goalAmount), color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.bodySmall)
+                Text("${(progress * 100).toInt()}%", color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodySmall)
+                Text(String.format(java.util.Locale.US, "$%,.2f", goalAmount), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodySmall)
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(painter = painterResource(id = R.drawable.check), contentDescription = "Check")
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(description, color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.bodySmall)
+                Text(description, color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodySmall)
             }
         }
     }
@@ -133,7 +154,16 @@ fun TransactionItem(
     amount: String,
     isExpense: Boolean
 ) {
-    val amountColor = if (isExpense) Color.Red else Color(0xFF008000) // Dark Green
+    val amountColor = if (isExpense) Ocean_blue else MaterialTheme.colorScheme.primary
+
+    // Selección de color para el fondo circular del icono según el icono
+    val iconBgColor = when (iconResId) {
+        R.drawable.salary -> Light_blue
+        R.drawable.food -> Light_blue
+        R.drawable.groceries -> Vivid_blue
+        R.drawable.rent -> Ocean_blue
+        else -> MaterialTheme.colorScheme.secondaryContainer
+    }
 
     Card(
         modifier = Modifier
@@ -154,21 +184,25 @@ fun TransactionItem(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(MaterialTheme.colorScheme.secondaryContainer),
+                        .background(iconBgColor),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(painter = painterResource(id = iconResId), contentDescription = title)
+                    Image(painter = painterResource(id = iconResId), contentDescription = title, modifier = Modifier.size(24.dp))
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
                     Text(title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
-                    Text(date, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                    Text(date, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(category, style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                Text(category, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 if (category.isNotEmpty()) {
-                    VerticalDivider(modifier = Modifier.padding(horizontal = 8.dp).height(24.dp))
+                    VerticalDivider(
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        thickness = 1.dp,
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                    )
                 }
                 Text(amount, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, color = amountColor)
             }
@@ -183,5 +217,13 @@ fun SectionHeader(title: String) {
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
+    )
+}
+
+@Composable
+fun VerticalDivider(modifier: Modifier = Modifier, thickness: Dp = 1.dp, color: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f)) {
+    Box(modifier = modifier
+        .width(thickness)
+        .background(color)
     )
 }
