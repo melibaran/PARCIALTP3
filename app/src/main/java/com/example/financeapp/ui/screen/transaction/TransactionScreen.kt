@@ -243,39 +243,45 @@ fun TransactionScreen(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "${uiState.expensePercentage}%",
-                        modifier = Modifier
-                            .background(
-                                Fence_green,
-                                RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp)
-                            )
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        color = Honeydew,
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                            fontSize = 12.sp,
-                        )
-                    )
-
-                    LinearProgressIndicator(
-                        progress = { 1f },
+                    Box(
                         modifier = Modifier
                             .weight(1f)
-                            .height(20.dp),
-                        color = Honeydew,
-                        trackColor = Honeydew
-                    )
-
-                    Text(
-                        text = "$${uiState.expenseGoal}",
-                        modifier = Modifier.padding(start = 4.dp),
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_italic)),
-                            color = Fence_green,
-                            fontSize = 12.sp,
+                            .height(20.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Honeydew)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .clip(RoundedCornerShape(20.dp))
+                                .fillMaxWidth(uiState.expensePercentage / 100f)
+                                .background(Fence_green)
                         )
-                    )
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "${uiState.expensePercentage}%",
+                                modifier = Modifier.padding(start = 8.dp),
+                                color = Honeydew,
+                                style = TextStyle(
+                                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                    fontSize = 12.sp,
+                                )
+                            )
+                            Text(
+                                text = "$${uiState.expenseGoal}",
+                                modifier = Modifier.padding(end = 8.dp),
+                                style = TextStyle(
+                                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                    color = Fence_green,
+                                    fontSize = 12.sp,
+                                )
+                            )
+                        }
+                    }
                 }
 
                 Row(
