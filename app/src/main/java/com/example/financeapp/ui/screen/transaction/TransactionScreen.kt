@@ -21,7 +21,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,7 +31,6 @@ import com.example.financeapp.ui.components.TransactionListItem
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.Honeydew
-import com.example.financeapp.ui.theme.Light_blue
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Ocean_blue
 import com.example.financeapp.ui.theme.Void
@@ -231,35 +229,27 @@ fun TransactionScreen(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // 1. TEXTO DEL PORCENTAJE (30%) - Fondo Negro/Oscuro
                     Text(
                         text = "${uiState.expensePercentage}%",
                         modifier = Modifier
                             .background(
-                                Fence_green, // Fondo oscuro (Fence_green)
+                                Fence_green,
                                 RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp)
                             )
                             .padding(horizontal = 8.dp, vertical = 4.dp),
-                        color = Honeydew, // Texto blanco
+                        color = Honeydew,
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
                             fontSize = 12.sp,
                         )
                     )
 
-                    // 2. BARRA BLANCA QUE OCUPA EL ESPACIO RESTANTE HASTA EL TEXTO DE META
                     LinearProgressIndicator(
-                        // Establecemos el progreso en 1f (100%) para que la barra blanca ocupe todo el espacio
                         progress = { 1f },
                         modifier = Modifier
-                            .weight(1f) // Ocupa el espacio restante
+                            .weight(1f)
                             .height(20.dp),
-                        // Eliminamos el padding horizontal
-
-                        // ✅ AJUSTE CLAVE: La barra DE PROGRESO (el 100%) es el color blanco
                         color = Honeydew,
-
-                        // ✅ AJUSTE CLAVE: El color de la pista (que se vería detrás) es el color blanco (Honeydew)
                         trackColor = Honeydew
                     )
 
@@ -275,19 +265,28 @@ fun TransactionScreen(
                 }
 
                 Row(
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+
+                    horizontalArrangement = Arrangement.Center,
+
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.check),
                         contentDescription = "Check Icon",
-                        tint = Caribbean_green,
-                        modifier = Modifier.size(20.dp)
+                        tint = Void,
+                        modifier = Modifier.size(13.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "${uiState.expensePercentage}% Of Your Expenses, Looks Good.",
-                        style = MaterialTheme.typography.bodyMedium
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                            color = Fence_green,
+                            fontSize = 14.sp,
+                        )
                     )
                 }
             }
@@ -297,7 +296,7 @@ fun TransactionScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 16.dp)
-                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                    .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
                     .background(MaterialTheme.colorScheme.surface)
                     .padding(16.dp)
             ) {
