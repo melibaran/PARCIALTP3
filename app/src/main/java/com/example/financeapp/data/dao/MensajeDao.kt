@@ -13,7 +13,7 @@ interface MensajeDao {
     fun getAll(): List<Message>
 
     @Query(value = "SELECT * FROM mensaje WHERE uid IN (:userIds)")
-   fun loadAllByIds(userIds: IntArray): List<Message>
+   fun loadAllByIds(userIds: Int): List<Message>
 
 
     @Insert
