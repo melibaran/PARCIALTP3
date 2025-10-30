@@ -28,16 +28,17 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.navigation.BottomNavItem
 import com.example.financeapp.ui.navigation.BottomNavViewModel
 
-private val BarBackground = Color(0xFFE8F7EF)
+
+private val BarBackground = Color(0xFFDFF7E2)
 private val ActiveTurquoise = Color(0xFF05C3A7)
-private val InactiveIcon = Color(0xFF0A0A0A)
+private val InactiveIcon = Color(0xFFA0A0A0)
 
 private val navItems = listOf(
-    BottomNavItem(R.drawable.ic_home, "Home", "home"),
-    BottomNavItem(R.drawable.ic_analytics, "Analytics", "analytics"),
-    BottomNavItem(R.drawable.ic_transfer, "Transfer", "transfer"),
-    BottomNavItem(R.drawable.ic_layers, "Layers", "layers"),
-    BottomNavItem(R.drawable.ic_profile, "Profile", "profile")
+    BottomNavItem(R.drawable.home, "Home", "home", 25.dp, 31.dp),
+    BottomNavItem(R.drawable.analysis, "Analytics", "analytics", 31.dp, 30.dp),
+    BottomNavItem(R.drawable.transactions, "Transfer", "transfer", 33.dp, 25.dp),
+    BottomNavItem(R.drawable.vector, "Layers", "layers", 27.dp, 23.dp),
+    BottomNavItem(R.drawable.vector_1, "Profile", "profile", 22.dp, 27.dp)
 )
 
 @Composable
@@ -101,7 +102,7 @@ private fun BottomNavItem(
                 painter = painterResource(id = item.icon),
                 contentDescription = item.label,
                 tint = if (isSelected) Color.White else InactiveIcon,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(width = item.width, height = item.height)
             )
         }
     }
@@ -111,6 +112,8 @@ private fun BottomNavItem(
 @Composable
 fun FinanceBottomBarPreview() {
     MaterialTheme {
-        FinanceBottomBar()
+        Surface(color = Color(0xFFF1FFF3)) {
+            FinanceBottomBar()
+        }
     }
 }

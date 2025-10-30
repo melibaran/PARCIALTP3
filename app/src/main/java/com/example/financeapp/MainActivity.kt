@@ -17,7 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
-import com.example.financeapp.ui.theme.Clase4Theme
+import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
 import com.example.financeapp.ui.theme.screen.LoginScreen
 import com.example.financeapp.ui.theme.screen.WelcomeScreen
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            Clase4Theme {
+            FinanceAppTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     containerColor = Color(0xFFE8F7EF),
@@ -99,7 +99,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    Clase4Theme {
-        Greeting("Melissa")
+    FinanceAppTheme {
+        Greeting("Android")
     }
 }
