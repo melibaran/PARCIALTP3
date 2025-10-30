@@ -22,6 +22,9 @@ import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
 import com.example.financeapp.ui.theme.screen.LoginScreen
 import com.example.financeapp.ui.theme.screen.WelcomeScreen
+import com.example.financeapp.ui.screens.AccountBalanceScreen
+import com.example.financeapp.ui.screens.FoodScreen
+import com.example.financeapp.ui.screens.HomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,16 +71,16 @@ class MainActivity : ComponentActivity() {
                         }
                         // Rutas para la bottom navigation
                         composable(route = "home") {
-                            // TODO: Implementar Home Screen
+                            HomeScreen(navController = navController)
                         }
                         composable(route = "analytics") {
-                            // TODO: Implementar Analytics Screen
+                            AccountBalanceScreen(navController = navController)
                         }
                         composable(route = "transfer") {
                             // TODO: Implementar Transfer Screen
                         }
                         composable(route = "layers") {
-                            // TODO: Implementar Layers Screen
+                            FoodScreen(navController = navController)
                         }
                         composable(route = "profile") {
                             // TODO: Implementar Profile Screen
