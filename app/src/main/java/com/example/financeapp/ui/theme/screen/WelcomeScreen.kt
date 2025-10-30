@@ -28,11 +28,11 @@ fun WelcomeScreen(modifier: Modifier, navController: NavHostController, intent: 
     val context = LocalContext.current
 
     Column (modifier = Modifier.fillMaxSize()) {
-        Image(
+/*        Image(
             modifier = Modifier,
             painter = painterResource(id = com.example.financeapp.R.drawable.welcome),
             contentDescription = "welcome"
-        )
+        )*/
 
         Text(text=stringResource(R.string.Login), style = MaterialTheme.typography.bodyLarge)
 
