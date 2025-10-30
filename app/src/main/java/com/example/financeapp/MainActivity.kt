@@ -11,10 +11,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.theme.Clase4Theme
 import com.example.financeapp.ui.theme.poppinsFamily
 import com.example.financeapp.ui.theme.screen.LoginScreen
@@ -29,14 +31,24 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
 
-       val intent = Intent(DashboardActivity::class.toString())
+        val intent = Intent(DashboardActivity::class.toString())
 
 
         setContent {
             val navController = rememberNavController()
 
             Clase4Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    containerColor = Color(0xFFE8F7EF),
+                    bottomBar = {
+                        FinanceBottomBar(
+                            onNavigate = { route ->
+                                navController.navigate(route)
+                            }
+                        )
+                    }
+                ) { innerPadding ->
                     NavHost(
                         navController = navController,
                         modifier = Modifier.padding (innerPadding),
@@ -53,11 +65,23 @@ class MainActivity : ComponentActivity() {
                         composable(route = "register") {
                             LoginScreen(Modifier, navController)
                         }
+                        // Rutas para la bottom navigation
+                        composable(route = "home") {
+                            // TODO: Implementar Home Screen
+                        }
+                        composable(route = "analytics") {
+                            // TODO: Implementar Analytics Screen
+                        }
+                        composable(route = "transfer") {
+                            // TODO: Implementar Transfer Screen
+                        }
+                        composable(route = "layers") {
+                            // TODO: Implementar Layers Screen
+                        }
+                        composable(route = "profile") {
+                            // TODO: Implementar Profile Screen
+                        }
                     }
-                    Greeting(
-                        name = "Melissa",
-                        modifier = Modifier.padding(innerPadding)
-                    )
                 }
             }
         }
