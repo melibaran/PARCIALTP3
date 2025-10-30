@@ -1,0 +1,36 @@
+package com.example.financeapp.ui.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.financeapp.ui.theme.screen.login.LoginScreen
+import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
+
+@Composable
+fun NavGraph(startDestination: String = "login") {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = startDestination) {
+        composable("login") {
+            LoginScreen(
+                onLoginClick = { /* navegar a home o manejar login */ },
+                onSignUpClick = { navController.navigate("signup") },
+                onForgotPasswordClick = { navController.navigate(route = "forgotpassword") }
+            )
+        }
+
+        composable("signup") {
+            SignUpScreen(
+                onLoginClick = { navController.navigate("login") } // ejemplo: volver atrás
+            )
+        }
+        composable(route = "forgotpassword"){
+             /*ForgotPasswordScreen(
+                 onSignUpClick = { navController.navigate("signup") },
+
+             )*/
+        }
+    }
+}
+

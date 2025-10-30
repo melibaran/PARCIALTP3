@@ -15,11 +15,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
+import com.example.financeapp.ui.navigation.NavGraph
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
 import com.example.financeapp.ui.theme.screen.WelcomeScreen
+import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -83,7 +85,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }*/
-                LoginScreen()
+                NavGraph()
             }
         }
     }
