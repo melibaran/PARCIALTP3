@@ -1,4 +1,4 @@
-package com.example.financeapp.presentation.screen.transaction
+package com.example.financeapp.ui.screen.transaction
 
 import androidx.lifecycle.ViewModel
 import com.example.financeapp.R

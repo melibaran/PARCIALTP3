@@ -1,4 +1,4 @@
-package com.example.financeapp.presentation.screen.transaction
+package com.example.financeapp.ui.screen.transaction
 
 data class TransactionUIState(
     val balance: Double = 7783.00,

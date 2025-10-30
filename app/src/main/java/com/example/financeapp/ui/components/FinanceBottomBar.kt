@@ -1,4 +1,4 @@
-package com.example.financeapp.presentation.components
+package com.example.financeapp.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,8 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.financeapp.R
-import com.example.financeapp.presentation.navigation.BottomNavItem
-import com.example.financeapp.presentation.navigation.BottomNavViewModel
+import com.example.financeapp.ui.navigation.BottomNavItem
+import com.example.financeapp.ui.navigation.BottomNavViewModel
 
 
 private val BarBackground = Color(0xFFDFF7E2)

@@ -1,4 +1,4 @@
-package com.example.financeapp.presentation.screen
+package com.example.financeapp.ui.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

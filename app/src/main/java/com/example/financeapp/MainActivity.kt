@@ -14,13 +14,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.financeapp.presentation.components.FinanceBottomBar
-import com.example.financeapp.presentation.theme.Caribbean_green
-import com.example.financeapp.presentation.theme.FinanceAppTheme
-import com.example.financeapp.presentation.theme.poppinsFamily
-import com.example.financeapp.presentation.screen.LoginScreen
-import com.example.financeapp.presentation.screen.WelcomeScreen
-import com.example.financeapp.presentation.screen.transaction.TransactionScreen
+import com.example.financeapp.ui.components.FinanceBottomBar
+import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.FinanceAppTheme
+import com.example.financeapp.ui.theme.poppinsFamily
+import com.example.financeapp.ui.screen.LoginScreen
+import com.example.financeapp.ui.screen.WelcomeScreen
+import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

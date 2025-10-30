@@ -1,4 +1,4 @@
-package com.example.financeapp.presentation.components
+package com.example.financeapp.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.financeapp.presentation.theme.Caribbean_green
-import com.example.financeapp.presentation.theme.Light_blue
-import com.example.financeapp.presentation.screen.transaction.TransactionItem
+import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Light_blue
+import com.example.financeapp.ui.screen.transaction.TransactionItem
 
 @Composable
 fun TransactionListItem(

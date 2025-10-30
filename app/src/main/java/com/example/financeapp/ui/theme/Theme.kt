@@ -1,4 +1,4 @@
-package com.example.financeapp.presentation.theme
+package com.example.financeapp.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
