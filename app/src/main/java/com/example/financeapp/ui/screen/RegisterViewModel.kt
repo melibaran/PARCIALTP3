@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.theme.screen
+package com.example.financeapp.ui.screen
 
 import androidx.lifecycle.ViewModel
 import com.example.financeapp.data.dao.MensajeDao
