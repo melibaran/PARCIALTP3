@@ -1,6 +1,5 @@
 package com.example.financeapp
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,7 +10,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,8 +18,9 @@ import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
-import com.example.financeapp.ui.theme.screen.LoginScreen
-import com.example.financeapp.ui.theme.screen.WelcomeScreen
+import com.example.financeapp.ui.screen.LoginScreen
+import com.example.financeapp.ui.screen.WelcomeScreen
+import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -74,7 +73,7 @@ class MainActivity : ComponentActivity() {
                             // TODO: Implementar Analytics Screen
                         }
                         composable(route = "transfer") {
-                            // TODO: Implementar Transfer Screen
+                            TransactionScreen(navController = navController)
                         }
                         composable(route = "layers") {
                             // TODO: Implementar Layers Screen
