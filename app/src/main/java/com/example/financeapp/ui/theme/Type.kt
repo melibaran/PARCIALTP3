@@ -11,32 +11,23 @@ import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
 
 // Set of Material typography styles to start with
-//aca va a estar la tipografia q va a estar por defecto. Voy a declarar la FAMILIA de fuentes
-//(en este caso popins)
-//Son deficiones hecha por Material
 
-//FontFamily tiene todas las variaciones de fuente que podemos tener
-//HAY DOS OPCIONES:
-
-//1. PROVEEDOR DE FUENTES EXTERNO:
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
     providerPackage = "com.google.android.gms",
     certificates = R.array.com_google_android_gms_fonts_certs
 )
 
-var robotoFont = GoogleFont("Roboto")
-var robotoFamily = FontFamily(
-    Font(googleFont = robotoFont, fontProvider = provider, weight = FontWeight.Normal),
-)
 
-//2. LOCAL: esta en Recursos
 val poppinsFamily = FontFamily(
     Font(R.font.poppins_regular, weight = FontWeight.Normal),
-    Font(R.font.poppins_semi_bold, weight = FontWeight.SemiBold)
+    Font(R.font.poppins_semi_bold, weight = FontWeight.SemiBold),
+    Font(R.font.poppins_bold, weight = FontWeight.Bold),
+    Font(R.font.poppins_medium, weight = FontWeight.Medium),
+    Font(R.font.poppins_light, weight = FontWeight.Light),
+    Font(R.font.poppins_thin, weight = FontWeight.Thin)
 )
 
-//es el conjunto de los estilos, y son lo q usaran por defecto.Puede agregar la font que use
 val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = poppinsFamily,
