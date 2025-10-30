@@ -3,7 +3,7 @@ package com.example.financeapp.infrastructure.api
 import com.example.financeapp.domain.infrastructure.api.ApiClient
 import com.example.financeapp.domain.model.LoginRequest as DomainLoginRequest
 import com.example.financeapp.domain.model.SignUpRequest as DomainSignUpRequest
-import com.example.financeapp.domain.model.User
+import com.example.financeapp.domain.model.UserToken
 import com.example.financeapp.domain.model.UserProfile
 import com.example.financeapp.domain.model.UserTransactions
 import com.example.financeapp.infrastructure.api.request.LoginRequest
@@ -35,7 +35,7 @@ class ApiClientMockServer(
         apiService = retrofit.create(ApiService::class.java)
     }
 
-    override suspend fun login(request: DomainLoginRequest): User {
+    override suspend fun login(request: DomainLoginRequest): UserToken {
         val infraRequest = LoginRequest.fromDomain(request)
         val response = apiService.login(infraRequest)
         return response.body()!!.toDomain()
