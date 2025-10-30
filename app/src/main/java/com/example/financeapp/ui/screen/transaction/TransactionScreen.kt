@@ -2,10 +2,13 @@ package com.example.financeapp.ui.screen.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,14 +17,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TransactionListItem
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_blue
+import com.example.financeapp.ui.theme.Light_green
+import com.example.financeapp.ui.theme.Ocean_blue
+import com.example.financeapp.ui.theme.Void
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,9 +52,11 @@ fun TransactionScreen(
                 title = {
                     Text(
                         "Transaction",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge.copy(
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
+                            color = Void,
+                            fontWeight = FontWeight.SemiBold
                         )
                     )
                 },
@@ -49,17 +65,26 @@ fun TransactionScreen(
                         Icon(
                             painter = painterResource(R.drawable.bring_back),
                             contentDescription = "Back",
-                            tint = Color.White
+                            tint = Color.White,
+                            modifier = Modifier.size(19.dp)
                         )
                     }
                 },
                 actions = {
                     IconButton(onClick = { /* TODO */ }) {
-                        Icon(
-                            painter = painterResource(R.drawable.bell),
-                            contentDescription = "Notifications",
-                            tint = Color.White
-                        )
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .background(Color.White, shape = CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.bell),
+                                contentDescription = "Notifications",
+                                modifier = Modifier.size(24.dp),
+                                tint = Void
+                            )
+                        }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -78,95 +103,174 @@ fun TransactionScreen(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp)
-            ) {
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
+                shape = RoundedCornerShape(13.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Honeydew
+                )) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ){
                     Text(
                         text = "Total Balance",
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                        style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                            color = Void,
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Center
+                        ))
                     Text(
                         text = "$${uiState.balance}",
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = Caribbean_green
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column {
-                            Text(
-                                text = "Total Balance",
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                            Text(
-                                text = "$${uiState.balance}",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Caribbean_green
-                            )
-                        }
-
-                        HorizontalDivider(
-                            modifier = Modifier
-                                .height(40.dp)
-                                .width(1.dp)
-                                .padding(horizontal = 16.dp)
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                            color = Void,
+                            fontSize = 24.sp,
+                            textAlign = TextAlign.Center
                         )
-
-                        Column {
-                            Text(
-                                text = "Total Expense",
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                            Text(
-                                text = "-$${uiState.totalExpense}",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Light_blue
-                            )
-                        }
-                    }
+                    )
                 }
             }
 
-            // Progress Section
+
+       Spacer(modifier = Modifier.height(14.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.income),
+                            contentDescription = "Income Icon",
+                            modifier = Modifier.size(16.dp),
+                            tint = Color.Black
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "Total Balance",
+                            style = TextStyle(
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                color = Void,
+                                fontSize = 12.sp,
+                            ),
+                        )
+                    }
+                    Text(
+                        text = "$${uiState.balance}",
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                            color = Void,
+                            fontSize = 26.sp,
+                        ),
+                        color = Honeydew
+                    )
+                }
+
+                VerticalDivider(
+                    modifier = Modifier
+                        .height(48.dp)
+                        .padding(horizontal = 14.dp),
+                    thickness = 1.dp,
+                    color = Light_green
+                )
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.expense),
+                            contentDescription = "Expense Icon",
+                            modifier = Modifier.size(16.dp),
+                            tint = Color.Black
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "Total Expense",
+                            style = TextStyle(
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                color = Void,
+                                fontSize = 12.sp,
+                            ),
+                        )
+                    }
+                    Text(
+                        text = "-$${uiState.totalExpense}",
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                            fontSize = 26.sp,
+                        ),
+                        color = Ocean_blue
+                    )
+                }
+            }
+
+            // Column de barra:
             Column(
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 21.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    // 1. TEXTO DEL PORCENTAJE (30%) - Fondo Negro/Oscuro
                     Text(
                         text = "${uiState.expensePercentage}%",
                         modifier = Modifier
                             .background(
-                                Color.Black,
-                                RoundedCornerShape(16.dp)
+                                Fence_green, // Fondo oscuro (Fence_green)
+                                RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp)
                             )
                             .padding(horizontal = 8.dp, vertical = 4.dp),
-                        color = Color.White
+                        color = Honeydew, // Texto blanco
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                            fontSize = 12.sp,
+                        )
                     )
 
+                    // 2. BARRA BLANCA QUE OCUPA EL ESPACIO RESTANTE HASTA EL TEXTO DE META
                     LinearProgressIndicator(
-                        progress = uiState.expensePercentage / 100f,
+                        // Establecemos el progreso en 1f (100%) para que la barra blanca ocupe todo el espacio
+                        progress = { 1f },
                         modifier = Modifier
-                            .weight(1f)
-                            .height(8.dp)
-                            .padding(horizontal = 8.dp),
-                        color = Caribbean_green,
-                        trackColor = MaterialTheme.colorScheme.surfaceVariant
+                            .weight(1f) // Ocupa el espacio restante
+                            .height(20.dp),
+                        // Eliminamos el padding horizontal
+
+                        // ✅ AJUSTE CLAVE: La barra DE PROGRESO (el 100%) es el color blanco
+                        color = Honeydew,
+
+                        // ✅ AJUSTE CLAVE: El color de la pista (que se vería detrás) es el color blanco (Honeydew)
+                        trackColor = Honeydew
                     )
 
                     Text(
                         text = "$${uiState.expenseGoal}",
-                        style = MaterialTheme.typography.bodyMedium
+                        modifier = Modifier.padding(start = 4.dp),
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_italic)),
+                            color = Fence_green,
+                            fontSize = 12.sp,
+                        )
                     )
                 }
 
@@ -200,7 +304,11 @@ fun TransactionScreen(
                 item {
                     Text(
                         "April",
-                        style = MaterialTheme.typography.titleLarge,
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                            color = Fence_green,
+                            fontSize = 20.sp,
+                        ),
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
@@ -215,7 +323,12 @@ fun TransactionScreen(
                 item {
                     Text(
                         "March",
-                        style = MaterialTheme.typography.titleLarge,
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                            color = Fence_green,
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center
+                        ),
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
