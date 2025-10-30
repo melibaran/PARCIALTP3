@@ -44,6 +44,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.material3)
+    implementation(libs.androidx.runtime)
     //Para ROOM:
     val room_version = "2.8.2"
 

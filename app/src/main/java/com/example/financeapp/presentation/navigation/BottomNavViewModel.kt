@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.navigation
+package com.example.financeapp.presentation.navigation
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

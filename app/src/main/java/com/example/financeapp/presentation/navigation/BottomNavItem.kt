@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.navigation
+package com.example.financeapp.presentation.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.unit.Dp

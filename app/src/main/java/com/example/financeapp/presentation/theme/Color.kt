@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.theme
+package com.example.financeapp.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -11,3 +11,4 @@ val Void = Color(0xFF031314)
 val Light_blue = Color(0xFF6DB6FE)
 val Vivid_blue = Color(0xFF3299FF)
 val Ocean_blue = Color(0xFF0068FF)
+val Voidd = Color(0xFF031314)
