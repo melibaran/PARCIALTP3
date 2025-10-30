@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,8 +33,10 @@ import com.example.financeapp.ui.components.TransactionListItem
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.Honeydew
+import com.example.financeapp.ui.theme.Light_blue
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Ocean_blue
+import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Void
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,6 +47,16 @@ fun TransactionScreen(
     viewModel: TransactionViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    val coloresDeCirculo = remember {
+        listOf(
+            Light_blue,
+            Vivid_blue,
+            Ocean_blue,
+            Vivid_blue,
+            Light_blue,
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -229,39 +243,45 @@ fun TransactionScreen(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "${uiState.expensePercentage}%",
-                        modifier = Modifier
-                            .background(
-                                Fence_green,
-                                RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp)
-                            )
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        color = Honeydew,
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                            fontSize = 12.sp,
-                        )
-                    )
-
-                    LinearProgressIndicator(
-                        progress = { 1f },
+                    Box(
                         modifier = Modifier
                             .weight(1f)
-                            .height(20.dp),
-                        color = Honeydew,
-                        trackColor = Honeydew
-                    )
-
-                    Text(
-                        text = "$${uiState.expenseGoal}",
-                        modifier = Modifier.padding(start = 4.dp),
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_italic)),
-                            color = Fence_green,
-                            fontSize = 12.sp,
+                            .height(20.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Honeydew)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .clip(RoundedCornerShape(20.dp))
+                                .fillMaxWidth(uiState.expensePercentage / 100f)
+                                .background(Fence_green)
                         )
-                    )
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "${uiState.expensePercentage}%",
+                                modifier = Modifier.padding(start = 8.dp),
+                                color = Honeydew,
+                                style = TextStyle(
+                                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                    fontSize = 12.sp,
+                                )
+                            )
+                            Text(
+                                text = "$${uiState.expenseGoal}",
+                                modifier = Modifier.padding(end = 8.dp),
+                                style = TextStyle(
+                                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                    color = Fence_green,
+                                    fontSize = 12.sp,
+                                )
+                            )
+                        }
+                    }
                 }
 
                 Row(
@@ -294,10 +314,11 @@ fun TransactionScreen(
             // Transactions List
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .weight(1f)
                     .padding(top = 16.dp)
+                    .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(MaterialTheme.colorScheme.surface)
+                    .background(Honeydew)
                     .padding(16.dp)
             ) {
                 item {
@@ -311,13 +332,19 @@ fun TransactionScreen(
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
-                items(
+                itemsIndexed(
                     viewModel.getTransactionsByMonth("April"),
-                    key = { it.id }
-                ) { transaction ->
-                    TransactionListItem(transaction = transaction)
-                    HorizontalDivider()
+                    key = { _, item -> item.id }
+                ) { index, transaction ->
+                    val itemColor = coloresDeCirculo.getOrElse(index) { Light_blue }
+
+                    TransactionListItem(
+                        transaction = transaction,
+                        circleBgColor = itemColor
+                    )
                 }
+
+                val marchStartIndex = viewModel.getTransactionsByMonth("April").size
 
                 item {
                     Text(
@@ -331,12 +358,17 @@ fun TransactionScreen(
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
-                items(
+                itemsIndexed(
                     viewModel.getTransactionsByMonth("March"),
-                    key = { it.id }
-                ) { transaction ->
-                    TransactionListItem(transaction = transaction)
-                    HorizontalDivider()
+                    key = { _, item -> item.id }
+                ) { index, transaction ->
+                    val globalIndex = marchStartIndex + index
+                    val itemColor = coloresDeCirculo.getOrElse(globalIndex) { Light_blue }
+
+                    TransactionListItem(
+                        transaction = transaction,
+                        circleBgColor = itemColor
+                    )
                 }
             }
         }
