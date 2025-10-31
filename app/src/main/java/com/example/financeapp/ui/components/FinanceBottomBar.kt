@@ -27,10 +27,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.financeapp.R
 import com.example.financeapp.ui.navigation.BottomNavItem
 import com.example.financeapp.ui.navigation.BottomNavViewModel
+import com.example.financeapp.ui.theme.Light_green
+import com.example.financeapp.ui.theme.Caribbean_green
 
 
-private val BarBackground = Color(0xFFDFF7E2)
-private val ActiveTurquoise = Color(0xFF05C3A7)
+private val BarBackground = Light_green
+private val ActiveTurquoise = Caribbean_green
 private val InactiveIcon = Color(0xFFA0A0A0)
 
 private val navItems = listOf(
@@ -112,7 +114,7 @@ private fun BottomNavItem(
 @Composable
 fun FinanceBottomBarPreview() {
     MaterialTheme {
-        Surface(color = Color(0xFFF1FFF3)) {
+        Surface(color = com.example.financeapp.ui.theme.Honeydew) {
             FinanceBottomBar()
         }
     }
