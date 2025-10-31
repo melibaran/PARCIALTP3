@@ -23,6 +23,7 @@ import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
 import com.example.financeapp.ui.screens.FoodScreen
 import com.example.financeapp.ui.screens.HomeScreen
+import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -74,7 +75,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "transfer") {
                             // Using existing TransactionScreen
-                            // TransactionScreen(navController = navController)
+                            TransactionScreen(navController = navController)
                         }
                         composable(route = "layers") {
                             FoodScreen(navController = navController)

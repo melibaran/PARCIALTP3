@@ -25,6 +25,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.graphics.Brush
 import com.example.financeapp.ui.theme.Light_blue
 import com.example.financeapp.ui.theme.Vivid_blue
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.lerp
+import com.example.financeapp.ui.theme.Caribbean_green
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +36,8 @@ fun TopBar(
     subtitle: String? = null,
     showBackButton: Boolean = false,
     onBackClick: () -> Unit = {},
-    onNotificationClick: () -> Unit = {}
+    onNotificationClick: () -> Unit = {},
+    containerColor: Color = MaterialTheme.colorScheme.background
 ) {
     TopAppBar(
         title = {
@@ -65,7 +69,7 @@ fun TopBar(
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = containerColor,
             titleContentColor = MaterialTheme.colorScheme.onBackground,
             actionIconContentColor = MaterialTheme.colorScheme.onBackground
         )
@@ -123,7 +127,7 @@ fun BalanceSummaryCard(
             }
             Spacer(modifier = Modifier.height(16.dp))
             LinearProgressIndicator(
-                progress = { currentProgress.value },
+                progress = currentProgress.value,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(20.dp)

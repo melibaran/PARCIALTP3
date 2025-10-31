@@ -6,7 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -15,244 +15,431 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.data.sampleTransactions
 import com.example.financeapp.ui.components.BalanceSummaryCard
 import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.components.TransactionListItem
+import com.example.financeapp.ui.screen.transaction.TransactionItem as TxItem
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Light_blue
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Ocean_blue
+import com.example.financeapp.ui.theme.Honeydew
 import androidx.compose.material3.HorizontalDivider
 
 @Suppress("UNUSED_PARAMETER")
 @Composable
 fun HomeScreen(navController: NavController) {
+    // Colores para los iconos circulares (match TransactionScreen)
+    val coloresDeCirculo = remember {
+        listOf(Light_blue, Vivid_blue, Ocean_blue, Vivid_blue, Light_blue)
+    }
     Scaffold(
         topBar = {
             TopBar(
                 title = stringResource(R.string.hi_welcome_back),
                 subtitle = stringResource(R.string.good_morning),
                 showBackButton = false,
-                onNotificationClick = { /* TODO */ }
+                onNotificationClick = { /* TODO */ },
+                containerColor = Caribbean_green
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = Caribbean_green
     ) { innerPadding ->
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+        Column(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+                .padding(innerPadding)
         ) {
-            // Top balance card
-            item {
-                BalanceSummaryCard(
-                    totalBalance = 7783.00,
-                    totalExpense = 1187.40,
-                    progress = 0.3f,
-                    goalAmount = 20000.00,
-                    description = stringResource(R.string.goal_description)
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Total Balance y Total Expense Row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.arrow_up),
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = stringResource(R.string.total_balance),
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
+                        )
+                    }
+                    Text(
+                        text = "$7,783.00",
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    )
+                }
+
+                com.example.financeapp.ui.components.VerticalDivider(
+                    modifier = Modifier
+                        .height(48.dp)
+                        .padding(horizontal = 14.dp),
+                    thickness = 1.dp,
+                    color = Light_green
                 )
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.arrow_down),
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = stringResource(R.string.total_expense),
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
+                        )
+                    }
+                    Text(
+                        text = "-$1,187.40",
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.SemiBold,
+                            color = Ocean_blue
+                        )
+                    )
+                }
             }
 
-            // Card central y tabs
-            item {
-                Column(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
-                        .background(Light_green)
-                        .padding(20.dp)
+            // Progress Bar
+            Column(
+                modifier = Modifier.padding(horizontal = 21.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Card central
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(20.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Honeydew)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .clip(RoundedCornerShape(20.dp))
+                                .fillMaxWidth(0.3f)
+                                .background(com.example.financeapp.ui.theme.Fence_green)
+                        )
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "30%",
+                                modifier = Modifier.padding(start = 8.dp),
+                                color = Honeydew,
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                            Text(
+                                text = "$20,000.00",
+                                modifier = Modifier.padding(end = 8.dp),
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = com.example.financeapp.ui.theme.Fence_green
+                                )
+                            )
+                        }
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.check),
+                        contentDescription = "Check",
+                        modifier = Modifier.size(13.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(R.string.goal_description),
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            color = com.example.financeapp.ui.theme.Fence_green
+                        )
+                    )
+                }
+            }
+
+            // Transactions List con card de Savings y tabs
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(top = 16.dp)
+                    .fillMaxHeight()
+                    .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
+                    .background(Honeydew)
+                    .padding(16.dp)
+            ) {
+                // Card de Savings y Revenue/Food
+                item {
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .heightIn(min = 120.dp),
+                            .padding(bottom = 16.dp),
                         shape = RoundedCornerShape(16.dp),
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
+                        colors = CardDefaults.cardColors(containerColor = Caribbean_green)
                     ) {
-                        Row(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-
-                            // Outer white circle to make the split circle pop
-                            Box(modifier = Modifier
-                                .size(80.dp)
-                                .clip(CircleShape)
-                                .background(Color.White), contentAlignment = Alignment.Center) {
-                                // Inner split circle (slightly smaller)
-                                Box(modifier = Modifier
-                                    .size(64.dp)
-                                    .clip(CircleShape)) {
-                                    Row(modifier = Modifier
-                                        .fillMaxSize()
-                                        .clip(RoundedCornerShape(36.dp))) {
-                                        Box(modifier = Modifier
-                                            .weight(1f)
-                                            .background(Color.White))
-                                        Box(modifier = Modifier
-                                            .weight(1f)
-                                            .background(Vivid_blue))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // Círculo con borde bicolor y texto debajo
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.padding(end = 8.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier.size(70.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    // Círculo exterior mitad blanco/azul
+                                    Box(
+                                        modifier = Modifier
+                                            .size(70.dp)
+                                            .clip(CircleShape)
+                                    ) {
+                                        Row(modifier = Modifier.fillMaxSize()) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .weight(1f)
+                                                    .fillMaxHeight()
+                                                    .background(Color.White)
+                                            )
+                                            Box(
+                                                modifier = Modifier
+                                                    .weight(1f)
+                                                    .fillMaxHeight()
+                                                    .background(Vivid_blue)
+                                            )
+                                        }
                                     }
-                                    Image(painter = painterResource(id = R.drawable.car), contentDescription = null, modifier = Modifier.size(36.dp).align(Alignment.Center))
+                                    // Círculo interior verde
+                                    Box(
+                                        modifier = Modifier
+                                            .size(58.dp)
+                                            .clip(CircleShape)
+                                            .background(Caribbean_green),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.car),
+                                            contentDescription = null,
+                                            modifier = Modifier.size(32.dp)
+                                        )
+                                    }
                                 }
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = "Savings\nOn Goals",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onBackground,
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                    lineHeight = 14.sp
+                                )
                             }
 
+                            Spacer(modifier = Modifier.width(8.dp))
+
+                            Box(
+                                modifier = Modifier
+                                    .width(2.dp)
+                                    .height(70.dp)
+                                    .background(Color.White)
+                            )
+
                             Spacer(modifier = Modifier.width(16.dp))
 
-                            // Barra vertical separadora blanca (más visible)
-                            Box(modifier = Modifier
-                                .width(2.dp)
-                                .height(56.dp)
-                                .background(Color.White))
-
-                            Spacer(modifier = Modifier.width(16.dp))
-
-                            // Texto de la derecha (Revenue & Food) con icons
-                            Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
-                                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Image(painter = painterResource(id = R.drawable.salary), contentDescription = null, modifier = Modifier.size(20.dp))
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Column {
-                                            Text(text = stringResource(R.string.revenue_last_week), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onBackground)
-                                            Text(text = "$4.000,00", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
-                                        }
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.salary),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(28.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Column {
+                                        Text(
+                                            text = stringResource(R.string.revenue_last_week),
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onBackground
+                                        )
+                                        Text(
+                                            text = "$4,000.00",
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            fontWeight = FontWeight.Bold,
+                                            color = MaterialTheme.colorScheme.onBackground
+                                        )
                                     }
                                 }
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
-                                // Línea blanca divisoria más fina
-                                HorizontalDivider(color = Color.White.copy(alpha = 0.9f), thickness = 1.dp)
+                                HorizontalDivider(
+                                    color = Color.White.copy(alpha = 0.9f),
+                                    thickness = 1.dp
+                                )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
-                                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Image(painter = painterResource(id = R.drawable.food), contentDescription = null, modifier = Modifier.size(20.dp))
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Column {
-                                            Text(text = stringResource(R.string.food_last_week), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onBackground)
-                                        }
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.food),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(28.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Column {
+                                        Text(
+                                            text = stringResource(R.string.food_last_week),
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onBackground
+                                        )
+                                        Text(
+                                            text = "-$100.00",
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = Ocean_blue
+                                        )
                                     }
-                                    Text(text = "-100", style = MaterialTheme.typography.bodyMedium, color = Ocean_blue)
                                 }
                             }
                         }
                     }
+                }
 
-                    Spacer(modifier = Modifier.height(18.dp))
-
-                    // Tabs pill con sombra y espaciado, usando tint de caribbean_green
+                // Tabs
+                item {
                     Surface(
-                        color = Light_green,
-                        shape = RoundedCornerShape(50),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(48.dp)
-                            .shadow(6.dp, RoundedCornerShape(50))
+                            .padding(horizontal = 16.dp, vertical = 16.dp),
+                        shape = RoundedCornerShape(50),
+                        color = Light_green,
+                        shadowElevation = 4.dp
                     ) {
-                        Row(modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(6.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             var selectedIndex by remember { mutableStateOf(2) }
-                            val tabs = listOf(stringResource(R.string.daily), stringResource(R.string.weekly), stringResource(R.string.monthly))
+                            val tabs = listOf(
+                                stringResource(R.string.daily),
+                                stringResource(R.string.weekly),
+                                stringResource(R.string.monthly)
+                            )
                             tabs.forEachIndexed { i, t ->
                                 val selected = i == selectedIndex
-                                Box(modifier = Modifier
-                                    .clip(RoundedCornerShape(50))
-                                    .background(if (selected) Color.White else Color.Transparent)
-                                    .then(if (selected) Modifier.border(2.dp, Caribbean_green, RoundedCornerShape(50)) else Modifier)
-                                    .clickable { selectedIndex = i }
+                                Box(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .clip(RoundedCornerShape(50))
+                                        .background(if (selected) Caribbean_green else Color.Transparent)
+                                        .clickable { selectedIndex = i }
+                                        .padding(vertical = 10.dp),
+                                    contentAlignment = Alignment.Center
                                 ) {
-                                    Text(text = t, color = if (selected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp))
+                                    Text(
+                                        text = t,
+                                        color = if (selected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal
+                                    )
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            // Transactions list: filtramos Transport
-            val filtered = sampleTransactions.filter { it.titleResId != R.string.transport }
-            items(filtered) { tx ->
-                // Cada item: usar salary_white para el ícono de salario y texto más pequeño
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 6.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-                ) {
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                // Lista de transacciones
+                val filtered = sampleTransactions.filter { it.titleResId != R.string.transport }
+                itemsIndexed(filtered) { index, tx ->
+                    val iconId =
+                        if (tx.iconResId == R.drawable.salary) R.drawable.salary_white else tx.iconResId
+                    val mapped = TxItem(
+                        id = "tx_$index",
+                        iconId = iconId,
+                        title = stringResource(tx.titleResId),
+                        dateTime = stringResource(tx.dateResId),
+                        category = stringResource(tx.categoryResId),
+                        amount = tx.amount,
+                        isIncome = tx.amount >= 0,
+                        month = ""
+                    )
 
-                        val iconId = if (tx.iconResId == R.drawable.salary) R.drawable.salary_white else tx.iconResId
-                        val bgBrush = when (tx.iconResId) {
-                            R.drawable.salary -> Brush.linearGradient(listOf(Light_blue, Vivid_blue), tileMode = TileMode.Clamp)
-                            R.drawable.groceries -> Brush.linearGradient(listOf(Light_blue, Vivid_blue), tileMode = TileMode.Clamp)
-                            R.drawable.rent -> Brush.linearGradient(listOf(Vivid_blue, Ocean_blue), tileMode = TileMode.Clamp)
-                            else -> Brush.linearGradient(listOf(Light_blue, Vivid_blue), tileMode = TileMode.Clamp)
-                        }
+                    val circleColor =
+                        coloresDeCirculo.getOrElse(index % coloresDeCirculo.size) { Light_blue }
 
-                        Box(modifier = Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .background(brush = bgBrush), contentAlignment = Alignment.Center) {
-                            Image(painter = painterResource(id = iconId), contentDescription = null, modifier = Modifier.size(24.dp))
-                        }
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(text = stringResource(tx.titleResId), style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
-                            Text(text = stringResource(tx.dateResId), style = MaterialTheme.typography.bodySmall, color = Vivid_blue)
-                        }
-
-                        // Divider vertical delgado
-                        Box(modifier = Modifier
-                            .width(1.dp)
-                            .height(36.dp)
-                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
-                        )
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        // Categoría o frecuencia
-                        Text(text = stringResource(tx.categoryResId), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        // Divider vertical antes de la cantidad
-                        Box(modifier = Modifier
-                            .width(1.dp)
-                            .height(36.dp)
-                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
-                        )
-
-                        Spacer(modifier = Modifier.width(12.dp))
-
-                        // Cantidad
-                        val amountText = if (tx.amount < 0) String.format(java.util.Locale.US, "-$%,.2f", -tx.amount) else String.format(java.util.Locale.US, "$%,.2f", tx.amount)
-                        val amountColor = if (tx.amount < 0) Ocean_blue else MaterialTheme.colorScheme.onBackground
-                        Text(text = amountText, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, color = amountColor)
-                    }
+                    TransactionListItem(
+                        transaction = mapped,
+                        circleBgColor = circleColor,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 6.dp)
+                    )
                 }
-            }
 
-            item {
-                Spacer(modifier = Modifier.height(80.dp))
+                item {
+                    Spacer(modifier = Modifier.height(80.dp))
+                }
             }
         }
     }
