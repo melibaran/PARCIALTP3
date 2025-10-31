@@ -123,6 +123,19 @@ class MainActivity : ComponentActivity() {
                         composable(route = "online_support") {
                             OnlineSupportScreen(navController = navController)
                         }
+                        composable(route = "settings") {
+                            SettingsScreen(
+                                navController = navController,
+                                onBackClick = { navController.navigateUp() }
+                            )
+                        }
+                        composable(route = "notification_settings") {
+                            NotificationSettingsScreen1(
+                                navController = navController,
+                                onBackClick = { navController.navigateUp() },
+                                onNotificationClick = { /* TODO */ }
+                            )
+                        }
                         composable(route = "chat_detail/{chatId}") { backStackEntry ->
                             val chatId = backStackEntry.arguments?.getString("chatId") ?: "1"
                             ChatDetailScreen(navController = navController, chatId = chatId)
@@ -132,7 +145,11 @@ class MainActivity : ComponentActivity() {
                             ProfileScreen(
                                 onEditProfileClick = { /* TODO: Navegar a editar perfil */ },
                                 onSecurityClick = { /* TODO: Navegar a seguridad */ },
-                                onSettingClick = { /* TODO: Navegar a configuración */ },
+                                onSettingClick = {
+                                    navController.navigate("settings"){
+                                        popUpTo("home") { inclusive = true }
+                                    }
+                                },
                                 onHelpClick = {
                                     navController.navigate("help_center") {
                                         popUpTo("home") { inclusive = true }

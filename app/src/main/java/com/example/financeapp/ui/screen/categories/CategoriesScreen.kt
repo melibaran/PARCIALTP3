@@ -64,7 +64,7 @@ fun CategoriesScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { navController.navigate("notifications") }) {
+                    IconButton(onClick = { /* TODO */ }) {
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
