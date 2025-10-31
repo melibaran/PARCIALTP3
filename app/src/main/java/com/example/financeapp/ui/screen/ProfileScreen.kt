@@ -75,7 +75,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         ProfileMenuItem(
-            icon = R.drawable.vector_1,
+            icon = R.drawable.edit_profile,
             text = "Edit Profile",
             onClick = onEditProfileClick
         )
@@ -91,7 +91,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         ProfileMenuItem(
-            icon = R.drawable.more,
+            icon = R.drawable.settings,
             text = "Setting",
             onClick = onSettingClick
         )
@@ -99,7 +99,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         ProfileMenuItem(
-            icon = R.drawable.online_support,
+            icon = R.drawable.help,
             text = "Help",
             onClick = onHelpClick
         )
@@ -107,7 +107,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         ProfileMenuItem(
-            icon = R.drawable.bring_back,
+            icon = R.drawable.logout,
             text = "Logout",
             onClick = onLogoutClick
         )
@@ -184,7 +184,7 @@ fun ProfileScreenPreview() {
 fun ProfileMenuItemPreview() {
     MaterialTheme {
         ProfileMenuItem(
-            icon = R.drawable.vector_1,
+            icon = R.drawable.edit_profile,
             text = "Edit Profile",
             onClick = {}
         )
