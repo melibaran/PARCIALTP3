@@ -16,14 +16,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
-import com.example.financeapp.ui.navigation.NavGraph
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
-import com.example.financeapp.ui.screen.settings.SettingsScreen
-import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
+import com.example.financeapp.ui.screen.categories.AddExpensesScreen
+import com.example.financeapp.ui.screen.categories.food.FoodScreen
+import com.example.financeapp.ui.screen.categories.transport.TransportScreen
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
 import com.example.financeapp.ui.screens.ChatDetailScreen
@@ -105,6 +105,15 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "layers") {
                             CategoriesScreen(navController = navController)
+                        }
+                        composable(route = "food") {
+                            FoodScreen(navController = navController)
+                        }
+                        composable(route = "transport") {
+                            TransportScreen(navController = navController)
+                        }
+                        composable(route = "add_expenses") {
+                            AddExpensesScreen(navController = navController)
                         }
                         composable(route = "notifications") {
                             NotificationScreen(navController = navController)
