@@ -7,7 +7,9 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import android.content.Context
 import androidx.room.Room
+import com.example.financeapp.domain.infrastructure.api.ApiClient
 import com.example.financeapp.infrastructure.AppDatabase
+import com.example.financeapp.infrastructure.api.ApiClientMockServer
 import com.example.financeapp.data.dao.MensajeDao
 import dagger.hilt.android.qualifiers.ApplicationContext // Necesario para obtener el Context
 
@@ -31,6 +33,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext // Necesario para obten
     @Provides
     fun provideMensajeDao(database: AppDatabase): MensajeDao {
         return database.mensajeDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiClient(): ApiClient {
+        return ApiClientMockServer()
     }
 
 }
