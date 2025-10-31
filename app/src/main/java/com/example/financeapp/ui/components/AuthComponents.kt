@@ -7,7 +7,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -155,32 +154,39 @@ fun PasswordTextField(
 
 
 @Composable
-fun PrimaryButton(
-    text: String,
-    onClick: () -> Unit
-) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier
+    fun PrimaryButton(
+        text: String,
+        onClick: () -> Unit
     ) {
-        Box (modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Image(
-                painter = painterResource(id = R.drawable.botonprimario),
-                contentDescription = "Boton Primario",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+        Button(
+            onClick = onClick,
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Caribbean_green),
+            shape = RoundedCornerShape(0.dp),
+            contentPadding = PaddingValues(0.dp),
+            elevation = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(55.dp)
+                .padding(horizontal = 20.dp, vertical = 5.dp)
+        ) {
+            Box (modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Image(
+                    painter = painterResource(id = R.drawable.botonprimario),
+                    contentDescription = "Boton Primario",
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.FillBounds
+                )
+
+                Text(
+                text = text,
+                color = Void,
+                fontFamily = poppinsFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
             )
 
-            Text(
-            text = text,
-            color = Void,
-            fontFamily = poppinsFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp
-        )
-
-    }}
-}
+        }}
+    }
 
 @Composable
 fun SecondaryButton(
@@ -189,14 +195,21 @@ fun SecondaryButton(
 ) {
     Button(
         onClick = onClick,
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Caribbean_green),
+        shape = RoundedCornerShape(0.dp),
+        contentPadding = PaddingValues(0.dp),
+        elevation = null,
         modifier = Modifier
+            .fillMaxWidth()
+            .height(55.dp)
+            .padding(horizontal = 20.dp, vertical = 5.dp)
     ) {
         Box (modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Image(
                 painter = painterResource(id = R.drawable.secondbottom),
                 contentDescription = "Boton Secundario",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                modifier = Modifier.matchParentSize(),
+                contentScale = ContentScale.FillBounds
             )
 
             Text(
