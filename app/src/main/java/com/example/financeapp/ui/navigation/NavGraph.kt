@@ -1,14 +1,18 @@
 package com.example.financeapp.ui.navigation
 
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.financeapp.ui.screen.MainScreen
+import com.example.financeapp.ui.screen.login.SignUpScreen
 import com.example.financeapp.ui.theme.screen.forgotpassword.ForgotPasswordScreen
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
 import com.example.financeapp.ui.theme.screen.securitypin.SecurityPinScreen
-import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
 
+
+private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")
 @Composable
 fun NavGraph(startDestination: String = "login") {
     val navController = rememberNavController()
@@ -16,7 +20,11 @@ fun NavGraph(startDestination: String = "login") {
     NavHost(navController = navController, startDestination = startDestination) {
         composable("login") {
             LoginScreen(
-                onLoginClick = { /* navegar a home o manejar login */ },
+                onLoginClick = {
+                    navController.navigate("main_app") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                },
                 onSignUpClick = { navController.navigate("signup") },
                 onForgotPasswordClick = { navController.navigate("forgot_password") }
             )
@@ -24,7 +32,11 @@ fun NavGraph(startDestination: String = "login") {
 
         composable("signup") {
             SignUpScreen(
-                onSignUpClick = { /* Lógica de registro */ },
+                onSignUpClick = {
+                    navController.navigate("main_app") {
+                        popUpTo("signup") { inclusive = true }
+                    }
+                },
                 onLoginClick = { navController.navigate("login") }
             )
         }
@@ -38,9 +50,16 @@ fun NavGraph(startDestination: String = "login") {
 
         composable("security_pin") {
             SecurityPinScreen(
-                onContinueClick = { /* Lógica para continuar */ },
-                onSignUpClick =  { navController.navigate("signup") }
+                onContinueClick = {
+                    navController.navigate("main_app") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                }
             )
+        }
+
+        composable("main_app") {
+            MainScreen()
         }
     }
 }

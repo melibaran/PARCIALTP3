@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.theme.screen.signup
+package com.example.financeapp.ui.screen.login
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

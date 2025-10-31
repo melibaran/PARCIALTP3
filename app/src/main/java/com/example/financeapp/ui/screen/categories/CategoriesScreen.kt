@@ -1,45 +1,22 @@
-package com.example.financeapp.ui.screen.transaction
+package com.example.financeapp.ui.screen.categories
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -50,41 +27,24 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
-import com.example.financeapp.ui.components.TransactionListItem
-import com.example.financeapp.ui.theme.Caribbean_green
-import com.example.financeapp.ui.theme.Fence_green
-import com.example.financeapp.ui.theme.Honeydew
-import com.example.financeapp.ui.theme.Light_blue
-import com.example.financeapp.ui.theme.Light_green
-import com.example.financeapp.ui.theme.Ocean_blue
-import com.example.financeapp.ui.theme.Vivid_blue
-import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.components.CategoryItem
+import com.example.financeapp.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransactionScreen(
+fun CategoriesScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: TransactionViewModel = hiltViewModel()
+    viewModel: CategoriesViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
-    val coloresDeCirculo = remember {
-        listOf(
-            Light_blue,
-            Vivid_blue,
-            Ocean_blue,
-            Vivid_blue,
-            Light_blue,
-        )
-    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        "Transaction",
+                        "Categories",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge.copy(
@@ -108,14 +68,14 @@ fun TransactionScreen(
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
-                                .clip(CircleShape)
-                                .background(Color.White),
+                                .background(Color.White, shape = CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            androidx.compose.foundation.Image(
+                            Icon(
                                 painter = painterResource(R.drawable.bell),
                                 contentDescription = "Notifications",
-                                modifier = Modifier.padding(6.dp)
+                                modifier = Modifier.size(24.dp),
+                                tint = Void
                             )
                         }
                     }
@@ -132,32 +92,32 @@ fun TransactionScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            // Balance Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable {
-                    navController.navigate("transaction_details")
-                }
                     .padding(horizontal = 16.dp, vertical = 4.dp),
                 shape = RoundedCornerShape(13.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = Honeydew
-                )) {
+                )
+            ) {
                 Column(
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
-                ){
+                ) {
                     Text(
-                        text = "Total Balance",
+                        text = stringResource(id = R.string.total_balance),
                         style = TextStyle(
-                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                            fontFamily = FontFamily(Font(R.font.poppins_medium)),
                             color = Void,
                             fontSize = 15.sp,
                             textAlign = TextAlign.Center
-                        ))
+                        )
+                    )
                     Text(
                         text = "$${uiState.balance}",
                         style = TextStyle(
@@ -170,9 +130,9 @@ fun TransactionScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.height(14.dp))
 
-       Spacer(modifier = Modifier.height(14.dp))
-
+            // Balance and Expense Row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -189,13 +149,13 @@ fun TransactionScreen(
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.income),
-                            contentDescription = "Income Icon",
+                            contentDescription = "Balance Icon",
                             modifier = Modifier.size(16.dp),
                             tint = Color.Black
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "Total Balance",
+                            text = stringResource(id = R.string.total_balance),
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                 color = Void,
@@ -239,7 +199,7 @@ fun TransactionScreen(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "Total Expense",
+                            text = stringResource(id = R.string.total_expense),
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                 color = Void,
@@ -258,6 +218,7 @@ fun TransactionScreen(
                 }
             }
 
+            // Progress bar section
             Column(
                 modifier = Modifier.padding(horizontal = 21.dp)
             ) {
@@ -294,7 +255,7 @@ fun TransactionScreen(
                                 )
                             )
                             Text(
-                                text = "$${uiState.expenseGoal}",
+                                text = "$${uiState.budget}",
                                 modifier = Modifier.padding(end = 8.dp),
                                 style = TextStyle(
                                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -310,9 +271,7 @@ fun TransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 8.dp),
-
                     horizontalArrangement = Arrangement.Center,
-
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
@@ -323,7 +282,7 @@ fun TransactionScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "${uiState.expensePercentage}% Of Your Expenses, Looks Good.",
+                        text = stringResource(id = R.string.goal_description),
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
                             color = Fence_green,
@@ -333,107 +292,27 @@ fun TransactionScreen(
                 }
             }
 
-            if (uiState.isLoading) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = Fence_green)
-                }
-            } else if (uiState.error != null) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = "Error: ${uiState.error}",
-                            style = TextStyle(
-                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Color.Red,
-                                fontSize = 14.sp,
-                            ),
-                            textAlign = TextAlign.Center
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(onClick = { viewModel.loadTransactions() }) {
-                            Text("Reintentar")
-                        }
-                    }
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(top = 16.dp)
-                        .fillMaxHeight()
-                        .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                        .background(Honeydew)
-                        .padding(16.dp)
-                ) {
-                    val availableMonths = viewModel.getAvailableMonths()
-                    
-                    var globalIndex = 0
-                    availableMonths.forEach { month ->
-                        val monthTransactions = viewModel.getTransactionsByMonth(month)
-                        
-                        if (monthTransactions.isNotEmpty()) {
-                            // Header del mes
-                            item(key = "header_$month") {
-                                Text(
-                                    month,
-                                    style = TextStyle(
-                                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                        color = Fence_green,
-                                        fontSize = 20.sp,
-                                    ),
-                                    modifier = Modifier.padding(bottom = 8.dp, top = if (globalIndex > 0) 8.dp else 0.dp)
-                                )
-                            }
-                            
-                            itemsIndexed(
-                                monthTransactions,
-                                key = { _, item -> item.id }
-                            ) { localIndex, transaction ->
-                                val itemColor = coloresDeCirculo.getOrElse(globalIndex + localIndex) { Light_blue }
-
-                                TransactionListItem(
-                                    transaction = transaction,
-                                    circleBgColor = itemColor
-                                )
-                            }
-                            
-                            globalIndex += monthTransactions.size
-                        }
-                    }
-                    
-                    if (availableMonths.isEmpty() || uiState.transactions.isEmpty()) {
-                        item {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(32.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = "No hay transacciones disponibles",
-                                    style = TextStyle(
-                                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                        color = Fence_green,
-                                        fontSize = 16.sp,
-                                    ),
-                                    textAlign = TextAlign.Center
-                                )
-                            }
-                        }
-                    }
+            // Categories Grid
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(top = 16.dp)
+                    .fillMaxHeight()
+                    .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
+                    .background(Honeydew)
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(uiState.categories) { category ->
+                    CategoryItem(
+                        icon = category.iconId,
+                        name = category.name
+                    )
                 }
             }
         }
     }
 }
+
