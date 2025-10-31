@@ -75,7 +75,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         ProfileMenuItem(
-            icon = R.drawable.camera,
+            icon = R.drawable.vector_1,
             text = "Edit Profile",
             onClick = onEditProfileClick
         )
@@ -184,7 +184,7 @@ fun ProfileScreenPreview() {
 fun ProfileMenuItemPreview() {
     MaterialTheme {
         ProfileMenuItem(
-            icon = R.drawable.camera,
+            icon = R.drawable.vector_1,
             text = "Edit Profile",
             onClick = {}
         )
