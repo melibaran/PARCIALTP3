@@ -44,6 +44,7 @@ fun AccountBalanceScreen(navController: NavController) {
                 title = stringResource(R.string.account_balance_title),
                 showBackButton = true,
                 onBackClick = { navController.popBackStack() },
+                onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
             )
         },

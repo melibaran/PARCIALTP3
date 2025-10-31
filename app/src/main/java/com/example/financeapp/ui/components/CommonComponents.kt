@@ -35,16 +35,32 @@ fun TopBar(
     title: String,
     subtitle: String? = null,
     showBackButton: Boolean = false,
+    centerTitle: Boolean = false,
     onBackClick: () -> Unit = {},
     onNotificationClick: () -> Unit = {},
     containerColor: Color = MaterialTheme.colorScheme.background
 ) {
     TopAppBar(
         title = {
-            Column {
-                Text(text = title, style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onBackground), fontWeight = FontWeight.Bold)
-                if (subtitle != null) {
-                    Text(text = subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f))
+            Box(
+                modifier = if (centerTitle) Modifier.fillMaxWidth() else Modifier,
+                contentAlignment = if (centerTitle) Alignment.Center else Alignment.CenterStart
+            ) {
+                Column(
+                    horizontalAlignment = if (centerTitle) Alignment.CenterHorizontally else Alignment.Start
+                ) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onBackground),
+                        fontWeight = FontWeight.Bold
+                    )
+                    if (subtitle != null) {
+                        Text(
+                            text = subtitle,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f)
+                        )
+                    }
                 }
             }
         },
@@ -59,12 +75,16 @@ fun TopBar(
             IconButton(onClick = onNotificationClick) {
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(48.dp)
                         .clip(CircleShape)
                         .background(Color.White),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(painter = painterResource(id = R.drawable.bell), contentDescription = "Notifications", modifier = Modifier.padding(6.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.bell),
+                        contentDescription = "Notifications",
+                        modifier = Modifier.size(28.dp)
+                    )
                 }
             }
         },

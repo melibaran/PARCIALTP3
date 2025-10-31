@@ -43,6 +43,7 @@ fun FoodScreen(navController: NavController) {
                 title = stringResource(R.string.food_title),
                 showBackButton = true,
                 onBackClick = { navController.popBackStack() },
+                onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
             )
         },
