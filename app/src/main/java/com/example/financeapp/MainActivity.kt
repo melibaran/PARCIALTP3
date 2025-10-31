@@ -20,6 +20,7 @@ import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
+import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -74,6 +75,17 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "transfer") {
                             TransactionScreen(navController = navController)
+                        }
+
+                        composable("transaction_details") {
+                            TransactionDetailScreen(
+                                navController = navController,
+                                onBackClick = { navController.navigateUp() },
+                                transactions = listOf(),
+                                totalBalance = 0.0,
+                                totalIncome = 0.0,
+                                totalExpense = 0.0
+                            )
                         }
                         composable(route = "layers") {
                             // TODO: Implementar Layers Screen

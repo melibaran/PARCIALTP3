@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TransactionListItem
 import com.example.financeapp.ui.theme.*
@@ -22,6 +23,7 @@ import com.example.financeapp.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransactionDetailScreen(
+    navController: NavController,
     onBackClick: () -> Unit,
     transactions: List<TransactionItem> = emptyList(),
     totalBalance: Double = 7783.00,
