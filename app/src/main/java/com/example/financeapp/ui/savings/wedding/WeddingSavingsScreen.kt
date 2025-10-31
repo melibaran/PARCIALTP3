@@ -11,7 +11,7 @@ import com.example.financeapp.ui.savings.SavingsScreen
 fun WeddingSavingsScreen() {
     val weddingGoal = SavingsGoal(
         title = "Wedding",
-        painter = painterResource(id = R.drawable.wedding),
+        painter = painterResource(id = R.drawable.wedding_me),
         goalAmount = 34700.0,
         savedAmount = 296.25,
         progressPercentage = 10,

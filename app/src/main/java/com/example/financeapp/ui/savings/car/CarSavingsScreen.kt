@@ -11,7 +11,7 @@ import com.example.financeapp.ui.savings.SavingsScreen
 fun CarSavingsScreen() {
     val carGoal = SavingsGoal(
         title = "Car",
-        painter = painterResource(id = R.drawable.car),
+        painter = painterResource(id = R.drawable.car_me),
         goalAmount = 14390.0,
         savedAmount = 596.25,
         progressPercentage = 15,

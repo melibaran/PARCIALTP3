@@ -78,7 +78,6 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "layers") {
                             // TODO: Implementar Layers Screen
-                            CarSavingsScreen()
                         }
                         composable(route = "profile") {
                             // TODO: Implementar Profile Screen

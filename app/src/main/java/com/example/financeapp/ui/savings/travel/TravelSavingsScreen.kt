@@ -11,7 +11,7 @@ import com.example.financeapp.ui.savings.SavingsScreen
 fun TravelSavingsScreen() {
     val travelGoal = SavingsGoal(
         title = "Travel",
-        painter = painterResource(id = R.drawable.travel),
+        painter = painterResource(id = R.drawable.travel_me),
         goalAmount = 1962.93,
         savedAmount = 653.31,
         progressPercentage = 40,
