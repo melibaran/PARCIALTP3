@@ -1,6 +1,7 @@
 package com.example.financeapp.ui.screen.transaction
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,6 +53,8 @@ fun TransactionDetailScreen(
             Light_blue,
         )
     }
+
+    val (showIncome, setShowIncome) = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -130,7 +134,7 @@ fun TransactionDetailScreen(
                         )
                     )
                     Text(
-                        text = "$${uiState.balance}", // <-- Usando el valor del backend
+                        text = "$${uiState.balance}",
                         style = MaterialTheme.typography.headlineMedium.copy(
                             fontFamily = FontFamily(Font(R.font.poppins_bold)),
                             fontSize = 24.sp
@@ -148,8 +152,12 @@ fun TransactionDetailScreen(
             ) {
                 // Income Card
                 Card(
-                    modifier = Modifier.weight(1f),
-                    colors = CardDefaults.cardColors(containerColor = Honeydew)
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { setShowIncome(true) },
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (showIncome) Ocean_blue else Honeydew
+                    )
                 ) {
                     Column(
                         modifier = Modifier.padding(12.dp),
@@ -158,7 +166,7 @@ fun TransactionDetailScreen(
                         Icon(
                             painter = painterResource(R.drawable.income),
                             contentDescription = "Income",
-                            tint = Caribbean_green,
+                            tint = if (showIncome) Honeydew else Caribbean_green,
                             modifier = Modifier.size(24.dp)
                         )
                         Text(
@@ -166,16 +174,17 @@ fun TransactionDetailScreen(
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                fontFamily = FontFamily(Font(R.font.poppins_regular))
+                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                color = if (showIncome) Honeydew else Void
                             )
                         )
                         Text(
-                            text = "$${uiState.expenseGoal}", // <-- Usando el valor del backend
+                            text = "$${uiState.expenseGoal}",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                color = Void
+                                color = if (showIncome) Color.White else Void
                             )
                         )
                     }
@@ -207,7 +216,7 @@ fun TransactionDetailScreen(
                             )
                         )
                         Text(
-                            text = "$${uiState.totalExpense}", // <-- Usando el valor del backend
+                            text = "$${uiState.totalExpense}",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleMedium.copy(
@@ -265,12 +274,11 @@ fun TransactionDetailScreen(
                     .padding(16.dp)
             ) {
                 val availableMonths = viewModel.getAvailableMonths()
-
                 var globalIndex = 0
                 availableMonths.forEach { month ->
                     val monthTransactions = viewModel.getTransactionsByMonth(month)
-
-                    if (monthTransactions.isNotEmpty()) {
+                    val filteredTransactions = if (showIncome) monthTransactions.filter { it.isIncome } else monthTransactions
+                    if (filteredTransactions.isNotEmpty()) {
                         // Header del mes
                         item(key = "header_$month") {
                             Row(
@@ -301,20 +309,17 @@ fun TransactionDetailScreen(
                                 }
                             }
                         }
-
                         itemsIndexed(
-                            monthTransactions,
+                            filteredTransactions,
                             key = { _, item -> item.id }
                         ) { localIndex, transaction ->
                             val itemColor = coloresDeCirculo.getOrElse(globalIndex + localIndex) { Light_blue }
-
                             TransactionListItem(
                                 transaction = transaction,
                                 circleBgColor = itemColor
                             )
                         }
-
-                        globalIndex += monthTransactions.size
+                        globalIndex += filteredTransactions.size
                     }
                 }
 
