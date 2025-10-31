@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.navigation.NavGraph
 import com.example.financeapp.ui.screen.LoginScreen
+import com.example.financeapp.ui.screen.ProfileScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
@@ -115,8 +116,21 @@ class MainActivity : ComponentActivity() {
                             val chatId = backStackEntry.arguments?.getString("chatId") ?: "1"
                             ChatDetailScreen(navController = navController, chatId = chatId)
                         }
-                        composable(route = "profile") {
-                            HelpCenterScreen(navController = navController)
+
+                        composable("profile") {
+                            ProfileScreen(
+                                onEditProfileClick = { /* TODO: Navegar a editar perfil */ },
+                                onSecurityClick = { /* TODO: Navegar a seguridad */ },
+                                onSettingClick = { /* TODO: Navegar a configuración */ },
+                                onHelpClick = {
+                                    navController.navigate("help_center") {
+                                        popUpTo("home") { inclusive = true }
+                                    }
+                                },
+                                onLogoutClick = { navController.navigate("login") {
+                                    popUpTo("home") { inclusive = true }
+                                } }
+                            )
                         }
                     }
                 }

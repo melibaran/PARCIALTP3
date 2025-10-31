@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.screens.HomeScreen
+import com.example.financeapp.ui.screen.ProfileScreen
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
 import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
 
@@ -23,7 +24,7 @@ fun NavGraph(startDestination: String = "login") {
 
         composable("signup") {
             SignUpScreen(
-                onLoginClick = { navController.navigate("login") } // ejemplo: volver atrás
+                onLoginClick = { navController.navigate("login") }
             )
         }
         composable(route = "forgotpassword"){
@@ -37,6 +38,22 @@ fun NavGraph(startDestination: String = "login") {
                 navController = navController
             )
         }
+        
+//      composable("profile") {
+//                            ProfileScreen(
+//                                onEditProfileClick = { /* TODO: Navegar a editar perfil */ },
+//                                onSecurityClick = { /* TODO: Navegar a seguridad */ },
+//                                onSettingClick = { /* TODO: Navegar a configuración */ },
+//                                onHelpClick = {
+//                                    navController.navigate("help_center") {
+//                                        popUpTo("home") { inclusive = true }
+//                                    }
+//                                },
+//                                onLogoutClick = { navController.navigate("login") {
+//                                    popUpTo("home") { inclusive = true }
+//                                } }
+//                            )
+//                        }
     }
 }
 
