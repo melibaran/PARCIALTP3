@@ -1,16 +1,17 @@
-package com.example.financeapp.ui.screen.categories
+package com.example.financeapp.ui.screen.categories.transport
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,28 +28,36 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
-import com.example.financeapp.ui.components.CategoryItem
 import com.example.financeapp.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoriesScreen(
+fun TransportScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: CategoriesViewModel = hiltViewModel()
+    viewModel: TransportViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    val coloresDeCirculo = remember {
+        listOf(Light_blue, Vivid_blue, Ocean_blue, Vivid_blue, Light_blue)
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        "Categories",
-                        modifier = Modifier.fillMaxWidth(),
+                        "Transport",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .width(102.dp)
+                            .height(22.dp),
                         textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge.copy(
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                             color = Void,
+                            fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold
                         )
                     )
@@ -64,7 +73,7 @@ fun CategoriesScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* TODO */ }) {
+                    IconButton(onClick = { navController.navigate("notifications") }) {
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
@@ -80,61 +89,45 @@ fun CategoriesScreen(
                         }
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Caribbean_green
-                )
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Caribbean_green)
             )
         },
-        containerColor = Caribbean_green
-    ) { paddingValues ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            // Balance Card
-            Card(
+        bottomBar = {
+            // Bottom bar con botón Add Expenses centrado (igual que Save en AddExpensesScreen)
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 4.dp),
-                shape = RoundedCornerShape(13.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Honeydew
-                )
+                    .background(Honeydew)
+                    .padding(vertical = 16.dp),
+                contentAlignment = Alignment.Center
             ) {
-                Column(
+                Button(
+                    onClick = { navController.navigate("add_expenses") },
                     modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+                        .width(169.dp)
+                        .height(36.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Caribbean_green
+                    ),
+                    shape = RoundedCornerShape(18.dp)
                 ) {
                     Text(
-                        text = stringResource(id = R.string.total_balance),
+                        text = "Add Expenses",
                         style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                            color = Void,
-                            fontSize = 15.sp,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-                    Text(
-                        text = "$${uiState.balance}",
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                            color = Void,
-                            fontSize = 24.sp,
-                            textAlign = TextAlign.Center
+                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                            color = Honeydew,
+                            fontSize = 16.sp,
                         )
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.height(14.dp))
-
+        },
+        containerColor = Caribbean_green
+    ) { paddingValues ->
+        Column(modifier = modifier.fillMaxSize().padding(paddingValues)) {
             // Balance and Expense Row
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -151,33 +144,30 @@ fun CategoriesScreen(
                             painter = painterResource(R.drawable.income),
                             contentDescription = "Balance Icon",
                             modifier = Modifier.size(16.dp),
-                            tint = Color.Black
+                            tint = Honeydew
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = stringResource(id = R.string.total_balance),
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Void,
+                                color = Honeydew,
                                 fontSize = 12.sp,
-                            ),
+                            )
                         )
                     }
                     Text(
-                        text = "$${uiState.balance}",
+                        text = "$${String.format("%.2f", uiState.balance)}",
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                            color = Void,
+                            color = Honeydew,
                             fontSize = 26.sp,
-                        ),
-                        color = Honeydew
+                        )
                     )
                 }
 
                 VerticalDivider(
-                    modifier = Modifier
-                        .height(48.dp)
-                        .padding(horizontal = 14.dp),
+                    modifier = Modifier.height(48.dp).padding(horizontal = 14.dp),
                     thickness = 1.dp,
                     color = Light_green
                 )
@@ -195,50 +185,42 @@ fun CategoriesScreen(
                             painter = painterResource(R.drawable.expense),
                             contentDescription = "Expense Icon",
                             modifier = Modifier.size(16.dp),
-                            tint = Color.Black
+                            tint = Honeydew
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = stringResource(id = R.string.total_expense),
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Void,
+                                color = Honeydew,
                                 fontSize = 12.sp,
-                            ),
+                            )
                         )
                     }
                     Text(
-                        text = "-$${uiState.totalExpense}",
+                        text = "$${String.format("%.2f", uiState.totalExpense)}",
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                             fontSize = 26.sp,
-                        ),
-                        color = Ocean_blue
+                            color = Ocean_blue
+                        )
                     )
                 }
             }
 
-            // Progress bar section
-            Column(
-                modifier = Modifier.padding(horizontal = 21.dp)
-            ) {
+            // ...existing code for progress bar...
+            Column(modifier = Modifier.padding(horizontal = 21.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(20.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Honeydew)
+                        modifier = Modifier.weight(1f).height(20.dp)
+                            .clip(RoundedCornerShape(20.dp)).background(Honeydew)
                     ) {
                         Box(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .clip(RoundedCornerShape(20.dp))
-                                .fillMaxWidth(uiState.expensePercentage / 100f)
-                                .background(Fence_green)
+                            modifier = Modifier.fillMaxHeight().clip(RoundedCornerShape(20.dp))
+                                .fillMaxWidth(uiState.expensePercentage / 100f).background(Fence_green)
                         )
                         Row(
                             modifier = Modifier.fillMaxSize(),
@@ -255,7 +237,7 @@ fun CategoriesScreen(
                                 )
                             )
                             Text(
-                                text = "$${uiState.budget}",
+                                text = "$${String.format("%.2f", uiState.budget)}",
                                 modifier = Modifier.padding(end = 8.dp),
                                 style = TextStyle(
                                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
@@ -268,9 +250,7 @@ fun CategoriesScreen(
                 }
 
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -282,7 +262,7 @@ fun CategoriesScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = stringResource(id = R.string.goal_description),
+                        text = "${uiState.expensePercentage}% Of Your Expenses, Looks Good.",
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
                             color = Fence_green,
@@ -292,34 +272,100 @@ fun CategoriesScreen(
                 }
             }
 
-            // Categories Grid
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(top = 16.dp)
-                    .fillMaxHeight()
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Transactions List
+            LazyColumn(
+                modifier = Modifier.weight(1f).fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew)
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .background(Honeydew).padding(16.dp)
             ) {
-                items(uiState.categories) { category ->
-                    CategoryItem(
-                        icon = category.iconId,
-                        name = category.name,
-                        onClick = {
-                            when (category.name) {
-                                "Food" -> navController.navigate("food")
-                                "Transport" -> navController.navigate("transport")
-                                // Aquí puedes agregar más navegaciones para otras categorías
-                            }
+                val availableMonths = viewModel.getAvailableMonths()
+                var globalIndex = 0
+
+                availableMonths.forEach { month ->
+                    val monthTransactions = viewModel.getTransactionsByMonth(month)
+                    if (monthTransactions.isNotEmpty()) {
+                        item(key = "header_$month") {
+                            Text(
+                                month,
+                                style = TextStyle(
+                                    fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                                    color = Fence_green,
+                                    fontSize = 20.sp,
+                                ),
+                                modifier = Modifier.padding(
+                                    bottom = 8.dp,
+                                    top = if (globalIndex > 0) 8.dp else 0.dp
+                                )
+                            )
                         }
-                    )
+
+                        itemsIndexed(monthTransactions, key = { _, item -> item.id }) { localIndex, transaction ->
+                            val itemColor = coloresDeCirculo.getOrElse(globalIndex + localIndex) { Light_blue }
+                            TransportTransactionItem(transaction = transaction, circleBgColor = itemColor)
+                        }
+                        globalIndex += monthTransactions.size
+                    }
+                }
+
+                // Spacer final para evitar que el último elemento quede pegado al bottom
+                item {
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun TransportTransactionItem(
+    transaction: TransportTransaction,
+    circleBgColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth().padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier.size(48.dp).clip(CircleShape).background(circleBgColor),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = transaction.iconId),
+                contentDescription = transaction.title,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.width(12.dp))
+
+        Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
+            Text(
+                text = transaction.title,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                    color = Void
+                )
+            )
+            Text(
+                text = transaction.dateTime,
+                style = TextStyle(
+                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                    color = Ocean_blue,
+                    fontSize = 11.sp,
+                )
+            )
+        }
+
+        Text(
+            text = "-$${String.format("%.2f", transaction.amount)}",
+            style = MaterialTheme.typography.titleMedium.copy(
+                fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                color = Ocean_blue
+            )
+        )
     }
 }
 
