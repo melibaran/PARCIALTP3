@@ -50,7 +50,7 @@ fun HomeScreen(navController: NavController) {
                 title = stringResource(R.string.hi_welcome_back),
                 subtitle = stringResource(R.string.good_morning),
                 showBackButton = false,
-                onNotificationClick = { /* TODO */ },
+                onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
             )
         },

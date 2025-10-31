@@ -21,8 +21,12 @@ import com.example.financeapp.ui.theme.poppinsFamily
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
+import com.example.financeapp.ui.screens.ChatDetailScreen
 import com.example.financeapp.ui.screens.FoodScreen
+import com.example.financeapp.ui.screens.HelpCenterScreen
 import com.example.financeapp.ui.screens.HomeScreen
+import com.example.financeapp.ui.screens.NotificationScreen
+import com.example.financeapp.ui.screens.OnlineSupportScreen
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -80,8 +84,21 @@ class MainActivity : ComponentActivity() {
                         composable(route = "layers") {
                             FoodScreen(navController = navController)
                         }
+                        composable(route = "notifications") {
+                            NotificationScreen(navController = navController)
+                        }
+                        composable(route = "help_center") {
+                            HelpCenterScreen(navController = navController)
+                        }
+                        composable(route = "online_support") {
+                            OnlineSupportScreen(navController = navController)
+                        }
+                        composable(route = "chat_detail/{chatId}") { backStackEntry ->
+                            val chatId = backStackEntry.arguments?.getString("chatId") ?: "1"
+                            ChatDetailScreen(navController = navController, chatId = chatId)
+                        }
                         composable(route = "profile") {
-                            // TODO: Implementar Profile Screen
+                            HelpCenterScreen(navController = navController)
                         }
                     }
                 }
