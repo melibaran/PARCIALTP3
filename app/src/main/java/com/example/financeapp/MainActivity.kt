@@ -15,9 +15,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
+import com.example.financeapp.ui.navigation.NavGraph
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
+import com.example.financeapp.ui.theme.screen.login.LoginScreen
+import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
@@ -38,7 +41,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             FinanceAppTheme {
-                Scaffold(
+                /*Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     containerColor = Caribbean_green,
                     bottomBar = {
@@ -49,6 +52,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 ) { innerPadding ->
+
                     NavHost(
                         navController = navController,
                         modifier = Modifier.padding (innerPadding),
@@ -59,11 +63,11 @@ class MainActivity : ComponentActivity() {
                             WelcomeScreen(Modifier, navController, intent)
                         }
                         composable(route = "login") {
-                            LoginScreen(Modifier, navController)
+                            LoginScreen()
                         }
 
                         composable(route = "register") {
-                            LoginScreen(Modifier, navController)
+                            LoginScreen()
                         }
                         // Rutas para la bottom navigation
                         composable(route = "home") {
@@ -82,7 +86,8 @@ class MainActivity : ComponentActivity() {
                             // TODO: Implementar Profile Screen
                         }
                     }
-                }
+                }*/
+                NavGraph()
             }
         }
     }
@@ -90,16 +95,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!", fontFamily = poppinsFamily,
-        modifier = modifier
-    )
+
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainActivityPreview() {
     FinanceAppTheme {
-        Greeting("Android")
+        LoginScreen ()
     }
 }
