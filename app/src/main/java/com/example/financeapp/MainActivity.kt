@@ -108,7 +108,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-                NavGraph()
+                //NavGraph()
             }
         }
     }
