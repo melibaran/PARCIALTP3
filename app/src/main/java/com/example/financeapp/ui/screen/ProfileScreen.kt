@@ -44,7 +44,7 @@ fun ProfileScreen(
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.newhome),
+                painter = painterResource(id = R.drawable.profile_image),
                 contentDescription = "Profile Picture",
                 modifier = Modifier.size(100.dp).clip(CircleShape)
             )
@@ -53,7 +53,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Martín Macció",
+            text = "John Smith",
             fontFamily = poppinsFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp,
@@ -64,7 +64,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = "ID: 28030024",
+            text = "ID: 25030024",
             fontFamily = poppinsFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
