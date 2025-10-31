@@ -6,8 +6,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.screens.HomeScreen
 import com.example.financeapp.ui.screen.ProfileScreen
+import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
 import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
+import com.example.financeapp.ui.screen.settings.SettingsScreen
 
 @Composable
 fun NavGraph(startDestination: String = "login") {
@@ -38,7 +40,25 @@ fun NavGraph(startDestination: String = "login") {
                 navController = navController
             )
         }
-        
+
+        composable("settings") {
+            SettingsScreen(
+                navController = navController,
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = { navController.navigate("notification_settings") },
+                onPasswordClick = {},
+                onDeleteAccountClick = { }
+            )
+        }
+
+        composable("notification_settings") {
+            NotificationSettingsScreen1(
+                navController = navController,
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = {  }
+            )
+        }
+
 //      composable("profile") {
 //                            ProfileScreen(
 //                                onEditProfileClick = { /* TODO: Navegar a editar perfil */ },

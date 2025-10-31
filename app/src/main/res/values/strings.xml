@@ -39,4 +39,19 @@
     <string name="date_apr_15_lunch">12:30 - April 15</string>
     <string name="date_mar_31">20:50 - March 31</string>
     <string name="add_expenses">Add Expenses</string>
+    <string name="settings">Settings</string>
+    <string name="go_back">Back</string>
+    <string name="notifications">Notification</string>
+    <string name="notifications_settings">Notification Settings</string>
+    <string name="password_settings">Password Settings</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="general_notification">General Notification</string>
+    <string name="sound">Sound</string>
+    <string name="sound_call">Sound Call</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="transaction_update">Transaction Update</string>
+    <string name="expense_reminder">Expense Reminder </string>
+    <string name="budget_otifications">Budget Notifications</string>
+    <string name="low_balance_alerts">Low Balance Alerts</string>
+
 </resources>
