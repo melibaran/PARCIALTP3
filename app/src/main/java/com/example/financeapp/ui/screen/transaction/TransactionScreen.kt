@@ -1,15 +1,35 @@
 package com.example.financeapp.ui.screen.transaction
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -87,14 +107,14 @@ fun TransactionScreen(
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
-                                .background(Color.White, shape = CircleShape),
+                                .clip(CircleShape)
+                                .background(Color.White),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(
+                            androidx.compose.foundation.Image(
                                 painter = painterResource(R.drawable.bell),
                                 contentDescription = "Notifications",
-                                modifier = Modifier.size(24.dp),
-                                tint = Void
+                                modifier = Modifier.padding(6.dp)
                             )
                         }
                     }
@@ -111,7 +131,6 @@ fun TransactionScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // Balance Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -235,7 +254,6 @@ fun TransactionScreen(
                 }
             }
 
-            // Column de barra:
             Column(
                 modifier = Modifier.padding(horizontal = 21.dp)
             ) {
@@ -311,64 +329,105 @@ fun TransactionScreen(
                 }
             }
 
-            // Transactions List
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(top = 16.dp)
-                    .fillMaxHeight()
-                    .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew)
-                    .padding(16.dp)
-            ) {
-                item {
-                    Text(
-                        "April",
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                            color = Fence_green,
-                            fontSize = 20.sp,
-                        ),
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
+            if (uiState.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = Fence_green)
                 }
-                itemsIndexed(
-                    viewModel.getTransactionsByMonth("April"),
-                    key = { _, item -> item.id }
-                ) { index, transaction ->
-                    val itemColor = coloresDeCirculo.getOrElse(index) { Light_blue }
-
-                    TransactionListItem(
-                        transaction = transaction,
-                        circleBgColor = itemColor
-                    )
-                }
-
-                val marchStartIndex = viewModel.getTransactionsByMonth("April").size
-
-                item {
-                    Text(
-                        "March",
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                            color = Fence_green,
-                            fontSize = 20.sp,
+            } else if (uiState.error != null) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = "Error: ${uiState.error}",
+                            style = TextStyle(
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                color = Color.Red,
+                                fontSize = 14.sp,
+                            ),
                             textAlign = TextAlign.Center
-                        ),
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(onClick = { viewModel.loadTransactions() }) {
+                            Text("Reintentar")
+                        }
+                    }
                 }
-                itemsIndexed(
-                    viewModel.getTransactionsByMonth("March"),
-                    key = { _, item -> item.id }
-                ) { index, transaction ->
-                    val globalIndex = marchStartIndex + index
-                    val itemColor = coloresDeCirculo.getOrElse(globalIndex) { Light_blue }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(top = 16.dp)
+                        .fillMaxHeight()
+                        .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
+                        .background(Honeydew)
+                        .padding(16.dp)
+                ) {
+                    val availableMonths = viewModel.getAvailableMonths()
+                    
+                    var globalIndex = 0
+                    availableMonths.forEach { month ->
+                        val monthTransactions = viewModel.getTransactionsByMonth(month)
+                        
+                        if (monthTransactions.isNotEmpty()) {
+                            // Header del mes
+                            item(key = "header_$month") {
+                                Text(
+                                    month,
+                                    style = TextStyle(
+                                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                                        color = Fence_green,
+                                        fontSize = 20.sp,
+                                    ),
+                                    modifier = Modifier.padding(bottom = 8.dp, top = if (globalIndex > 0) 8.dp else 0.dp)
+                                )
+                            }
+                            
+                            itemsIndexed(
+                                monthTransactions,
+                                key = { _, item -> item.id }
+                            ) { localIndex, transaction ->
+                                val itemColor = coloresDeCirculo.getOrElse(globalIndex + localIndex) { Light_blue }
 
-                    TransactionListItem(
-                        transaction = transaction,
-                        circleBgColor = itemColor
-                    )
+                                TransactionListItem(
+                                    transaction = transaction,
+                                    circleBgColor = itemColor
+                                )
+                            }
+                            
+                            globalIndex += monthTransactions.size
+                        }
+                    }
+                    
+                    if (availableMonths.isEmpty() || uiState.transactions.isEmpty()) {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(32.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "No hay transacciones disponibles",
+                                    style = TextStyle(
+                                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                        color = Fence_green,
+                                        fontSize = 16.sp,
+                                    ),
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }

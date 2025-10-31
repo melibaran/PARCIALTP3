@@ -46,7 +46,7 @@ fun BalanceHeader(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = stringResource(id = R.string.expense_look_good), style = MaterialTheme.typography.bodySmall)
+            Text(text = stringResource(id = R.string.goal_description), style = MaterialTheme.typography.bodySmall)
             Text(text = "$$budget", style = MaterialTheme.typography.bodySmall)
         }
     }
