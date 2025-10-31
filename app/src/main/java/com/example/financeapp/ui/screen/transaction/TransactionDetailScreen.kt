@@ -63,9 +63,11 @@ fun TransactionDetailScreen(
                         "Transaction",
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            color = Void,
-                            fontWeight = FontWeight.SemiBold
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                            color = Fence_green,
+                            fontSize = 24.sp,
+                            textAlign = TextAlign.Center
                         )
                     )
                 },
@@ -95,29 +97,36 @@ fun TransactionDetailScreen(
                             )
                         }
                     }
-                }
+                },
+
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Caribbean_green,
+
+                ),
+
         )
 
-        // Balance Section
+        // Total Balance:
         Column(
-            modifier = Modifier.padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 colors = CardDefaults.cardColors(containerColor = Honeydew)
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(vertical = 16.dp).fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = "Total Balance",
-                        style = MaterialTheme.typography.bodyLarge.copy(
+                        style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                            fontSize = 15.sp
+                            color = Fence_green,
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Center
                         )
                     )
                     Text(
@@ -134,16 +143,16 @@ fun TransactionDetailScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 // Income Card
                 Card(
-                    modifier = Modifier.weight(1f).padding(end = 8.dp),
+                    modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = Honeydew)
                 ) {
                     Column(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Icon(
@@ -154,12 +163,16 @@ fun TransactionDetailScreen(
                         )
                         Text(
                             text = "Income",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular))
                             )
                         )
                         Text(
                             text = "$$totalIncome",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                                 color = Void
@@ -168,13 +181,15 @@ fun TransactionDetailScreen(
                     }
                 }
 
+                Spacer(modifier = Modifier.width(16.dp))
+
                 // Expense Card
                 Card(
-                    modifier = Modifier.weight(1f).padding(start = 8.dp),
+                    modifier = Modifier.weight(1f),
                     colors = CardDefaults.cardColors(containerColor = Honeydew)
                 ) {
                     Column(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Icon(
@@ -185,12 +200,16 @@ fun TransactionDetailScreen(
                         )
                         Text(
                             text = "Expense",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular))
                             )
                         )
                         Text(
                             text = "$$totalExpense",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                                 color = Ocean_blue
@@ -200,6 +219,7 @@ fun TransactionDetailScreen(
                 }
             }
         }
+
 
         if (uiState.isLoading) {
             Box(
