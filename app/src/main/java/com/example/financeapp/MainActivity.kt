@@ -22,6 +22,8 @@ import com.example.financeapp.ui.screen.ProfileScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
+import com.example.financeapp.ui.screen.settings.SettingsScreen
+import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
 import com.example.financeapp.ui.screens.ChatDetailScreen
@@ -112,6 +114,19 @@ class MainActivity : ComponentActivity() {
                         composable(route = "online_support") {
                             OnlineSupportScreen(navController = navController)
                         }
+                        composable(route = "settings") {
+                            SettingsScreen(
+                                navController = navController,
+                                onBackClick = { navController.navigateUp() }
+                            )
+                        }
+                        composable(route = "notification_settings") {
+                            NotificationSettingsScreen1(
+                                navController = navController,
+                                onBackClick = { navController.navigateUp() },
+                                onNotificationClick = { /* TODO */ }
+                            )
+                        }
                         composable(route = "chat_detail/{chatId}") { backStackEntry ->
                             val chatId = backStackEntry.arguments?.getString("chatId") ?: "1"
                             ChatDetailScreen(navController = navController, chatId = chatId)
@@ -121,7 +136,11 @@ class MainActivity : ComponentActivity() {
                             ProfileScreen(
                                 onEditProfileClick = { /* TODO: Navegar a editar perfil */ },
                                 onSecurityClick = { /* TODO: Navegar a seguridad */ },
-                                onSettingClick = { /* TODO: Navegar a configuración */ },
+                                onSettingClick = {
+                                    navController.navigate("settings"){
+                                        popUpTo("home") { inclusive = true }
+                                    }
+                                },
                                 onHelpClick = {
                                     navController.navigate("help_center") {
                                         popUpTo("home") { inclusive = true }
