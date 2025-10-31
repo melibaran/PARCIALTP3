@@ -83,7 +83,7 @@ fun ProfileScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         ProfileMenuItem(
-            icon = R.drawable.customer_service,
+            icon = R.drawable.security,
             text = "Security",
             onClick = onSecurityClick
         )
