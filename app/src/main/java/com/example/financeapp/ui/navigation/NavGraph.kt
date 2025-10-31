@@ -1,13 +1,16 @@
 package com.example.financeapp.ui.navigation
 
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.financeapp.ui.screens.HomeScreen
-import com.example.financeapp.ui.theme.screen.login.LoginScreen
-import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
+import com.example.financeapp.ui.screen.MainScreen
+import com.example.financeapp.ui.screen.login.LoginScreen
+import com.example.financeapp.ui.screen.login.SignUpScreen
 
+
+private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")
 @Composable
 fun NavGraph(startDestination: String = "login") {
     val navController = rememberNavController()
@@ -15,28 +18,46 @@ fun NavGraph(startDestination: String = "login") {
     NavHost(navController = navController, startDestination = startDestination) {
         composable("login") {
             LoginScreen(
-                onLoginClick = { navController.navigate("home") },
+                onLoginClick = {
+                    navController.navigate("main_app") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                },
                 onSignUpClick = { navController.navigate("signup") },
-                onForgotPasswordClick = { navController.navigate(route = "forgotpassword") }
+                onForgotPasswordClick = { navController.navigate("forgot_password") }
             )
         }
 
         composable("signup") {
             SignUpScreen(
-                onLoginClick = { navController.navigate("login") } // ejemplo: volver atrás
+                onSignUpClick = {
+                    navController.navigate("main_app") {
+                        popUpTo("signup") { inclusive = true }
+                    }
+                },
+                onLoginClick = { navController.navigate("login") }
             )
         }
-        composable(route = "forgotpassword"){
-             /*ForgotPasswordScreen(
-                 onSignUpClick = { navController.navigate("signup") },
 
-             )*/
-        }
-        composable("home") {
-            HomeScreen(
-                navController = navController
+        /*composable("forgot_password") {
+            ForgotPasswordScreen(
+                onNextStepClick = { navController.navigate("security_pin") },
+                onSignUpClick = { navController.navigate("signup") }
             )
+        }*/
+
+        /*composable("security_pin") {
+            SecurityPinScreen(
+                onContinueClick = {
+                    navController.navigate("main_app") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                }
+            )
+        }*/
+
+        composable("main_app") {
+            MainScreen()
         }
     }
 }
-
