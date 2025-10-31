@@ -57,52 +57,52 @@ fun TransactionDetailScreen(
             .fillMaxSize()
             .background(Caribbean_green)
     ) {
-            TopAppBar(
-                title = {
-                    Text(
-                        "Transaction",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                            color = Fence_green,
-                            fontSize = 24.sp,
-                            textAlign = TextAlign.Center
-                        )
+        TopAppBar(
+            title = {
+                Text(
+                    "Transaction",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                        color = Fence_green,
+                        fontSize = 24.sp,
+                        textAlign = TextAlign.Center
                     )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
+                )
+            },
+            navigationIcon = {
+                IconButton(onClick = { navController.navigateUp() }) {
+                    Icon(
+                        painter = painterResource(R.drawable.bring_back),
+                        contentDescription = "Back",
+                        tint = Color.White,
+                        modifier = Modifier.size(19.dp)
+                    )
+                }
+            },
+            actions = {
+                IconButton(onClick = { /* TODO */ }) {
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .background(Color.White, shape = CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
                         Icon(
-                            painter = painterResource(R.drawable.bring_back),
-                            contentDescription = "Back",
-                            tint = Color.White,
-                            modifier = Modifier.size(19.dp)
+                            painter = painterResource(R.drawable.bell),
+                            contentDescription = "Notifications",
+                            modifier = Modifier.size(24.dp),
+                            tint = Void
                         )
                     }
-                },
-                actions = {
-                    IconButton(onClick = { /* TODO */ }) {
-                        Box(
-                            modifier = Modifier
-                                .size(40.dp)
-                                .background(Color.White, shape = CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.bell),
-                                contentDescription = "Notifications",
-                                modifier = Modifier.size(24.dp),
-                                tint = Void
-                            )
-                        }
-                    }
-                },
+                }
+            },
 
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Caribbean_green,
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Caribbean_green,
 
-                ),
+            ),
 
         )
 
@@ -130,7 +130,7 @@ fun TransactionDetailScreen(
                         )
                     )
                     Text(
-                        text = "$$totalBalance",
+                        text = "$${uiState.balance}", // <-- Usando el valor del backend
                         style = MaterialTheme.typography.headlineMedium.copy(
                             fontFamily = FontFamily(Font(R.font.poppins_bold)),
                             fontSize = 24.sp
@@ -170,7 +170,7 @@ fun TransactionDetailScreen(
                             )
                         )
                         Text(
-                            text = "$$totalIncome",
+                            text = "$${uiState.expenseGoal}", // <-- Usando el valor del backend
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleMedium.copy(
@@ -207,7 +207,7 @@ fun TransactionDetailScreen(
                             )
                         )
                         Text(
-                            text = "$$totalExpense",
+                            text = "$${uiState.totalExpense}", // <-- Usando el valor del backend
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleMedium.copy(
