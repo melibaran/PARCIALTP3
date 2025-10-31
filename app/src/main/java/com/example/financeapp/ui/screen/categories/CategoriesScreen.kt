@@ -282,7 +282,7 @@ fun CategoriesScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = stringResource(id = R.string.expense_look_good),
+                        text = stringResource(id = R.string.goal_description),
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
                             color = Fence_green,
