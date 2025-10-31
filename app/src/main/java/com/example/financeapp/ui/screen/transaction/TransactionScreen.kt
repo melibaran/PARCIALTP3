@@ -1,6 +1,7 @@
 package com.example.financeapp.ui.screen.transaction
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -134,6 +135,9 @@ fun TransactionScreen(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clickable {
+                    navController.navigate("transaction_details")
+                }
                     .padding(horizontal = 16.dp, vertical = 4.dp),
                 shape = RoundedCornerShape(13.dp),
                 colors = CardDefaults.cardColors(

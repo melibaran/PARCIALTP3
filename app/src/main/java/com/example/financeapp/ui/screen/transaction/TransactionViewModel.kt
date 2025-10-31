@@ -43,7 +43,7 @@ class TransactionViewModel @Inject constructor(
                 } else {
                     0
                 }
-                
+
                 _uiState.value = _uiState.value.copy(
                     balance = userTransactions.balance,
                     totalExpense = totalExpense,
