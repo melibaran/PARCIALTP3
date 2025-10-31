@@ -4,14 +4,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -19,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
-import com.example.financeapp.ui.components.AuthScreenLayout
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Void
@@ -33,46 +35,61 @@ fun ProfileScreen(
     onHelpClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {}
 ) {
-    AuthScreenLayout(title = "Profile") {
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Box(
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .background(Color.LightGray),
-            contentAlignment = Alignment.Center
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Caribbean_green)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.profile_image),
-                contentDescription = "Profile Picture",
-                modifier = Modifier.size(100.dp).clip(CircleShape)
+            Spacer(modifier = Modifier.height(50.dp))
+            Text(
+                text = "Profile",
+                fontFamily = poppinsFamily,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 32.sp,
+                color = Void,
+                textAlign = TextAlign.Center
             )
-        }
+            Spacer(modifier = Modifier.height(80.dp))
+            Card(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
+                colors = CardDefaults.cardColors(containerColor = com.example.financeapp.ui.theme.Honeydew)
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Spacer(Modifier.height(60.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "John Smith",
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        color = Void,
+                        textAlign = TextAlign.Center
+                    )
 
-        Text(
-            text = "John Smith",
-            fontFamily = poppinsFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
-            color = Void,
-            textAlign = TextAlign.Center
-        )
+                    Spacer(modifier = Modifier.height(4.dp))
 
-        Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "ID: 25030024",
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        color = Void.copy(alpha = 0.6f),
+                        textAlign = TextAlign.Center
+                    )
 
-        Text(
-            text = "ID: 25030024",
-            fontFamily = poppinsFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            color = Void.copy(alpha = 0.6f),
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
         ProfileMenuItem(
             icon = R.drawable.edit_profile,
@@ -113,6 +130,28 @@ fun ProfileScreen(
         )
 
         Spacer(modifier = Modifier.height(24.dp))
+                }
+            }
+        }
+        
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 130.dp)
+                .size(100.dp)
+                .clip(CircleShape)
+                .background(Color.White),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.profile_image),
+                contentDescription = "Profile Picture",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape)
+            )
+        }
     }
 }
 
