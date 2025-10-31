@@ -107,14 +107,14 @@ fun TransactionScreen(
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
-                                .background(Color.White, shape = CircleShape),
+                                .clip(CircleShape)
+                                .background(Color.White),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(
+                            androidx.compose.foundation.Image(
                                 painter = painterResource(R.drawable.bell),
                                 contentDescription = "Notifications",
-                                modifier = Modifier.size(24.dp),
-                                tint = Void
+                                modifier = Modifier.padding(6.dp)
                             )
                         }
                     }
