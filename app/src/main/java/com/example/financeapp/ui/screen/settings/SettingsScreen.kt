@@ -109,7 +109,7 @@ fun SettingsScreen(
                     SettingsItem(
                         iconRes = R.drawable.key,
                         text = stringResource(R.string.password_settings),
-                        onClick = onPasswordClick
+                        onClick = { navController.navigate("password_settings") }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     SettingsItem(
@@ -167,4 +167,3 @@ fun SettingsItem(
         )
     }
 }
-
