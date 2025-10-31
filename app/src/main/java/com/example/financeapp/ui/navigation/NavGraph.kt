@@ -1,0 +1,59 @@
+package com.example.financeapp.ui.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.financeapp.ui.screens.HomeScreen
+import com.example.financeapp.ui.screen.ProfileScreen
+import com.example.financeapp.ui.theme.screen.login.LoginScreen
+import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
+
+@Composable
+fun NavGraph(startDestination: String = "login") {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = startDestination) {
+        composable("login") {
+            LoginScreen(
+                onLoginClick = { navController.navigate("home") },
+                onSignUpClick = { navController.navigate("signup") },
+                onForgotPasswordClick = { navController.navigate(route = "forgotpassword") }
+            )
+        }
+
+        composable("signup") {
+            SignUpScreen(
+                onLoginClick = { navController.navigate("login") }
+            )
+        }
+        composable(route = "forgotpassword"){
+             /*ForgotPasswordScreen(
+                 onSignUpClick = { navController.navigate("signup") },
+
+             )*/
+        }
+        composable("home") {
+            HomeScreen(
+                navController = navController
+            )
+        }
+        
+//      composable("profile") {
+//                            ProfileScreen(
+//                                onEditProfileClick = { /* TODO: Navegar a editar perfil */ },
+//                                onSecurityClick = { /* TODO: Navegar a seguridad */ },
+//                                onSettingClick = { /* TODO: Navegar a configuración */ },
+//                                onHelpClick = {
+//                                    navController.navigate("help_center") {
+//                                        popUpTo("home") { inclusive = true }
+//                                    }
+//                                },
+//                                onLogoutClick = { navController.navigate("login") {
+//                                    popUpTo("home") { inclusive = true }
+//                                } }
+//                            )
+//                        }
+    }
+}
+

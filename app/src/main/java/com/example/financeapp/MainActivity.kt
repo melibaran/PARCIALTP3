@@ -1,5 +1,6 @@
 package com.example.financeapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,13 +16,23 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
-import com.example.financeapp.ui.savings.car.CarSavingsScreen
+import com.example.financeapp.ui.navigation.NavGraph
+import com.example.financeapp.ui.screen.LoginScreen
+import com.example.financeapp.ui.screen.ProfileScreen
+import com.example.financeapp.ui.screen.WelcomeScreen
+import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
+import com.example.financeapp.ui.screen.categories.CategoriesScreen
+import com.example.financeapp.ui.screen.transaction.TransactionScreen
+import com.example.financeapp.ui.screens.AccountBalanceScreen
+import com.example.financeapp.ui.screens.ChatDetailScreen
+import com.example.financeapp.ui.screens.HelpCenterScreen
+import com.example.financeapp.ui.screens.HomeScreen
+import com.example.financeapp.ui.screens.NotificationScreen
+import com.example.financeapp.ui.screens.OnlineSupportScreen
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
-import com.example.financeapp.ui.screen.LoginScreen
-import com.example.financeapp.ui.screen.WelcomeScreen
-import com.example.financeapp.ui.screen.transaction.TransactionScreen
+import com.example.financeapp.ui.theme.screen.login.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,13 +43,12 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
 
-/*        val intent = Intent(DashboardActivity::class.toString())*/
-
-
         setContent {
             val navController = rememberNavController()
 
             FinanceAppTheme {
+
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     containerColor = Caribbean_green,
@@ -50,40 +60,81 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 ) { innerPadding ->
+
                     NavHost(
                         navController = navController,
-                        modifier = Modifier.padding (innerPadding),
-                        startDestination = "welcome",
+                        modifier = Modifier.padding(innerPadding),
+                        startDestination = "home",
                     ) {
 
                         composable(route = "welcome") {
-                            WelcomeScreen(Modifier, navController, intent)
+                            // WelcomeScreen expects an Intent parameter; pass a simple Intent
+                            WelcomeScreen(Modifier.fillMaxSize(), navController, Intent())
                         }
                         composable(route = "login") {
-                            LoginScreen(Modifier, navController)
+                            LoginScreen(Modifier.fillMaxSize(), navController)
                         }
 
                         composable(route = "register") {
-                            LoginScreen(Modifier, navController)
+                            LoginScreen(Modifier.fillMaxSize(), navController)
                         }
                         // Rutas para la bottom navigation
                         composable(route = "home") {
-                            // TODO: Implementar Home Screen
+                            HomeScreen(navController = navController)
                         }
                         composable(route = "analytics") {
-                            // TODO: Implementar Analytics Screen
+                            AccountBalanceScreen(navController = navController)
                         }
                         composable(route = "transfer") {
+                            // Using existing TransactionScreen
                             TransactionScreen(navController = navController)
                         }
-                        composable(route = "layers") {
-                            // TODO: Implementar Layers Screen
+
+                        composable("transaction_details") {
+                            TransactionDetailScreen(
+                                navController = navController,
+                                onBackClick = { navController.navigateUp() },
+                                transactions = listOf(),
+                                totalBalance = 0.0,
+                                totalIncome = 0.0,
+                                totalExpense = 0.0
+                            )
                         }
-                        composable(route = "profile") {
-                            // TODO: Implementar Profile Screen
+                        composable(route = "layers") {
+                            CategoriesScreen(navController = navController)
+                        }
+                        composable(route = "notifications") {
+                            NotificationScreen(navController = navController)
+                        }
+                        composable(route = "help_center") {
+                            HelpCenterScreen(navController = navController)
+                        }
+                        composable(route = "online_support") {
+                            OnlineSupportScreen(navController = navController)
+                        }
+                        composable(route = "chat_detail/{chatId}") { backStackEntry ->
+                            val chatId = backStackEntry.arguments?.getString("chatId") ?: "1"
+                            ChatDetailScreen(navController = navController, chatId = chatId)
+                        }
+
+                        composable("profile") {
+                            ProfileScreen(
+                                onEditProfileClick = { /* TODO: Navegar a editar perfil */ },
+                                onSecurityClick = { /* TODO: Navegar a seguridad */ },
+                                onSettingClick = { /* TODO: Navegar a configuración */ },
+                                onHelpClick = {
+                                    navController.navigate("help_center") {
+                                        popUpTo("home") { inclusive = true }
+                                    }
+                                },
+                                onLogoutClick = { navController.navigate("login") {
+                                    popUpTo("home") { inclusive = true }
+                                } }
+                            )
                         }
                     }
                 }
+                //NavGraph()
             }
         }
     }
@@ -99,8 +150,8 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainActivityPreview() {
     FinanceAppTheme {
-        Greeting("Android")
+        LoginScreen ()
     }
 }

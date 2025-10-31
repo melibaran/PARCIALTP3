@@ -1,83 +1,86 @@
 package com.example.financeapp.ui.screen.transaction
 
 import androidx.lifecycle.ViewModel
-import com.example.financeapp.R
+import androidx.lifecycle.viewModelScope
+import com.example.financeapp.domain.infrastructure.api.ApiClient
+import com.example.financeapp.ui.mapper.TransactionMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TransactionViewModel @Inject constructor() : ViewModel() {
+class TransactionViewModel @Inject constructor(
+    private val apiClient: ApiClient
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TransactionUIState())
     val uiState: StateFlow<TransactionUIState> = _uiState.asStateFlow()
+    
+    private var _selectedMonth: MutableStateFlow<String?> = MutableStateFlow(null)
+    val selectedMonth: StateFlow<String?> = _selectedMonth.asStateFlow()
 
     init {
-        loadMockData()
+        loadTransactions()
     }
 
-    private fun loadMockData() {
-        val mockTransactions = listOf(
-            TransactionItem(
-                id = "1",
-                title = "Salary",
-                amount = 4000.00,
-                category = "Monthly",
-                dateTime = "18:27 - April 30",
-                iconId = R.drawable.salary,
-                isIncome = true,
-                month = "April"
-            ),
-            TransactionItem(
-                id = "2",
-                title = "Groceries",
-                amount = -100.00,
-                category = "Pantry",
-                dateTime = "17:00 - April 24",
-                iconId = R.drawable.groceries,
-                isIncome = false,
-                month = "April"
-            ),
-            TransactionItem(
-                id = "3",
-                title = "Rent",
-                amount = -674.40,
-                category = "Rent",
-                dateTime = "8:30 - April 15",
-                iconId = R.drawable.rent,
-                isIncome = false,
-                month = "April"
-            ),
-            TransactionItem(
-                id = "4",
-                title = "Transport",
-                amount = -4.13,
-                category = "Fuel",
-                dateTime = "9:30 - April 08",
-                iconId = R.drawable.transport,
-                isIncome = false,
-                month = "April"
-            ),
-            TransactionItem(
-                id = "5",
-                title = "Food",
-                amount = -70.40,
-                category = "Dinner",
-                dateTime = "19:30 - March 31",
-                iconId = R.drawable.food,
-                isIncome = false,
-                month = "March"
-            )
-        )
 
-        _uiState.value = _uiState.value.copy(
-            transactions = mockTransactions
-        )
+    fun loadTransactions(apiKey: String = "123456789") {
+        viewModelScope.launch {
+            try {
+                _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+                
+                val userTransactions = apiClient.getTransactions(apiKey)
+                
+                val transactionItems = TransactionMapper.toTransactionItems(userTransactions.transactions)
+                
+                val totalExpense = userTransactions.expense
+                val expenseGoal = userTransactions.income
+                val expensePercentage = if (expenseGoal > 0) {
+                    ((totalExpense / expenseGoal) * 100).toInt()
+                } else {
+                    0
+                }
+
+                _uiState.value = _uiState.value.copy(
+                    balance = userTransactions.balance,
+                    totalExpense = totalExpense,
+                    expenseGoal = expenseGoal,
+                    expensePercentage = expensePercentage,
+                    transactions = transactionItems,
+                    isLoading = false
+                )
+                
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = e.message ?: "Error al cargar transacciones"
+                )
+            }
+        }
     }
 
     fun getTransactionsByMonth(month: String): List<TransactionItem> {
         return uiState.value.transactions.filter { it.month == month }
+    }
+    
+    fun getAvailableMonths(): List<String> {
+        return uiState.value.transactions
+            .map { it.month }
+            .distinct()
+            .sortedByDescending { monthName ->
+                // Ordenar por fecha (los más recientes primero)
+                val monthIndex = listOf(
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ).indexOf(monthName)
+                monthIndex
+            }
+    }
+
+    fun selectMonth(month: String?) {
+        _selectedMonth.value = month
     }
 }
