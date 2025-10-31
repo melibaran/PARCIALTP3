@@ -35,6 +35,7 @@ import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
+import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -122,6 +123,12 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "notification_settings") {
                             NotificationSettingsScreen1(
+                                navController = navController,
+                                onBackClick = { navController.navigateUp() },
+                            )
+                        }
+                        composable(route = "password_settings") {
+                            PasswordSettingsScreen(
                                 navController = navController,
                                 onBackClick = { navController.navigateUp() },
                                 onNotificationClick = { /* TODO */ }

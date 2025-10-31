@@ -53,5 +53,10 @@
     <string name="expense_reminder">Expense Reminder </string>
     <string name="budget_otifications">Budget Notifications</string>
     <string name="low_balance_alerts">Low Balance Alerts</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="password">Password Settings</string>
+    <string name="change_password">Change Password</string>
 
 </resources>
