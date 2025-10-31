@@ -55,6 +55,13 @@ fun TransactionDetailScreen(
     }
 
     val (showIncome, setShowIncome) = remember { mutableStateOf(false) }
+    val (showExpense, setShowExpense) = remember { mutableStateOf(false) }
+
+    val filteredTransactions = when {
+        showIncome -> uiState.transactions.filter { it.isIncome }
+        showExpense -> uiState.transactions.filter { !it.isIncome }
+        else -> uiState.transactions
+    }
 
     Column(
         modifier = Modifier
@@ -154,7 +161,10 @@ fun TransactionDetailScreen(
                 Card(
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { setShowIncome(true) },
+                        .clickable {
+                            setShowIncome(true)
+                            setShowExpense(false)
+                        },
                     colors = CardDefaults.cardColors(
                         containerColor = if (showIncome) Ocean_blue else Honeydew
                     )
@@ -194,8 +204,15 @@ fun TransactionDetailScreen(
 
                 // Expense Card
                 Card(
-                    modifier = Modifier.weight(1f),
-                    colors = CardDefaults.cardColors(containerColor = Honeydew)
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable {
+                            setShowExpense(true)
+                            setShowIncome(false)
+                        },
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (showExpense) Ocean_blue else Honeydew
+                    )
                 ) {
                     Column(
                         modifier = Modifier.padding(12.dp),
@@ -204,7 +221,7 @@ fun TransactionDetailScreen(
                         Icon(
                             painter = painterResource(R.drawable.expense),
                             contentDescription = "Expense",
-                            tint = Ocean_blue,
+                            tint = if (showExpense) Honeydew else Ocean_blue,
                             modifier = Modifier.size(24.dp)
                         )
                         Text(
@@ -212,7 +229,8 @@ fun TransactionDetailScreen(
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                fontFamily = FontFamily(Font(R.font.poppins_regular))
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                color = if (showExpense) Honeydew else Void
                             )
                         )
                         Text(
@@ -221,7 +239,7 @@ fun TransactionDetailScreen(
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                color = Ocean_blue
+                                color = if (showExpense) Color.White else Ocean_blue
                             )
                         )
                     }
@@ -266,82 +284,17 @@ fun TransactionDetailScreen(
         } else {
             LazyColumn(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .weight(1f)
-                    .padding(top = 16.dp)
-                    .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
                     .background(Honeydew)
                     .padding(16.dp)
             ) {
-                val availableMonths = viewModel.getAvailableMonths()
-                var globalIndex = 0
-                availableMonths.forEach { month ->
-                    val monthTransactions = viewModel.getTransactionsByMonth(month)
-                    val filteredTransactions = if (showIncome) monthTransactions.filter { it.isIncome } else monthTransactions
-                    if (filteredTransactions.isNotEmpty()) {
-                        // Header del mes
-                        item(key = "header_$month") {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    month,
-                                    style = TextStyle(
-                                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                        color = Void,
-                                        fontSize = 20.sp,
-                                    ),
-                                    modifier = Modifier.padding(bottom = 8.dp, top = if (globalIndex > 0) 8.dp else 0.dp)
-                                )
-                                Spacer(modifier = Modifier.weight(1f))
-                                Box(
-                                    modifier = Modifier
-                                        .size(30.dp)
-                                        .background(Caribbean_green, shape = CircleShape),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.calendario),
-                                        contentDescription = "Calendario",
-                                        modifier = Modifier.size(16.dp),
-                                    )
-                                }
-                            }
-                        }
-                        itemsIndexed(
-                            filteredTransactions,
-                            key = { _, item -> item.id }
-                        ) { localIndex, transaction ->
-                            val itemColor = coloresDeCirculo.getOrElse(globalIndex + localIndex) { Light_blue }
-                            TransactionListItem(
-                                transaction = transaction,
-                                circleBgColor = itemColor
-                            )
-                        }
-                        globalIndex += filteredTransactions.size
-                    }
-                }
-
-                if (availableMonths.isEmpty() || uiState.transactions.isEmpty()) {
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(32.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "No hay transacciones disponibles",
-                                style = TextStyle(
-                                    fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                    color = Fence_green,
-                                    fontSize = 16.sp,
-                                ),
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
+                itemsIndexed(filteredTransactions) { index, transaction ->
+                    TransactionListItem(
+                        transaction = transaction,
+                        circleBgColor = coloresDeCirculo[index % coloresDeCirculo.size]
+                    )
                 }
             }
         }
