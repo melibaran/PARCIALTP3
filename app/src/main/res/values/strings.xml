@@ -2,8 +2,16 @@
     <string name="app_name">My Application</string>
     <string name="go_to_login">Ir al loginn</string>
     <string name="Login">Login</string>
-
-
-
-
+    <string name="total_balance">Balance Total</string>
+    <string name="total_expense">Gastos Totales</string>
+    <string name="expense_look_good">30% de tus gastos. Buen trabajo!</string>
+    <string name="food">Food</string>
+    <string name="transport">Transport</string>
+    <string name="medicine">Medicine</string>
+    <string name="groceries">Groceries</string>
+    <string name="rent">Rent</string>
+    <string name="gifts">Gifts</string>
+    <string name="savings">Savings</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="more">More</string>
 </resources>

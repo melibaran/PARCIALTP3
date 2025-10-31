@@ -15,12 +15,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
-import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
+import com.example.financeapp.ui.screen.categories.CategoriesScreen
+import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Honeydew
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -76,7 +78,7 @@ class MainActivity : ComponentActivity() {
                             TransactionScreen(navController = navController)
                         }
                         composable(route = "layers") {
-                            // TODO: Implementar Layers Screen
+                            CategoriesScreen(navController = navController)
                         }
                         composable(route = "profile") {
                             // TODO: Implementar Profile Screen
