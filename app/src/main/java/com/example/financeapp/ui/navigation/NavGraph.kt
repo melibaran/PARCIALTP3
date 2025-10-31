@@ -9,6 +9,7 @@ import com.example.financeapp.ui.screen.ProfileScreen
 import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
 import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
+import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
 import com.example.financeapp.ui.screen.settings.SettingsScreen
 
 @Composable
@@ -46,7 +47,7 @@ fun NavGraph(startDestination: String = "login") {
                 navController = navController,
                 onBackClick = { navController.navigateUp() },
                 onNotificationClick = { navController.navigate("notification_settings") },
-                onPasswordClick = {},
+                onPasswordClick = { navController.navigate("password_settings") },
                 onDeleteAccountClick = { }
             )
         }
@@ -56,6 +57,14 @@ fun NavGraph(startDestination: String = "login") {
                 navController = navController,
                 onBackClick = { navController.navigateUp() },
                 onNotificationClick = {  }
+            )
+        }
+
+        composable("password_settings") {
+            PasswordSettingsScreen(
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = { navController.navigate("password_settings") },
+                navController = navController
             )
         }
 
@@ -76,4 +85,3 @@ fun NavGraph(startDestination: String = "login") {
 //                        }
     }
 }
-
