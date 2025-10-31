@@ -62,10 +62,7 @@ fun ProfileScreen(
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(24.dp)
-                        .verticalScroll(rememberScrollState())
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     Spacer(Modifier.height(60.dp))
 
@@ -91,45 +88,53 @@ fun ProfileScreen(
 
                     Spacer(modifier = Modifier.height(32.dp))
 
-        ProfileMenuItem(
-            icon = R.drawable.edit_profile,
-            text = "Edit Profile",
-            onClick = onEditProfileClick
-        )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 24.dp)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        ProfileMenuItem(
+                            icon = R.drawable.edit_profile,
+                            text = "Edit Profile",
+                            onClick = onEditProfileClick
+                        )
 
-        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
 
-        ProfileMenuItem(
-            icon = R.drawable.security,
-            text = "Security",
-            onClick = onSecurityClick
-        )
+                        ProfileMenuItem(
+                            icon = R.drawable.security,
+                            text = "Security",
+                            onClick = onSecurityClick
+                        )
 
-        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
 
-        ProfileMenuItem(
-            icon = R.drawable.settings,
-            text = "Setting",
-            onClick = onSettingClick
-        )
+                        ProfileMenuItem(
+                            icon = R.drawable.settings,
+                            text = "Setting",
+                            onClick = onSettingClick
+                        )
 
-        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
 
-        ProfileMenuItem(
-            icon = R.drawable.help,
-            text = "Help",
-            onClick = onHelpClick
-        )
+                        ProfileMenuItem(
+                            icon = R.drawable.help,
+                            text = "Help",
+                            onClick = onHelpClick
+                        )
 
-        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
 
-        ProfileMenuItem(
-            icon = R.drawable.logout,
-            text = "Logout",
-            onClick = onLogoutClick
-        )
+                        ProfileMenuItem(
+                            icon = R.drawable.logout,
+                            text = "Logout",
+                            onClick = onLogoutClick
+                        )
 
-        Spacer(modifier = Modifier.height(24.dp))
+                        Spacer(modifier = Modifier.height(24.dp))
+                    }
                 }
             }
         }
@@ -161,45 +166,37 @@ fun ProfileMenuItem(
     text: String,
     onClick: () -> Unit
 ) {
-    Card(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            .clickable(onClick = onClick)
+            .padding(vertical = 12.dp, horizontal = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Vivid_blue),
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(CircleShape)
-                    .background(Vivid_blue),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = icon),
-                    contentDescription = text,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Text(
-                text = text,
-                fontFamily = poppinsFamily,
-                fontWeight = FontWeight.Medium,
-                fontSize = 16.sp,
-                color = Void,
-                modifier = Modifier.weight(1f)
+            Image(
+                painter = painterResource(id = icon),
+                contentDescription = text,
+                modifier = Modifier.size(24.dp)
             )
         }
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Text(
+            text = text,
+            fontFamily = poppinsFamily,
+            fontWeight = FontWeight.Medium,
+            fontSize = 16.sp,
+            color = Void,
+            modifier = Modifier.weight(1f)
+        )
     }
 }
 
