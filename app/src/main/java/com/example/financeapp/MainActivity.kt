@@ -24,6 +24,8 @@ import com.example.financeapp.ui.screen.categories.CategoriesScreen
 import com.example.financeapp.ui.screen.categories.AddExpensesScreen
 import com.example.financeapp.ui.screen.categories.food.FoodScreen
 import com.example.financeapp.ui.screen.categories.transport.TransportScreen
+import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
+import com.example.financeapp.ui.screen.settings.SettingsScreen
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
 import com.example.financeapp.ui.screens.ChatDetailScreen
