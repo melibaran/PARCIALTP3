@@ -273,15 +273,33 @@ fun TransactionDetailScreen(
                     if (monthTransactions.isNotEmpty()) {
                         // Header del mes
                         item(key = "header_$month") {
-                            Text(
-                                month,
-                                style = TextStyle(
-                                    fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                    color = Fence_green,
-                                    fontSize = 20.sp,
-                                ),
-                                modifier = Modifier.padding(bottom = 8.dp, top = if (globalIndex > 0) 8.dp else 0.dp)
-                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    month,
+                                    style = TextStyle(
+                                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                                        color = Void,
+                                        fontSize = 20.sp,
+                                    ),
+                                    modifier = Modifier.padding(bottom = 8.dp, top = if (globalIndex > 0) 8.dp else 0.dp)
+                                )
+                                Spacer(modifier = Modifier.weight(1f))
+                                Box(
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .background(Caribbean_green, shape = CircleShape),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.calendario),
+                                        contentDescription = "Calendario",
+                                        modifier = Modifier.size(16.dp),
+                                    )
+                                }
+                            }
                         }
 
                         itemsIndexed(
