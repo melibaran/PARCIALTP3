@@ -87,6 +87,9 @@
     <string name="change_pin">Change Pin</string>
     <string name="fingerprint">Fingerprint</string>
     <string name="terms_and_conditions">Terms And Conditions</string>
+    <string name="terms_and_conditions_title">Terms And Conditions</string>
+    <string name="terms_accept_checkbox">I accept all the terms and conditions</string>
+    <string name="accept">Accept</string>
     
     <string name="fingerprint_title">Fingerprint</string>
     <string name="add_fingerprint">Add A Fingerprint</string>
