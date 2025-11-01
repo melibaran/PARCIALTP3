@@ -41,7 +41,7 @@ fun NotificationSettingsScreen1(
                     Text(
                         text = stringResource(R.string.notifications_settings),
                         style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                             color = Void,
                             fontSize = 22.sp
                         ),
@@ -81,17 +81,17 @@ fun NotificationSettingsScreen1(
                 )
             )
 
-            // Card principal
-            Box(
+            // Card principal: usar Surface con shape redondeado igual que los otros screens
+            Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
-                    .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew)
+                    .weight(1f),
+                shape = RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp),
+                color = Honeydew
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .padding(top = 32.dp, start = 24.dp, end = 24.dp),
                     verticalArrangement = Arrangement.Top
                 ) {

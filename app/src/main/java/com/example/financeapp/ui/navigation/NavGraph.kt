@@ -5,7 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.screens.HomeScreen
-import com.example.financeapp.ui.screen.ProfileScreen
+import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
 import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
 import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
@@ -48,7 +48,7 @@ fun NavGraph(startDestination: String = "login") {
                 onBackClick = { navController.navigateUp() },
                 onNotificationClick = { navController.navigate("notification_settings") },
                 onPasswordClick = { navController.navigate("password_settings") },
-                onDeleteAccountClick = { }
+                onDeleteAccountClick = { navController.navigate("delete_account") }
             )
         }
 
@@ -68,20 +68,14 @@ fun NavGraph(startDestination: String = "login") {
             )
         }
 
-//      composable("profile") {
-//                            ProfileScreen(
-//                                onEditProfileClick = { /* TODO: Navegar a editar perfil */ },
-//                                onSecurityClick = { /* TODO: Navegar a seguridad */ },
-//                                onSettingClick = { /* TODO: Navegar a configuración */ },
-//                                onHelpClick = {
-//                                    navController.navigate("help_center") {
-//                                        popUpTo("home") { inclusive = true }
-//                                    }
-//                                },
-//                                onLogoutClick = { navController.navigate("login") {
-//                                    popUpTo("home") { inclusive = true }
-//                                } }
-//                            )
-//                        }
+        composable("delete_account") {
+            DeleteAccountScreen(
+                navController = navController,
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = { navController.navigate("notification_settings") },
+                onDeleteConfirmed = { /* TODO: manejar borrado aquí (ViewModel/API) */ },
+                onCancel = { navController.navigateUp() }
+            )
+        }
     }
 }
