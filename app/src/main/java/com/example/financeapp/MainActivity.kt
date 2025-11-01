@@ -11,15 +11,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.navigation.NavGraph
+import com.example.financeapp.ui.screen.changepin.ChangePinScreen
 import com.example.financeapp.ui.screen.EditProfileScreen
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
+import com.example.financeapp.ui.screen.SecurityScreen
+import com.example.financeapp.ui.screen.SuccessScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
@@ -178,7 +182,7 @@ class MainActivity : ComponentActivity() {
                         composable("profile") {
                             ProfileScreen(
                                 onEditProfileClick = { navController.navigate("edit_profile") },
-                                onSecurityClick = { },
+                                onSecurityClick = { navController.navigate("security") },
                                 onSettingClick = {
                                     navController.navigate("settings"){
                                         popUpTo("home") { inclusive = true }
@@ -201,6 +205,37 @@ class MainActivity : ComponentActivity() {
                             EditProfileScreen(
                                 onBackClick = { navController.navigateUp() },
                                 onUpdateClick = { }
+                            )
+                        }
+                        
+                        composable("security") {
+                            SecurityScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onChangePinClick = { navController.navigate("change_pin") },
+                                onFingerprintClick = { },
+                                onTermsClick = { }
+                            )
+                        }
+                        
+                        composable("change_pin") {
+                            ChangePinScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onPinChanged = { 
+                                    navController.navigate("pin_success") {
+                                        popUpTo("change_pin") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+                        
+                        composable("pin_success") {
+                            SuccessScreen(
+                                message = stringResource(R.string.pin_changed_successfully),
+                                onComplete = {
+                                    navController.navigate("security") {
+                                        popUpTo("security") { inclusive = true }
+                                    }
+                                }
                             )
                         }
                     }
