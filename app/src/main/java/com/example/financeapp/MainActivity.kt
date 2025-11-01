@@ -26,6 +26,7 @@ import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
 import com.example.financeapp.ui.screen.SecurityScreen
 import com.example.financeapp.ui.screen.SuccessScreen
+import com.example.financeapp.ui.screen.TermsAndConditionsScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
@@ -222,7 +223,18 @@ class MainActivity : ComponentActivity() {
                                 onBackClick = { navController.navigateUp() },
                                 onChangePinClick = { navController.navigate("change_pin") },
                                 onFingerprintClick = { navController.navigate("fingerprint") },
-                                onTermsClick = { }
+                                onTermsClick = { navController.navigate("terms_and_conditions") }
+                            )
+                        }
+                        
+                        composable("terms_and_conditions") {
+                            TermsAndConditionsScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onAcceptClick = { 
+                                    navController.navigate("profile") {
+                                        popUpTo("profile") { inclusive = true }
+                                    }
+                                }
                             )
                         }
                         
