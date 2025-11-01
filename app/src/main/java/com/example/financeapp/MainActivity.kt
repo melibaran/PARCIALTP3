@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,6 +23,7 @@ import com.example.financeapp.ui.screen.EditProfileScreen
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
 import com.example.financeapp.ui.screen.SecurityScreen
+import com.example.financeapp.ui.screen.SuccessScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
@@ -196,7 +198,20 @@ class MainActivity : ComponentActivity() {
                             ChangePinScreen(
                                 onBackClick = { navController.navigateUp() },
                                 onPinChanged = { 
-                                    navController.navigateUp()
+                                    navController.navigate("pin_success") {
+                                        popUpTo("change_pin") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+                        
+                        composable("pin_success") {
+                            SuccessScreen(
+                                message = stringResource(R.string.pin_changed_successfully),
+                                onComplete = {
+                                    navController.navigate("security") {
+                                        popUpTo("security") { inclusive = true }
+                                    }
                                 }
                             )
                         }

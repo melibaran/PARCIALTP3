@@ -97,4 +97,6 @@
     <string name="error_pins_dont_match">PINs don\'t match</string>
     <string name="error_pin_same_as_current">New PIN must be different from current PIN</string>
     <string name="error_change_pin_failed">Failed to change PIN</string>
+    
+    <string name="pin_changed_successfully">Pin Has Been\nChanged Successfully</string>
 </resources>
