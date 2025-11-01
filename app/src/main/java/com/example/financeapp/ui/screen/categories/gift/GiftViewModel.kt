@@ -22,35 +22,43 @@ class GiftViewModel @Inject constructor() : ViewModel() {
         val mockTransactions = listOf(
             GiftTransaction(
                 id = "1",
-                title = "Birthday Gift",
-                amount = 75.00,
-                dateTime = "11:30 - April 26",
-                iconId = R.drawable.gift,
+                title = "Perfume",
+                amount = 30.00,
+                dateTime = "10:27 - April 28",
+                iconId = R.drawable.gift_vector,
                 month = "April"
             ),
             GiftTransaction(
                 id = "2",
-                title = "Anniversary",
-                amount = 150.00,
-                dateTime = "14:00 - April 20",
-                iconId = R.drawable.gift,
+                title = "Make-Up",
+                amount = 60.35,
+                dateTime = "16:28 - April 15",
+                iconId = R.drawable.gift_vector,
                 month = "April"
             ),
             GiftTransaction(
                 id = "3",
-                title = "Wedding Gift",
-                amount = 200.00,
-                dateTime = "16:00 - April 12",
-                iconId = R.drawable.gift,
-                month = "April"
+                title = "Teddy Bear",
+                amount = 20.00,
+                dateTime = "8.30 - March 10",
+                iconId = R.drawable.gift_vector,
+                month = "March"
             ),
             GiftTransaction(
                 id = "4",
-                title = "Baby Shower",
-                amount = 95.75,
-                dateTime = "10:30 - March 28",
-                iconId = R.drawable.gift,
+                title = "Cooking Lessons",
+                amount = 128.00,
+                dateTime = "14:24 - March 02",
+                iconId = R.drawable.gift_vector,
                 month = "March"
+            ),
+            GiftTransaction(
+                id = "5",
+                title = "Toys For Dani",
+                amount = 50.20,
+                dateTime = "11:15 - February 18",
+                iconId = R.drawable.gift_vector,
+                month = "February"
             )
         )
 

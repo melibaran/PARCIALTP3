@@ -23,41 +23,41 @@ class EntertainmentViewModel @Inject constructor() : ViewModel() {
             EntertainmentTransaction(
                 id = "1",
                 title = "Cinema",
-                amount = 35.00,
-                dateTime = "20:00 - April 27",
-                iconId = R.drawable.entertainment,
+                amount = 30.00,
+                dateTime = "20:15 - April 29",
+                iconId = R.drawable.entertaiment_vector,
                 month = "April"
             ),
             EntertainmentTransaction(
                 id = "2",
-                title = "Concert",
-                amount = 150.00,
-                dateTime = "19:30 - April 22",
-                iconId = R.drawable.entertainment,
+                title = "Netflix",
+                amount = 12.27,
+                dateTime = "16:15 - April 12",
+                iconId = R.drawable.entertaiment_vector,
                 month = "April"
             ),
             EntertainmentTransaction(
                 id = "3",
-                title = "Netflix",
-                amount = 15.99,
-                dateTime = "10:00 - April 15",
-                iconId = R.drawable.entertainment,
+                title = "Karaoke",
+                amount = 110.00,
+                dateTime = "18:00 - April 05",
+                iconId = R.drawable.entertaiment_vector,
                 month = "April"
             ),
             EntertainmentTransaction(
                 id = "4",
-                title = "Gaming",
-                amount = 59.99,
-                dateTime = "14:30 - April 08",
-                iconId = R.drawable.entertainment,
-                month = "April"
+                title = "Video Game",
+                amount = 60.20,
+                dateTime = "20:50 - March 24",
+                iconId = R.drawable.entertaiment_vector,
+                month = "March"
             ),
             EntertainmentTransaction(
                 id = "5",
-                title = "Theater",
-                amount = 80.00,
-                dateTime = "18:00 - March 30",
-                iconId = R.drawable.entertainment,
+                title = "Netflix",
+                amount = 12.27,
+                dateTime = "16:15 - March 12",
+                iconId = R.drawable.entertaiment_vector,
                 month = "March"
             )
         )

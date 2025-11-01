@@ -38,7 +38,7 @@ fun BalanceHeader(
         }
         Spacer(modifier = Modifier.height(8.dp))
         LinearProgressIndicator(
-            progress = totalExpense / budget,
+            progress = { totalExpense / budget },  // ✅ Lambda
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(4.dp))

@@ -136,8 +136,9 @@ fun SavingsScreen(
                 ) {
                     items(uiState.savingsGoals) { goal ->
                         CategoryItem(
-                            painter = goal.painter,
-                            name = goal.title
+                            icon = goal.iconId,
+                            name = goal.title,
+                            onClick = { /* TODO: Navigate to goal details */ }
                         )
                     }
                 }

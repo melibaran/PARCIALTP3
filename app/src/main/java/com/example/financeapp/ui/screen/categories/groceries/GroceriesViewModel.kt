@@ -22,43 +22,43 @@ class GroceriesViewModel @Inject constructor() : ViewModel() {
         val mockTransactions = listOf(
             GroceriesTransaction(
                 id = "1",
-                title = "Supermarket",
-                amount = 120.50,
-                dateTime = "10:30 - April 28",
-                iconId = R.drawable.groceries,
-                month = "April"
+                title = "Pantry",
+                amount = 53.59,
+                dateTime = "18:27 - March 10",
+                iconId = R.drawable.groceries_vector,
+                month = "March"
             ),
             GroceriesTransaction(
                 id = "2",
-                title = "Fresh Market",
-                amount = 85.75,
-                dateTime = "16:00 - April 25",
-                iconId = R.drawable.groceries,
-                month = "April"
+                title = "Snacks",
+                amount = 35.03,
+                dateTime = "15:00 - March 10",
+                iconId = R.drawable.groceries_vector,
+                month = "March"
             ),
             GroceriesTransaction(
                 id = "3",
-                title = "Walmart",
-                amount = 95.20,
-                dateTime = "11:45 - April 18",
-                iconId = R.drawable.groceries,
-                month = "April"
+                title = "Canned Food",
+                amount = 11.82,
+                dateTime = "10:47 - February 30",
+                iconId = R.drawable.groceries_vector,
+                month = "February"
             ),
             GroceriesTransaction(
                 id = "4",
-                title = "Costco",
-                amount = 210.00,
-                dateTime = "14:20 - April 10",
-                iconId = R.drawable.groceries,
-                month = "April"
+                title = "Veggies",
+                amount = 14.79,
+                dateTime = "7:30 - February 20",
+                iconId = R.drawable.groceries_vector,
+                month = "February"
             ),
             GroceriesTransaction(
                 id = "5",
-                title = "Local Store",
-                amount = 45.30,
-                dateTime = "09:15 - March 29",
-                iconId = R.drawable.groceries,
-                month = "March"
+                title = "Groceries",
+                amount = 175.35,
+                dateTime = "18:50 - February 1",
+                iconId = R.drawable.groceries_vector,
+                month = "February"
             )
         )
 

@@ -22,19 +22,35 @@ class RentViewModel @Inject constructor() : ViewModel() {
         val mockTransactions = listOf(
             RentTransaction(
                 id = "1",
-                title = "Monthly Rent",
-                amount = 1500.00,
-                dateTime = "09:00 - April 01",
-                iconId = R.drawable.rent,
+                title = "Rent",
+                amount = 674.40,
+                dateTime = "18:27 - April 15",
+                iconId = R.drawable.rent_vector,
                 month = "April"
             ),
             RentTransaction(
                 id = "2",
-                title = "Monthly Rent",
-                amount = 1500.00,
-                dateTime = "09:00 - March 01",
-                iconId = R.drawable.rent,
+                title = "Rent",
+                amount = 674.40,
+                dateTime = "15:00 - March 15",
+                iconId = R.drawable.rent_vector,
                 month = "March"
+            ),
+            RentTransaction(
+                id = "3",
+                title = "Rent",
+                amount = 674.40,
+                dateTime = "11:47 - February 15",
+                iconId = R.drawable.rent_vector,
+                month = "February"
+            ),
+            RentTransaction(
+                id = "4",
+                title = "Rent",
+                amount = 674.40,
+                dateTime = "18:50 - January 15",
+                iconId = R.drawable.rent_vector,
+                month = "January"
             )
         )
 

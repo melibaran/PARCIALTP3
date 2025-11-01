@@ -103,10 +103,14 @@ object TransactionMapper {
         val typeLower = type.lowercase()
         
         return when (subtypeLower) {
-            "food" -> R.drawable.food
-            "clothes" -> R.drawable.groceries
-            "services" -> R.drawable.rent
-            "savings" -> R.drawable.salary
+            "food" -> R.drawable.food_default
+            "clothes" -> R.drawable.groceries_default
+            "services" -> R.drawable.rent_default
+            "savings" -> R.drawable.saving_default
+            "transport" -> R.drawable.transport_default
+            "medicine" -> R.drawable.medicine_default
+            "gift" -> R.drawable.gift_default
+            "entertainment" -> R.drawable.entertaiment_default
             else -> if (typeLower == "income") R.drawable.income else R.drawable.expense
         }
     }

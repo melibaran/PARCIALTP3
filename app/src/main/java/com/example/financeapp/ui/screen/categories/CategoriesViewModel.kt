@@ -23,47 +23,47 @@ class CategoriesViewModel @Inject constructor() : ViewModel() {
             CategoryItem(
                 id = "1",
                 name = "Food",
-                iconId = R.drawable.food
+                iconId = R.drawable.food_default
             ),
             CategoryItem(
                 id = "2",
                 name = "Transport",
-                iconId = R.drawable.transport
+                iconId = R.drawable.transport_default
             ),
             CategoryItem(
                 id = "3",
                 name = "Medicine",
-                iconId = R.drawable.medicine
+                iconId = R.drawable.medicine_default
             ),
             CategoryItem(
                 id = "4",
                 name = "Groceries",
-                iconId = R.drawable.groceries
+                iconId = R.drawable.groceries_default
             ),
             CategoryItem(
                 id = "5",
                 name = "Rent",
-                iconId = R.drawable.rent
+                iconId = R.drawable.rent_default
             ),
             CategoryItem(
                 id = "6",
                 name = "Gift",
-                iconId = R.drawable.gift
+                iconId = R.drawable.gift_default
             ),
             CategoryItem(
                 id = "7",
                 name = "Savings",
-                iconId = R.drawable.saving
+                iconId = R.drawable.saving_default
             ),
             CategoryItem(
                 id = "8",
                 name = "Entertainment",
-                iconId = R.drawable.entertainment
+                iconId = R.drawable.entertaiment_default
             ),
             CategoryItem(
                 id = "9",
                 name = "More",
-                iconId = R.drawable.more
+                iconId = R.drawable.more_default
             )
         )
 
