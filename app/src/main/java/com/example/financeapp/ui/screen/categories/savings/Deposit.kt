@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.savings
+package com.example.financeapp.ui.screen.categories.savings
 
 data class Deposit(
     val title: String,

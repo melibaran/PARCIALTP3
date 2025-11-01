@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.ui.graphics)
     implementation(libs.androidx.ui.text)
+    implementation(libs.androidx.compose.ui)
     //Para ROOM:
     val room_version = "2.8.2"
 
