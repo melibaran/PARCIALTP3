@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -102,7 +103,7 @@ private fun BalanceExpenseRow(
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = "Total Balance",
+                    text = stringResource(R.string.total_balance),
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         color = Void,
@@ -145,7 +146,7 @@ private fun BalanceExpenseRow(
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = "Total Expense",
+                    text = stringResource(R.string.total_expense),
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
                         color = Void,

@@ -39,9 +39,16 @@ import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
 import com.example.financeapp.ui.screen.categories.rent.RentScreen
 import com.example.financeapp.ui.screen.categories.gift.GiftScreen
 import com.example.financeapp.ui.screen.categories.entertainment.EntertainmentScreen
+import com.example.financeapp.ui.screen.categories.savings.car.CarSavingsScreen
+import com.example.financeapp.ui.screen.categories.savings.newHouse.HouseSavingsScreen
+import com.example.financeapp.ui.screen.categories.savings.travel.TravelSavingsScreen
+import com.example.financeapp.ui.screen.categories.savings.wedding.WeddingSavingsScreen
+import com.example.financeapp.ui.screen.categories.savings.SavingsViewModel
+import com.example.financeapp.ui.screen.savings.SavingsScreen
 import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import com.example.financeapp.ui.screen.settings.SettingsScreen
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
@@ -68,6 +75,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
+            val savingsViewModel: SavingsViewModel = hiltViewModel()
 
             FinanceAppTheme {
 
@@ -146,6 +154,21 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "entertainment") {
                             EntertainmentScreen(navController = navController)
+                        }
+                        composable(route = "savings") {
+                            SavingsScreen(navController = navController, viewModel = savingsViewModel)
+                        }
+                        composable(route = "car_savings") {
+                            CarSavingsScreen(navController = navController, viewModel = savingsViewModel)
+                        }
+                        composable(route = "house_savings") {
+                            HouseSavingsScreen(navController = navController, viewModel = savingsViewModel)
+                        }
+                        composable(route = "travel_savings") {
+                            TravelSavingsScreen(navController = navController, viewModel = savingsViewModel)
+                        }
+                        composable(route = "wedding_savings") {
+                            WeddingSavingsScreen(navController = navController, viewModel = savingsViewModel)
                         }
                         composable(route = "add_expenses") {
                             AddExpensesScreen(navController = navController)

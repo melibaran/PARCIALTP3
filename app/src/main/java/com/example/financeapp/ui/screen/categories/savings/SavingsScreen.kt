@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -26,6 +27,7 @@ import com.example.financeapp.ui.components.CategoryItem
 import com.example.financeapp.ui.screen.categories.arquitectura.BaseFinanceScreen
 import com.example.financeapp.ui.screen.categories.arquitectura.FinanceDisplayData
 import com.example.financeapp.ui.screen.categories.arquitectura.FinanceGridContainer
+import com.example.financeapp.ui.screen.categories.savings.SavingsGoal
 import com.example.financeapp.ui.screen.categories.savings.SavingsViewModel
 import com.example.financeapp.ui.theme.*
 
@@ -33,9 +35,60 @@ import com.example.financeapp.ui.theme.*
 fun SavingsScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: SavingsViewModel = hiltViewModel()
+    viewModel: SavingsViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    // Crear painters en el contexto @Composable
+    val carPainter = painterResource(id = R.drawable.car)
+    val housePainter = painterResource(id = R.drawable.newhome)
+    val travelPainter = painterResource(id = R.drawable.travel)
+    val weddingPainter = painterResource(id = R.drawable.wedding_me)
+
+    // Inicializar objetivos de ahorro por defecto
+    LaunchedEffect(Unit) {
+        if (uiState.savingsGoals.isEmpty()) {
+            val defaultGoals = listOf(
+                SavingsGoal(
+                    title = "Car",
+                    painter = carPainter,
+                    goalAmount = 14390.0,
+                    savedAmount = 596.25,
+                    progressPercentage = 15,
+                    deposits = emptyMap(),
+                    route = "car_savings"
+                ),
+                SavingsGoal(
+                    title = "New House",
+                    painter = housePainter,
+                    goalAmount = 569200.0,
+                    savedAmount = 625.48,
+                    progressPercentage = 30,
+                    deposits = emptyMap(),
+                    route = "house_savings"
+                ),
+                SavingsGoal(
+                    title = "Travel",
+                    painter = travelPainter,
+                    goalAmount = 1962.93,
+                    savedAmount = 653.31,
+                    progressPercentage = 40,
+                    deposits = emptyMap(),
+                    route = "travel_savings"
+                ),
+                SavingsGoal(
+                    title = "Wedding",
+                    painter = weddingPainter,
+                    goalAmount = 34700.0,
+                    savedAmount = 296.25,
+                    progressPercentage = 10,
+                    deposits = emptyMap(),
+                    route = "wedding_savings"
+                )
+            )
+            defaultGoals.forEach { viewModel.addSavingsGoal(it) }
+        }
+    }
 
     BaseFinanceScreen(
         title = "Savings",
@@ -136,9 +189,13 @@ fun SavingsScreen(
                 ) {
                     items(uiState.savingsGoals) { goal ->
                         CategoryItem(
-                            icon = goal.iconId,
+                            painter = goal.painter,
                             name = goal.title,
-                            onClick = { /* TODO: Navigate to goal details */ }
+                            onClick = {
+                                if (goal.route.isNotEmpty()) {
+                                    navController.navigate(goal.route)
+                                }
+                            }
                         )
                     }
                 }
