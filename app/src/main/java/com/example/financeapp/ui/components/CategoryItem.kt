@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.ui.theme.Light_blue
@@ -48,3 +49,33 @@ fun CategoryItem(
         Text(text = name, style = MaterialTheme.typography.bodyMedium)
     }
 }
+
+@Composable
+fun CategoryItem(
+    painter: Painter,
+    name: String,
+    onClick: () -> Unit = {}
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.clickable { onClick() }
+    ) {
+        Box(
+            modifier = Modifier
+                .size(64.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .background(Light_blue),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painter,
+                contentDescription = name,
+                modifier = Modifier.size(40.dp),
+                tint = Color.Unspecified
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = name, style = MaterialTheme.typography.bodyMedium)
+    }
+}
+
