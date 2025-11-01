@@ -32,6 +32,7 @@ import com.example.financeapp.ui.screen.categories.CategoriesScreen
 import com.example.financeapp.ui.screen.categories.AddExpensesScreen
 import com.example.financeapp.ui.screen.categories.food.FoodScreen
 import com.example.financeapp.ui.screen.categories.transport.TransportScreen
+import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
 import com.example.financeapp.ui.screen.categories.medicine.MedicineScreen
 import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
 import com.example.financeapp.ui.screen.categories.rent.RentScreen
@@ -174,6 +175,12 @@ class MainActivity : ComponentActivity() {
                                 navController = navController,
                                 onBackClick = { navController.navigateUp() },
                                 onNotificationClick = { /* TODO */ }
+                            )
+                        }
+                        composable(route = "delete_account") {
+                            DeleteAccountScreen(
+                                navController = navController,
+                                onBackClick = { navController.navigateUp() }
                             )
                         }
                         composable(route = "chat_detail/{chatId}") { backStackEntry ->

@@ -114,7 +114,7 @@ fun SettingsScreen(
                     SettingsItem(
                         iconRes = R.drawable.profile,
                         text = stringResource(R.string.delete_account),
-                        onClick = onDeleteAccountClick
+                        onClick = { navController.navigate("delete_account") }
                     )
                 }
             }
