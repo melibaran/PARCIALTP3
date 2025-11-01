@@ -75,9 +75,10 @@
     <string name="yes_delete_account">Yes, Delete Account</string>
     <string name="cancel">Cancel</string>
 
-    <string name="item1"> All your expenses, income and associated transactions will be eliminated.</string>
-    <string name="item2"> You will not be able to access your account or any related\ninformation.</string>
-    <string name="item3">  This action cannot be undone.</string>
-
+    <string name="item1">All your expenses, income and associated transactions will be eliminated.</string>
+    <string name="item2">You will not be able to access your account or any related\ninformation.</string>
+    <string name="item3">This action cannot be undone.</string>
+    <string name="message_delete">By deleting your account, you agree that you understand the consequences of this action and that you agree to permanently delete your account and all associated data.</string>
+    <string name="logout_confirm_title">Are you sure you want to log out?</string>
 
 </resources>

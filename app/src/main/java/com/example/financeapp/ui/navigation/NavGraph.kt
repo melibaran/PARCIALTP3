@@ -72,7 +72,6 @@ fun NavGraph(startDestination: String = "login") {
             DeleteAccountScreen(
                 navController = navController,
                 onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("notification_settings") },
                 onDeleteConfirmed = { /* TODO: manejar borrado aquí (ViewModel/API) */ },
                 onCancel = { navController.navigateUp() }
             )

@@ -28,14 +28,12 @@ import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
-import com.example.financeapp.ui.theme.poppinsFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeleteAccountScreen(
     navController: NavController,
     onBackClick: () -> Unit = { navController.navigateUp() },
-    onNotificationClick: () -> Unit = { navController.navigate("notification_settings") },
     onDeleteConfirmed: (password: String) -> Unit = {},
     onCancel: () -> Unit = { navController.navigateUp() }
 ) {
@@ -43,6 +41,7 @@ fun DeleteAccountScreen(
 
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var showConfirmDialog by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -134,8 +133,7 @@ fun DeleteAccountScreen(
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text(
                                 text = stringResource(id = R.string.delete_account_warning).ifEmpty {
-                                    "This action will permanently delete all of your data, and you will not be able to recover it. Please keep the following in mind before proceeding:"
-                                },
+                                    stringResource(id = R.string.delete_account_confirm_title)                                },
                                 style = TextStyle(
                                     fontFamily = FontFamily(Font(R.font.poppins_light)),
                                     color = Void,
@@ -241,7 +239,7 @@ fun DeleteAccountScreen(
                     Spacer(modifier = Modifier.height(18.dp))
 
                     Button(
-                        onClick = { onDeleteConfirmed(password) },
+                        onClick = { showConfirmDialog = true },
                         colors = ButtonDefaults.buttonColors(containerColor = Caribbean_green),
                         modifier = Modifier
                             .fillMaxWidth(0.6f)
@@ -281,5 +279,104 @@ fun DeleteAccountScreen(
                 }
             }
         }
+
+        // Overlay modal: oscurece la pantalla y muestra la card de confirmación centrada
+        if (showConfirmDialog) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.35f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Surface(
+                    shape = RoundedCornerShape(20.dp),
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(24.dp)
+                        .widthIn(min = 280.dp, max = 360.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(20.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.delete_account_title).ifEmpty { "Delete Account" },
+                            style = TextStyle(
+                                fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                                fontSize = 20.sp,
+                                color = Void
+                            )
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text(
+                            text = stringResource(id = com.example.financeapp.R.string.logout_confirm_title),
+                            style = TextStyle(
+                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                fontSize = 16.sp,
+                                color = Void
+                            ),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = stringResource(id = R.string.message_delete),
+                            style = TextStyle(
+                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                fontSize = 14.sp,
+                                color = Void
+                            ),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Button(
+                            onClick = {
+                                showConfirmDialog = false
+                                onDeleteConfirmed(password)
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Caribbean_green),
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f)
+                                .height(40.dp)
+                                .align(Alignment.CenterHorizontally),
+                            shape = RoundedCornerShape(24.dp)
+                        ) {
+                            Text(text = stringResource(id = R.string.yes_delete_account).ifEmpty { "Yes, Delete Account" },
+                                color = Void,
+                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                fontSize = 13.sp
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f)
+                                .height(40.dp)
+                                .align(Alignment.CenterHorizontally)
+                                .clip(RoundedCornerShape(22.dp))
+                                .clickable { showConfirmDialog = false },
+                            color = Light_green
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Text(text = stringResource(id = R.string.cancel).ifEmpty { "Cancel" },
+                                    color = Void,
+                                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                    fontSize = 13.sp)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
