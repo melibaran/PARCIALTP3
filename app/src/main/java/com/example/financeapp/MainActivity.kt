@@ -26,6 +26,14 @@ import com.example.financeapp.ui.screen.categories.CategoriesScreen
 import com.example.financeapp.ui.screen.categories.AddExpensesScreen
 import com.example.financeapp.ui.screen.categories.food.FoodScreen
 import com.example.financeapp.ui.screen.categories.transport.TransportScreen
+import com.example.financeapp.ui.screen.categories.medicine.MedicineScreen
+import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
+import com.example.financeapp.ui.screen.categories.rent.RentScreen
+import com.example.financeapp.ui.screen.categories.gift.GiftScreen
+import com.example.financeapp.ui.screen.categories.entertainment.EntertainmentScreen
+import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
+import com.example.financeapp.ui.screen.transaction.TransactionScreen
+import com.example.financeapp.ui.screen.settings.SettingsScreen
 import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
@@ -115,6 +123,21 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "transport") {
                             TransportScreen(navController = navController)
+                        }
+                        composable(route = "medicine") {
+                            MedicineScreen(navController = navController)
+                        }
+                        composable(route = "groceries") {
+                            GroceriesScreen(navController = navController)
+                        }
+                        composable(route = "rent") {
+                            RentScreen(navController = navController)
+                        }
+                        composable(route = "gift") {
+                            GiftScreen(navController = navController)
+                        }
+                        composable(route = "entertainment") {
+                            EntertainmentScreen(navController = navController)
                         }
                         composable(route = "add_expenses") {
                             AddExpensesScreen(navController = navController)

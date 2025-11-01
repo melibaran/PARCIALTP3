@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen.categories.transport
+package com.example.financeapp.ui.screen.categories.entertainment
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,10 +35,10 @@ import com.example.financeapp.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransportScreen(
+fun EntertainmentScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: TransportViewModel = hiltViewModel()
+    viewModel: EntertainmentViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showDatePicker by remember { mutableStateOf(false) }
@@ -52,7 +52,7 @@ fun TransportScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Transport",
+                        "Entertainment",
                         modifier = Modifier
                             .fillMaxWidth()
                             .width(102.dp)
@@ -97,7 +97,6 @@ fun TransportScreen(
             )
         },
         bottomBar = {
-            // Bottom bar con botón Add Expenses centrado (igual que Save en AddExpensesScreen)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -110,9 +109,7 @@ fun TransportScreen(
                     modifier = Modifier
                         .width(169.dp)
                         .height(36.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Caribbean_green
-                    ),
+                    colors = ButtonDefaults.buttonColors(containerColor = Caribbean_green),
                     shape = RoundedCornerShape(18.dp)
                 ) {
                     Text(
@@ -212,7 +209,7 @@ fun TransportScreen(
                 }
             }
 
-            // ...existing code for progress bar...
+            // Progress bar section
             Column(modifier = Modifier.padding(horizontal = 21.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -336,13 +333,12 @@ fun TransportScreen(
 
                         itemsIndexed(monthTransactions, key = { _, item -> item.id }) { localIndex, transaction ->
                             val itemColor = coloresDeCirculo.getOrElse(globalIndex + localIndex) { Light_blue }
-                            TransportTransactionItem(transaction = transaction, circleBgColor = itemColor)
+                            EntertainmentTransactionItem(transaction = transaction, circleBgColor = itemColor)
                         }
                         globalIndex += monthTransactions.size
                     }
                 }
 
-                // Spacer final para evitar que el último elemento quede pegado al bottom
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
                 }
@@ -527,8 +523,8 @@ fun TransportScreen(
 }
 
 @Composable
-private fun TransportTransactionItem(
-    transaction: TransportTransaction,
+private fun EntertainmentTransactionItem(
+    transaction: EntertainmentTransaction,
     circleBgColor: Color,
     modifier: Modifier = Modifier
 ) {
