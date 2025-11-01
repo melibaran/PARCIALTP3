@@ -60,8 +60,8 @@ fun BaseFinanceScreen(
 
             Spacer(modifier = Modifier.height(if (topContent != null) 14.dp else 16.dp))
 
-            // Balance and Expense Row
-            BalanceExpenseRow(data = data, centered = topContent != null)
+            // Balance and Expense Row (siempre centrado)
+            BalanceExpenseRow(data = data, centered = true)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -96,26 +96,26 @@ private fun BalanceExpenseRow(
                 horizontalArrangement = if (centered) Arrangement.Center else Arrangement.Start
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.income),
+                    painter = painterResource(R.drawable.arrow_up),
                     contentDescription = "Balance Icon",
                     modifier = Modifier.size(16.dp),
-                    tint = Color.Black
+                    tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = stringResource(R.string.total_balance),
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        color = Void,
+                        color = Color.White,
                         fontSize = 12.sp,
                     ),
                 )
             }
             Text(
-                text = "${data.balance}",
+                text = "$${data.balance}",
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                    color = if (centered) Void else Honeydew,
+                    color = Color.White,
                     fontSize = 26.sp,
                 )
             )
@@ -139,23 +139,23 @@ private fun BalanceExpenseRow(
                 horizontalArrangement = if (centered) Arrangement.Center else Arrangement.Start
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.expense),
+                    painter = painterResource(R.drawable.arrow_down),
                     contentDescription = "Expense Icon",
                     modifier = Modifier.size(16.dp),
-                    tint = Color.Black
+                    tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = stringResource(R.string.total_expense),
                     style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                        color = Void,
+                        color = Color.White,
                         fontSize = 12.sp,
                     ),
                 )
             }
             Text(
-                text = "-${data.totalExpense}",
+                text = "-$${data.totalExpense}",
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                     fontSize = 26.sp,

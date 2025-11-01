@@ -94,9 +94,9 @@ fun SavingsScreen(
         title = "Savings",
         navController = navController,
         data = FinanceDisplayData(
-            balance = uiState.balance.toDoubleOrNull() ?: 0.0,
-            totalExpense = uiState.totalExpense.toDoubleOrNull() ?: 0.0,
-            budget = uiState.budget.toDoubleOrNull() ?: 0.0,
+            balance = uiState.balance,
+            totalExpense = uiState.totalExpense,
+            budget = uiState.budget,
             expensePercentage = uiState.expensePercentage
         ),
         modifier = modifier,

@@ -10,9 +10,9 @@ import javax.inject.Inject
 
 
 data class SavingsUiState(
-    val balance: String = "7,783.00",
-    val totalExpense: String = "1,187.40",
-    val budget: String = "20,000.00",
+    val balance: Double = 7783.00,
+    val totalExpense: Double = 1187.40,
+    val budget: Double = 20000.00,
     val expensePercentage: Int = 30,
     val savingsGoals: List<SavingsGoal> = emptyList()
 )
