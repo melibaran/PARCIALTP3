@@ -88,6 +88,11 @@
     <string name="fingerprint">Fingerprint</string>
     <string name="terms_and_conditions">Terms And Conditions</string>
     
+    <string name="fingerprint_title">Fingerprint</string>
+    <string name="add_fingerprint">Add A Fingerprint</string>
+    <string name="delete">Delete</string>
+    <string name="fingerprint_deleted_successfully">The Fingerprint Has\nBeen Successfully\nDeleted.</string>
+    
     <string name="current_pin_label">Current Pin</string>
     <string name="new_pin_label">New Pin</string>
     <string name="confirm_pin_label">Confirm Pin</string>
