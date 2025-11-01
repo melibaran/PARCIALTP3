@@ -340,37 +340,47 @@ fun DeleteAccountScreen(
                             onClick = {
                                 showConfirmDialog = false
                                 onDeleteConfirmed(password)
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = Caribbean_green),
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .height(40.dp)
-                                .align(Alignment.CenterHorizontally),
-                            shape = RoundedCornerShape(24.dp)
-                        ) {
-                            Text(text = stringResource(id = R.string.yes_delete_account).ifEmpty { "Yes, Delete Account" },
-                                color = Void,
-                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                fontSize = 13.sp
-                            )
-                        }
+                                // Navegar a Welcome y limpiar back stack para que sea la pantalla inicial
+                                navController.navigate("welcome") {
+                                    popUpTo(navController.graph.startDestinationId) {
+                                        inclusive = true
+                                    }
+                                    launchSingleTop = true
+                                }
+                             },
+                             colors = ButtonDefaults.buttonColors(containerColor = Caribbean_green),
+                             modifier = Modifier
+                                 .fillMaxWidth(0.6f)
+                                 .height(44.dp)
+                                 .align(Alignment.CenterHorizontally),
+                             shape = RoundedCornerShape(24.dp)
+                         ) {
+                             Text(
+                                 text = stringResource(id = R.string.yes_delete_account).ifEmpty { "Yes, Delete Account" },
+                                 color = Void,
+                                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                 fontSize = 14.sp
+                             )
+                         }
 
                         Spacer(modifier = Modifier.height(12.dp))
 
                         Surface(
                             modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .height(40.dp)
+                                .fillMaxWidth(0.6f)
+                                .height(44.dp)
                                 .align(Alignment.CenterHorizontally)
                                 .clip(RoundedCornerShape(22.dp))
                                 .clickable { showConfirmDialog = false },
                             color = Light_green
                         ) {
                             Box(contentAlignment = Alignment.Center) {
-                                Text(text = stringResource(id = R.string.cancel).ifEmpty { "Cancel" },
+                                Text(
+                                    text = stringResource(id = R.string.cancel).ifEmpty { "Cancel" },
                                     color = Void,
                                     fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                    fontSize = 13.sp)
+                                    fontSize = 14.sp
+                                )
                             }
                         }
                     }
