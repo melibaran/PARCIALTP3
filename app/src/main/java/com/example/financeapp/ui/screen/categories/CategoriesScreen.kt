@@ -313,6 +313,8 @@ fun CategoriesScreen(
                             when (category.name) {
                                 "Food" -> navController.navigate("food")
                                 "Transport" -> navController.navigate("transport")
+                                "Groceries" -> navController.navigate("groceries")
+                                "Entertainment" -> navController.navigate("entertainment")
                                 // Aquí puedes agregar más navegaciones para otras categorías
                             }
                         }
