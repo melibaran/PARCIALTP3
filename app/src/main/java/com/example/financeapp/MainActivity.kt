@@ -175,7 +175,6 @@ class MainActivity : ComponentActivity() {
                             PasswordSettingsScreen(
                                 navController = navController,
                                 onBackClick = { navController.navigateUp() },
-                                onNotificationClick = { /* TODO */ }
                             )
                         }
                         composable(route = "delete_account") {

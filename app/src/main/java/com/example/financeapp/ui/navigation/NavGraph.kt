@@ -64,9 +64,8 @@ fun NavGraph(startDestination: String = "login") {
 
         composable("password_settings") {
             PasswordSettingsScreen(
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("password_settings") },
-                navController = navController
+                navController = navController,
+                onBackClick = { navController.navigateUp() }
             )
         }
 

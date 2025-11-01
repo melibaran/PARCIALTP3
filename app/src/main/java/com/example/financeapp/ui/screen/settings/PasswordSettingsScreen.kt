@@ -5,7 +5,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,6 +23,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Caribbean_green
@@ -29,23 +34,33 @@ import com.example.financeapp.ui.theme.Void
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordSettingsScreen(
-    onBackClick: () -> Unit = {},
-    onNotificationClick: () -> Unit = {},
-    navController: NavController? = null
+    navController: NavController,
+    viewModel: PasswordSettingsViewModel = hiltViewModel(),
+    onBackClick: () -> Unit = { navController.navigateUp() }
 ) {
-    var currentPassword by remember { mutableStateOf("") }
-    var newPassword by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
-    var showCurrent by remember { mutableStateOf(false) }
-    var showNew by remember { mutableStateOf(false) }
-    var showConfirm by remember { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsState()
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Caribbean_green)
-    ) {
-        Column {
+    // Material3 pattern: use a SnackbarHostState and provide it to Scaffold via snackbarHost
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(uiState.errorMessage) {
+        uiState.errorMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            viewModel.clearError()
+        }
+    }
+
+    LaunchedEffect(uiState.isSuccess) {
+        if (uiState.isSuccess) {
+            // password changed successfully - navigate back
+            viewModel.resetSuccess()
+            navController.navigateUp()
+        }
+    }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
             TopAppBar(
                 title = {
                     Text(
@@ -70,7 +85,7 @@ fun PasswordSettingsScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = onNotificationClick) {
+                    IconButton(onClick = { navController.navigate("notifications") }) {
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
@@ -86,15 +101,19 @@ fun PasswordSettingsScreen(
                         }
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Caribbean_green
-                )
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Caribbean_green)
             )
-            // Card principal
+        }
+    ) { paddingValues ->
+         Box(
+             modifier = Modifier
+                 .fillMaxWidth()
+                 .padding(paddingValues)
+                 .background(Caribbean_green)
+         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
+                    .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
                     .background(Honeydew)
             ) {
@@ -107,44 +126,54 @@ fun PasswordSettingsScreen(
                 ) {
                     PasswordField(
                         label = stringResource(R.string.current_password),
-                        password = currentPassword,
-                        onPasswordChange = { currentPassword = it },
-                        showPassword = showCurrent,
-                        onShowPasswordChange = { showCurrent = it }
+                        password = uiState.currentPassword,
+                        onPasswordChange = viewModel::onCurrentPasswordChange,
+                        showPassword = uiState.currentPasswordVisible,
+                        onShowPasswordChange = { viewModel.toggleCurrentPasswordVisibility() }
                     )
+
                     Spacer(modifier = Modifier.height(24.dp))
+
                     PasswordField(
                         label = stringResource(R.string.new_password),
-                        password = newPassword,
-                        onPasswordChange = { newPassword = it },
-                        showPassword = showNew,
-                        onShowPasswordChange = { showNew = it }
+                        password = uiState.newPassword,
+                        onPasswordChange = viewModel::onNewPasswordChange,
+                        showPassword = uiState.newPasswordVisible,
+                        onShowPasswordChange = { viewModel.toggleNewPasswordVisibility() }
                     )
+
                     Spacer(modifier = Modifier.height(24.dp))
+
                     PasswordField(
                         label = stringResource(R.string.confirm_new_password),
-                        password = confirmPassword,
-                        onPasswordChange = { confirmPassword = it },
-                        showPassword = showConfirm,
-                        onShowPasswordChange = { showConfirm = it }
+                        password = uiState.confirmPassword,
+                        onPasswordChange = viewModel::onConfirmPasswordChange,
+                        showPassword = uiState.confirmPasswordVisible,
+                        onShowPasswordChange = { viewModel.toggleConfirmPasswordVisibility() }
                     )
+
                     Spacer(modifier = Modifier.height(40.dp))
+
                     Button(
-                        onClick = { /* TODO: Cambiar contraseña */ },
+                        onClick = { viewModel.changePassword() },
                         modifier = Modifier
                             .fillMaxWidth(0.7f)
                             .height(56.dp)
                             .clip(RoundedCornerShape(28.dp)),
                         colors = ButtonDefaults.buttonColors(containerColor = Caribbean_green)
                     ) {
-                        Text(
-                            text = stringResource(R.string.change_password),
-                            style = TextStyle(
-                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                color = Void,
-                                fontSize = 18.sp
+                        if (uiState.isLoading) {
+                            CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp, modifier = Modifier.size(20.dp))
+                        } else {
+                            Text(
+                                text = stringResource(R.string.change_password),
+                                style = TextStyle(
+                                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                    color = Void,
+                                    fontSize = 18.sp
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }

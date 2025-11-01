@@ -121,4 +121,12 @@
     <string name="error_change_pin_failed">Failed to change PIN</string>
     
     <string name="pin_changed_successfully">Pin Has Been\nChanged Successfully</string>
+
+    <!-- Password settings errors -->
+    <string name="error_current_password_length">Current password must be at least 6 characters</string>
+    <string name="error_new_password_length">New password must be at least 6 characters</string>
+    <string name="error_passwords_dont_match">Passwords dont match</string>
+    <string name="error_password_same_as_current">New password must be different from current password</string>
+    <string name="error_change_password_failed">Failed to change password</string>
+
 </resources>
