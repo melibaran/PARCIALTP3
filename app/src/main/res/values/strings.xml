@@ -66,4 +66,20 @@
     <string name="expense_title_label">Expense Title</string>
     <string name="enter_message">Enter Message</string>
     <string name="save_button">Save</string>
+
+    <string name="profile_title">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="security">Security</string>
+    <string name="setting">Setting</string>
+    <string name="help">Help</string>
+    <string name="logout">Logout</string>
+
+    <string name="edit_my_profile_title">Edit My Profile</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="username_label">Username</string>
+    <string name="phone_label">Phone</string>
+    <string name="email_address_label">Email Address</string>
+    <string name="push_notifications">Push Notifications</string>
+    <string name="turn_dark_theme">Turn Dark Theme</string>
+    <string name="update_profile">Update Profile</string>
 </resources>
