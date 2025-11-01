@@ -16,6 +16,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
+import com.example.financeapp.ui.navigation.NavGraph
+import com.example.financeapp.ui.screen.EditProfileScreen
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
@@ -152,8 +154,8 @@ class MainActivity : ComponentActivity() {
 
                         composable("profile") {
                             ProfileScreen(
-                                onEditProfileClick = { /* TODO: Navegar a editar perfil */ },
-                                onSecurityClick = { /* TODO: Navegar a seguridad */ },
+                                onEditProfileClick = { navController.navigate("edit_profile") },
+                                onSecurityClick = { },
                                 onSettingClick = {
                                     navController.navigate("settings"){
                                         popUpTo("home") { inclusive = true }
@@ -164,9 +166,18 @@ class MainActivity : ComponentActivity() {
                                         popUpTo("home") { inclusive = true }
                                     }
                                 },
-                                onLogoutClick = { navController.navigate("login") {
-                                    popUpTo("home") { inclusive = true }
-                                } }
+                                onLogoutClick = {
+                                    navController.navigate("login") {
+                                        popUpTo("home") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+
+                        composable("edit_profile") {
+                            EditProfileScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onUpdateClick = { }
                             )
                         }
                     }
