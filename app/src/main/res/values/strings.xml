@@ -81,4 +81,41 @@
     <string name="message_delete">By deleting your account, you agree that you understand the consequences of this action and that you agree to permanently delete your account and all associated data.</string>
     <string name="logout_confirm_title">Are you sure you want to log out?</string>
 
+    <string name="profile_title">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="security">Security</string>
+    <string name="setting">Setting</string>
+    <string name="help">Help</string>
+    <string name="logout">Logout</string>
+
+    <string name="edit_my_profile_title">Edit My Profile</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="username_label">Username</string>
+    <string name="phone_label">Phone</string>
+    <string name="email_address_label">Email Address</string>
+    <string name="push_notifications">Push Notifications</string>
+    <string name="turn_dark_theme">Turn Dark Theme</string>
+    <string name="update_profile">Update Profile</string>
+    
+    <string name="security_title">Security</string>
+    <string name="change_pin">Change Pin</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="terms_and_conditions">Terms And Conditions</string>
+    
+    <string name="fingerprint_title">Fingerprint</string>
+    <string name="add_fingerprint">Add A Fingerprint</string>
+    <string name="delete">Delete</string>
+    <string name="fingerprint_deleted_successfully">The Fingerprint Has\nBeen Successfully\nDeleted.</string>
+    
+    <string name="current_pin_label">Current Pin</string>
+    <string name="new_pin_label">New Pin</string>
+    <string name="confirm_pin_label">Confirm Pin</string>
+    
+    <string name="error_current_pin_length">Current PIN must be 4 digits</string>
+    <string name="error_new_pin_length">New PIN must be 4 digits</string>
+    <string name="error_pins_dont_match">PINs don\'t match</string>
+    <string name="error_pin_same_as_current">New PIN must be different from current PIN</string>
+    <string name="error_change_pin_failed">Failed to change PIN</string>
+    
+    <string name="pin_changed_successfully">Pin Has Been\nChanged Successfully</string>
 </resources>

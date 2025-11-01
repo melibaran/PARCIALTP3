@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen.categories.transport
+package com.example.financeapp.ui.screen.categories.medicine
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,10 +35,10 @@ import com.example.financeapp.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransportScreen(
+fun MedicineScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: TransportViewModel = hiltViewModel()
+    viewModel: MedicineViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showDatePicker by remember { mutableStateOf(false) }
@@ -52,16 +52,11 @@ fun TransportScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Transport",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .width(102.dp)
-                            .height(22.dp),
+                        "Medicine",
+                        modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                        style = MaterialTheme.typography.titleLarge.copy(
                             color = Void,
-                            fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold
                         )
                     )
@@ -93,11 +88,12 @@ fun TransportScreen(
                         }
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Caribbean_green)
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Caribbean_green
+                )
             )
         },
         bottomBar = {
-            // Bottom bar con botón Add Expenses centrado (igual que Save en AddExpensesScreen)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -128,13 +124,20 @@ fun TransportScreen(
         },
         containerColor = Caribbean_green
     ) { paddingValues ->
-        Column(modifier = modifier.fillMaxSize().padding(paddingValues)) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
             // Balance and Expense Row
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Total Balance
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -171,11 +174,14 @@ fun TransportScreen(
                 }
 
                 VerticalDivider(
-                    modifier = Modifier.height(48.dp).padding(horizontal = 14.dp),
+                    modifier = Modifier
+                        .height(48.dp)
+                        .padding(horizontal = 14.dp),
                     thickness = 1.dp,
                     color = Light_green
                 )
 
+                // Total Expense
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -212,19 +218,27 @@ fun TransportScreen(
                 }
             }
 
-            // ...existing code for progress bar...
-            Column(modifier = Modifier.padding(horizontal = 21.dp)) {
+            // Progress bar section
+            Column(
+                modifier = Modifier.padding(horizontal = 21.dp)
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
-                        modifier = Modifier.weight(1f).height(20.dp)
-                            .clip(RoundedCornerShape(20.dp)).background(Honeydew)
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(20.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Honeydew)
                     ) {
                         Box(
-                            modifier = Modifier.fillMaxHeight().clip(RoundedCornerShape(20.dp))
-                                .fillMaxWidth(uiState.expensePercentage / 100f).background(Fence_green)
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .clip(RoundedCornerShape(20.dp))
+                                .fillMaxWidth(uiState.expensePercentage / 100f)
+                                .background(Fence_green)
                         )
                         Row(
                             modifier = Modifier.fillMaxSize(),
@@ -254,7 +268,9 @@ fun TransportScreen(
                 }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -280,14 +296,15 @@ fun TransportScreen(
 
             // Transactions List
             LazyColumn(
-                modifier = Modifier.weight(1f).fillMaxHeight()
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew).padding(16.dp)
+                    .background(Honeydew)
+                    .padding(16.dp)
             ) {
                 // Calendar Icon Header
                 item(key = "calendar_header") {
-                    var isPressed by remember { mutableStateOf(false) }
-
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -299,14 +316,11 @@ fun TransportScreen(
                             modifier = Modifier
                                 .size(32.26.dp, 30.dp)
                                 .clip(RoundedCornerShape(4.dp))
-                                .background(
-                                    if (isPressed) Vivid_blue else Color.Transparent
-                                )
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.calendario),
                                 contentDescription = "Calendar",
-                                tint = if (isPressed) Honeydew else Cyprus,
+                                tint = Cyprus,
                                 modifier = Modifier.size(24.dp)
                             )
                         }
@@ -314,10 +328,11 @@ fun TransportScreen(
                 }
 
                 val availableMonths = viewModel.getAvailableMonths()
-                var globalIndex = 0
 
+                var globalIndex = 0
                 availableMonths.forEach { month ->
                     val monthTransactions = viewModel.getTransactionsByMonth(month)
+
                     if (monthTransactions.isNotEmpty()) {
                         item(key = "header_$month") {
                             Text(
@@ -334,15 +349,22 @@ fun TransportScreen(
                             )
                         }
 
-                        itemsIndexed(monthTransactions, key = { _, item -> item.id }) { localIndex, transaction ->
+                        itemsIndexed(
+                            monthTransactions,
+                            key = { _, item -> item.id }
+                        ) { localIndex, transaction ->
                             val itemColor = coloresDeCirculo.getOrElse(globalIndex + localIndex) { Light_blue }
-                            TransportTransactionItem(transaction = transaction, circleBgColor = itemColor)
+
+                            MedicineTransactionItem(
+                                transaction = transaction,
+                                circleBgColor = itemColor
+                            )
                         }
+
                         globalIndex += monthTransactions.size
                     }
                 }
 
-                // Spacer final para evitar que el último elemento quede pegado al bottom
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
                 }
@@ -527,17 +549,22 @@ fun TransportScreen(
 }
 
 @Composable
-private fun TransportTransactionItem(
-    transaction: TransportTransaction,
+private fun MedicineTransactionItem(
+    transaction: MedicineTransaction,
     circleBgColor: Color,
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(vertical = 8.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
-            modifier = Modifier.size(48.dp).clip(CircleShape).background(circleBgColor),
+            modifier = Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(circleBgColor),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -549,7 +576,10 @@ private fun TransportTransactionItem(
 
         Spacer(modifier = Modifier.width(12.dp))
 
-        Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Center
+        ) {
             Text(
                 text = transaction.title,
                 style = MaterialTheme.typography.titleMedium.copy(

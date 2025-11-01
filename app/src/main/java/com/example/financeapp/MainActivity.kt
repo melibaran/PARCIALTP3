@@ -11,13 +11,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
+import com.example.financeapp.ui.navigation.NavGraph
+import com.example.financeapp.ui.screen.changepin.ChangePinScreen
+import com.example.financeapp.ui.screen.fingerprint.FingerprintScreen
+import com.example.financeapp.ui.screen.fingerprint.FingerprintDetailScreen
+import com.example.financeapp.ui.screen.EditProfileScreen
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
+import com.example.financeapp.ui.screen.SecurityScreen
+import com.example.financeapp.ui.screen.SuccessScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
@@ -25,6 +33,14 @@ import com.example.financeapp.ui.screen.categories.AddExpensesScreen
 import com.example.financeapp.ui.screen.categories.food.FoodScreen
 import com.example.financeapp.ui.screen.categories.transport.TransportScreen
 import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
+import com.example.financeapp.ui.screen.categories.medicine.MedicineScreen
+import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
+import com.example.financeapp.ui.screen.categories.rent.RentScreen
+import com.example.financeapp.ui.screen.categories.gift.GiftScreen
+import com.example.financeapp.ui.screen.categories.entertainment.EntertainmentScreen
+import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
+import com.example.financeapp.ui.screen.transaction.TransactionScreen
+import com.example.financeapp.ui.screen.settings.SettingsScreen
 import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
@@ -115,6 +131,21 @@ class MainActivity : ComponentActivity() {
                         composable(route = "transport") {
                             TransportScreen(navController = navController)
                         }
+                        composable(route = "medicine") {
+                            MedicineScreen(navController = navController)
+                        }
+                        composable(route = "groceries") {
+                            GroceriesScreen(navController = navController)
+                        }
+                        composable(route = "rent") {
+                            RentScreen(navController = navController)
+                        }
+                        composable(route = "gift") {
+                            GiftScreen(navController = navController)
+                        }
+                        composable(route = "entertainment") {
+                            EntertainmentScreen(navController = navController)
+                        }
                         composable(route = "add_expenses") {
                             AddExpensesScreen(navController = navController)
                         }
@@ -159,8 +190,8 @@ class MainActivity : ComponentActivity() {
 
                         composable("profile") {
                             ProfileScreen(
-                                onEditProfileClick = { /* TODO: Navegar a editar perfil */ },
-                                onSecurityClick = { /* TODO: Navegar a seguridad */ },
+                                onEditProfileClick = { navController.navigate("edit_profile") },
+                                onSecurityClick = { navController.navigate("security") },
                                 onSettingClick = {
                                     navController.navigate("settings"){
                                         popUpTo("home") { inclusive = true }
@@ -171,9 +202,82 @@ class MainActivity : ComponentActivity() {
                                         popUpTo("home") { inclusive = true }
                                     }
                                 },
-                                onLogoutClick = { navController.navigate("login") {
-                                    popUpTo("home") { inclusive = true }
-                                } }
+                                onLogoutClick = {
+                                    navController.navigate("login") {
+                                        popUpTo("home") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+
+                        composable("edit_profile") {
+                            EditProfileScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onUpdateClick = { }
+                            )
+                        }
+                        
+                        composable("security") {
+                            SecurityScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onChangePinClick = { navController.navigate("change_pin") },
+                                onFingerprintClick = { navController.navigate("fingerprint") },
+                                onTermsClick = { }
+                            )
+                        }
+                        
+                        composable("fingerprint") {
+                            FingerprintScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onFingerprintClick = { fingerprint ->
+                                    navController.navigate("fingerprint_detail/${fingerprint.id}/${fingerprint.name}")
+                                }
+                            )
+                        }
+                        
+                        composable("fingerprint_detail/{fingerprintId}/{fingerprintName}") { backStackEntry ->
+                            val fingerprintName = backStackEntry.arguments?.getString("fingerprintName") ?: ""
+                            FingerprintDetailScreen(
+                                fingerprintName = fingerprintName,
+                                onBackClick = { navController.navigateUp() },
+                                onDeleteClick = {
+                                    navController.navigate("fingerprint_deleted_success") {
+                                        popUpTo("fingerprint_detail/{fingerprintId}/{fingerprintName}") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+                        
+                        composable("fingerprint_deleted_success") {
+                            SuccessScreen(
+                                message = stringResource(R.string.fingerprint_deleted_successfully),
+                                onComplete = {
+                                    navController.navigate("fingerprint") {
+                                        popUpTo("fingerprint") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+                        
+                        composable("change_pin") {
+                            ChangePinScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onPinChanged = { 
+                                    navController.navigate("pin_success") {
+                                        popUpTo("change_pin") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+                        
+                        composable("pin_success") {
+                            SuccessScreen(
+                                message = stringResource(R.string.pin_changed_successfully),
+                                onComplete = {
+                                    navController.navigate("security") {
+                                        popUpTo("security") { inclusive = true }
+                                    }
+                                }
                             )
                         }
                     }

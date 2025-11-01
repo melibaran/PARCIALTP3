@@ -6,6 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.screens.HomeScreen
 import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
+import com.example.financeapp.ui.screen.ProfileScreen
+import com.example.financeapp.ui.screen.EditProfileScreen
 import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
 import com.example.financeapp.ui.theme.screen.signup.SignUpScreen

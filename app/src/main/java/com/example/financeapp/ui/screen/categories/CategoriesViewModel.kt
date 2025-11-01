@@ -47,7 +47,7 @@ class CategoriesViewModel @Inject constructor() : ViewModel() {
             ),
             CategoryItem(
                 id = "6",
-                name = "Gifts",
+                name = "Gift",
                 iconId = R.drawable.gift
             ),
             CategoryItem(
