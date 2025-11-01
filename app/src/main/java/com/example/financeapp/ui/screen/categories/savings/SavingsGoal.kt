@@ -8,5 +8,6 @@ data class SavingsGoal(
     val goalAmount: Double,
     val savedAmount: Double,
     val progressPercentage: Int,
-    val deposits: Map<String, List<Deposit>>
+    val deposits: Map<String, List<Deposit>>,
+    val route: String = "" // Ruta de navegación para este objetivo
 )
