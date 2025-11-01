@@ -20,6 +20,7 @@ import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.navigation.NavGraph
 import com.example.financeapp.ui.screen.changepin.ChangePinScreen
 import com.example.financeapp.ui.screen.fingerprint.FingerprintScreen
+import com.example.financeapp.ui.screen.fingerprint.FingerprintDetailScreen
 import com.example.financeapp.ui.screen.EditProfileScreen
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
@@ -220,7 +221,21 @@ class MainActivity : ComponentActivity() {
                         
                         composable("fingerprint") {
                             FingerprintScreen(
-                                onBackClick = { navController.navigateUp() }
+                                onBackClick = { navController.navigateUp() },
+                                onFingerprintClick = { fingerprint ->
+                                    navController.navigate("fingerprint_detail/${fingerprint.id}/${fingerprint.name}")
+                                }
+                            )
+                        }
+                        
+                        composable("fingerprint_detail/{fingerprintId}/{fingerprintName}") { backStackEntry ->
+                            val fingerprintName = backStackEntry.arguments?.getString("fingerprintName") ?: ""
+                            FingerprintDetailScreen(
+                                fingerprintName = fingerprintName,
+                                onBackClick = { navController.navigateUp() },
+                                onDeleteClick = {
+                                    navController.navigateUp()
+                                }
                             )
                         }
                         

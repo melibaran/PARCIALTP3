@@ -33,6 +33,7 @@ import com.example.financeapp.ui.theme.poppinsFamily
 @Composable
 fun FingerprintScreen(
     onBackClick: () -> Unit,
+    onFingerprintClick: (FingerprintItem) -> Unit,
     viewModel: FingerprintViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -40,6 +41,7 @@ fun FingerprintScreen(
     FingerprintScreenContent(
         uiState = uiState,
         onBackClick = onBackClick,
+        onFingerprintClick = onFingerprintClick,
         onAddFingerprintClick = { viewModel.addFingerprint() }
     )
 }
@@ -48,6 +50,7 @@ fun FingerprintScreen(
 fun FingerprintScreenContent(
     uiState: FingerprintUiState,
     onBackClick: () -> Unit,
+    onFingerprintClick: (FingerprintItem) -> Unit,
     onAddFingerprintClick: () -> Unit
 ) {
     Box(
@@ -123,7 +126,7 @@ fun FingerprintScreenContent(
                     uiState.fingerprints.forEach { fingerprint ->
                         FingerprintItem(
                             name = fingerprint.name,
-                            onClick = { }
+                            onClick = { onFingerprintClick(fingerprint) }
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                     }
@@ -238,6 +241,7 @@ fun FingerprintScreenPreview() {
             )
         ),
         onBackClick = {},
+        onFingerprintClick = {},
         onAddFingerprintClick = {}
     )
 }
