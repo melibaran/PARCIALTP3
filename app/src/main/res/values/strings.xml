@@ -87,4 +87,14 @@
     <string name="change_pin">Change Pin</string>
     <string name="fingerprint">Fingerprint</string>
     <string name="terms_and_conditions">Terms And Conditions</string>
+    
+    <string name="current_pin_label">Current Pin</string>
+    <string name="new_pin_label">New Pin</string>
+    <string name="confirm_pin_label">Confirm Pin</string>
+    
+    <string name="error_current_pin_length">Current PIN must be 4 digits</string>
+    <string name="error_new_pin_length">New PIN must be 4 digits</string>
+    <string name="error_pins_dont_match">PINs don\'t match</string>
+    <string name="error_pin_same_as_current">New PIN must be different from current PIN</string>
+    <string name="error_change_pin_failed">Failed to change PIN</string>
 </resources>

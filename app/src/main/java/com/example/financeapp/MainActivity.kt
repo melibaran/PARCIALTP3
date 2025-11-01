@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.navigation.NavGraph
+import com.example.financeapp.ui.screen.changepin.ChangePinScreen
 import com.example.financeapp.ui.screen.EditProfileScreen
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
@@ -185,9 +186,18 @@ class MainActivity : ComponentActivity() {
                         composable("security") {
                             SecurityScreen(
                                 onBackClick = { navController.navigateUp() },
-                                onChangePinClick = { },
+                                onChangePinClick = { navController.navigate("change_pin") },
                                 onFingerprintClick = { },
                                 onTermsClick = { }
+                            )
+                        }
+                        
+                        composable("change_pin") {
+                            ChangePinScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onPinChanged = { 
+                                    navController.navigateUp()
+                                }
                             )
                         }
                     }
