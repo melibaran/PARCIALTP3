@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,7 +47,7 @@ fun ProfileScreen(
         ) {
             Spacer(modifier = Modifier.height(50.dp))
             Text(
-                text = "Profile",
+                text = stringResource(R.string.profile_title),
                 fontFamily = poppinsFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 32.sp,
@@ -97,7 +98,7 @@ fun ProfileScreen(
                     ) {
                         ProfileMenuItem(
                             icon = R.drawable.edit_profile,
-                            text = "Edit Profile",
+                            text = stringResource(R.string.edit_profile),
                             onClick = onEditProfileClick
                         )
 
@@ -105,7 +106,7 @@ fun ProfileScreen(
 
                         ProfileMenuItem(
                             icon = R.drawable.security,
-                            text = "Security",
+                            text = stringResource(R.string.security),
                             onClick = onSecurityClick
                         )
 
@@ -113,7 +114,7 @@ fun ProfileScreen(
 
                         ProfileMenuItem(
                             icon = R.drawable.settings,
-                            text = "Setting",
+                            text = stringResource(R.string.setting),
                             onClick = onSettingClick
                         )
 
@@ -121,7 +122,7 @@ fun ProfileScreen(
 
                         ProfileMenuItem(
                             icon = R.drawable.help,
-                            text = "Help",
+                            text = stringResource(R.string.help),
                             onClick = onHelpClick
                         )
 
@@ -129,7 +130,7 @@ fun ProfileScreen(
 
                         ProfileMenuItem(
                             icon = R.drawable.logout,
-                            text = "Logout",
+                            text = stringResource(R.string.logout),
                             onClick = onLogoutClick
                         )
 
