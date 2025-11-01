@@ -20,6 +20,7 @@ import com.example.financeapp.ui.navigation.NavGraph
 import com.example.financeapp.ui.screen.EditProfileScreen
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
+import com.example.financeapp.ui.screen.SecurityScreen
 import com.example.financeapp.ui.screen.WelcomeScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
@@ -155,7 +156,7 @@ class MainActivity : ComponentActivity() {
                         composable("profile") {
                             ProfileScreen(
                                 onEditProfileClick = { navController.navigate("edit_profile") },
-                                onSecurityClick = { },
+                                onSecurityClick = { navController.navigate("security") },
                                 onSettingClick = {
                                     navController.navigate("settings"){
                                         popUpTo("home") { inclusive = true }
@@ -178,6 +179,15 @@ class MainActivity : ComponentActivity() {
                             EditProfileScreen(
                                 onBackClick = { navController.navigateUp() },
                                 onUpdateClick = { }
+                            )
+                        }
+                        
+                        composable("security") {
+                            SecurityScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onChangePinClick = { },
+                                onFingerprintClick = { },
+                                onTermsClick = { }
                             )
                         }
                     }

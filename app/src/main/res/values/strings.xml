@@ -82,4 +82,9 @@
     <string name="push_notifications">Push Notifications</string>
     <string name="turn_dark_theme">Turn Dark Theme</string>
     <string name="update_profile">Update Profile</string>
+    
+    <string name="security_title">Security</string>
+    <string name="change_pin">Change Pin</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="terms_and_conditions">Terms And Conditions</string>
 </resources>
