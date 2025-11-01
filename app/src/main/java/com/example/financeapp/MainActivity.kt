@@ -177,6 +177,18 @@ class MainActivity : ComponentActivity() {
                                 onBackClick = { navController.navigateUp() },
                             )
                         }
+
+                        composable("password_success") {
+                            SuccessScreen(
+                                message = stringResource(R.string.password_succesful),
+                                onComplete = {
+                                    navController.navigate("settings") {
+                                        popUpTo("settings") { inclusive = true }
+                                        launchSingleTop = true
+                                    }
+                                 }
+                             )
+                         }
                         composable(route = "delete_account") {
                             DeleteAccountScreen(
                                 navController = navController,

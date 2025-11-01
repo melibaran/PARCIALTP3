@@ -40,7 +40,6 @@ fun PasswordSettingsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    // Material3 pattern: use a SnackbarHostState and provide it to Scaffold via snackbarHost
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(uiState.errorMessage) {
@@ -52,9 +51,10 @@ fun PasswordSettingsScreen(
 
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
-            // password changed successfully - navigate back
             viewModel.resetSuccess()
-            navController.navigateUp()
+            navController.navigate("password_success") {
+                launchSingleTop = true
+            }
         }
     }
 

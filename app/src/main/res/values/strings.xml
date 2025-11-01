@@ -129,4 +129,6 @@
     <string name="error_password_same_as_current">New password must be different from current password</string>
     <string name="error_change_password_failed">Failed to change password</string>
 
+    <string name="password_succesful"> Password Has been Changed successfully </string>
+
 </resources>
