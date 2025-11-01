@@ -234,7 +234,20 @@ class MainActivity : ComponentActivity() {
                                 fingerprintName = fingerprintName,
                                 onBackClick = { navController.navigateUp() },
                                 onDeleteClick = {
-                                    navController.navigateUp()
+                                    navController.navigate("fingerprint_deleted_success") {
+                                        popUpTo("fingerprint_detail/{fingerprintId}/{fingerprintName}") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+                        
+                        composable("fingerprint_deleted_success") {
+                            SuccessScreen(
+                                message = stringResource(R.string.fingerprint_deleted_successfully),
+                                onComplete = {
+                                    navController.navigate("fingerprint") {
+                                        popUpTo("fingerprint") { inclusive = true }
+                                    }
                                 }
                             )
                         }
