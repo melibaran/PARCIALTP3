@@ -4,16 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.financeapp.ui.screens.HomeScreen
-import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
-import com.example.financeapp.ui.screen.ProfileScreen
-import com.example.financeapp.ui.screen.EditProfileScreen
-import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
+import com.example.financeapp.ui.screen.MainScreen
+import com.example.financeapp.ui.screen.login.ForgotPasswordScreen
+import com.example.financeapp.ui.screen.login.NewPasswordScreen
+import com.example.financeapp.ui.screen.login.PasswordChangedScreen
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
+import com.example.financeapp.ui.screen.login.SecurityPinScreen
 import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
-import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
-import com.example.financeapp.ui.screen.settings.SettingsScreen
 
+
+private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")
 @Composable
 fun NavGraph(startDestination: String = "login") {
     val navController = rememberNavController()
@@ -21,61 +21,61 @@ fun NavGraph(startDestination: String = "login") {
     NavHost(navController = navController, startDestination = startDestination) {
         composable("login") {
             LoginScreen(
-                onLoginClick = { navController.navigate("home") },
+                onLoginClick = {
+                    navController.navigate("main_app") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                },
                 onSignUpClick = { navController.navigate("signup") },
-                onForgotPasswordClick = { navController.navigate(route = "forgotpassword") }
+                onForgotPasswordClick = { navController.navigate("forgot_password") }
             )
         }
 
         composable("signup") {
             SignUpScreen(
+                onSignUpClick = {
+                    navController.navigate("forgot_password") {
+                        popUpTo("signup") { inclusive = true }
+                    }
+                },
                 onLoginClick = { navController.navigate("login") }
             )
         }
-        composable(route = "forgotpassword"){
-             /*ForgotPasswordScreen(
-                 onSignUpClick = { navController.navigate("signup") },
 
-             )*/
-        }
-        composable("home") {
-            HomeScreen(
-                navController = navController
+        composable("forgot_password") {
+            ForgotPasswordScreen(
+                onNextStepClick = {
+                    navController.navigate("security_pin"){
+                    popUpTo("forgot_password") { inclusive = true }}},
+                onSignUpClick = { navController.navigate("signup") }
             )
         }
 
-        composable("settings") {
-            SettingsScreen(
-                navController = navController,
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("notification_settings") },
-                onPasswordClick = { navController.navigate("password_settings") },
-                onDeleteAccountClick = { navController.navigate("delete_account") }
+        composable("security_pin") {
+            SecurityPinScreen(
+                onContinueClick = {
+                    navController.navigate("new_password") {
+                        popUpTo("security_pin") { inclusive = true }
+                    }
+                }
+            )
+        }
+        composable(route = "new_password") {
+            NewPasswordScreen(
+                onChangeClick = {
+                    navController.navigate("screen_newPassword") {
+                        popUpTo("new_password") { inclusive = true }
+                    }
+                }
             )
         }
 
-        composable("notification_settings") {
-            NotificationSettingsScreen1(
-                navController = navController,
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = {  }
-            )
+        composable(route = "screen_newPassword") {
+            PasswordChangedScreen()
         }
 
-        composable("password_settings") {
-            PasswordSettingsScreen(
-                navController = navController,
-                onBackClick = { navController.navigateUp() }
-            )
-        }
-
-        composable("delete_account") {
-            DeleteAccountScreen(
-                navController = navController,
-                onBackClick = { navController.navigateUp() },
-                onDeleteConfirmed = { /* TODO: manejar borrado aquí (ViewModel/API) */ },
-                onCancel = { navController.navigateUp() }
-            )
+        composable("main_app") {
+            MainScreen()
         }
     }
 }
