@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
+import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
@@ -61,47 +62,13 @@ fun PasswordSettingsScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.password_settings),
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                            color = Void,
-                            fontSize = 22.sp
-                        ),
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            painter = painterResource(R.drawable.bring_back),
-                            contentDescription = stringResource(R.string.go_back),
-                            tint = Honeydew,
-                            modifier = Modifier.size(22.dp)
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { navController.navigate("notifications") }) {
-                        Box(
-                            modifier = Modifier
-                                .size(40.dp)
-                                .background(Honeydew, shape = CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.bell),
-                                contentDescription = stringResource(R.string.notifications),
-                                modifier = Modifier.size(24.dp),
-                                tint = Void
-                            )
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Caribbean_green)
+            TopBar(
+                title = stringResource(R.string.password_settings),
+                showBackButton = true,
+                centerTitle = true,
+                onBackClick = onBackClick,
+                onNotificationClick = { navController.navigate("notifications") },
+                containerColor = Caribbean_green
             )
         }
     ) { paddingValues ->

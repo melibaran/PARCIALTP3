@@ -11,10 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -37,19 +35,13 @@ fun SavingsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    // Crear painters en el contexto @Composable
-    val carPainter = painterResource(id = R.drawable.car)
-    val housePainter = painterResource(id = R.drawable.newhome)
-    val travelPainter = painterResource(id = R.drawable.travel)
-    val weddingPainter = painterResource(id = R.drawable.wedding_me)
-
     // Inicializar objetivos de ahorro por defecto
     LaunchedEffect(Unit) {
         if (uiState.savingsGoals.isEmpty()) {
             val defaultGoals = listOf(
                 SavingsGoal(
                     title = "Car",
-                    painter = carPainter,
+                    iconId = R.drawable.car,
                     goalAmount = 14390.0,
                     savedAmount = 596.25,
                     progressPercentage = 15,
@@ -58,7 +50,7 @@ fun SavingsScreen(
                 ),
                 SavingsGoal(
                     title = "New House",
-                    painter = housePainter,
+                    iconId = R.drawable.newhome,
                     goalAmount = 569200.0,
                     savedAmount = 625.48,
                     progressPercentage = 30,
@@ -67,7 +59,7 @@ fun SavingsScreen(
                 ),
                 SavingsGoal(
                     title = "Travel",
-                    painter = travelPainter,
+                    iconId = R.drawable.travel,
                     goalAmount = 1962.93,
                     savedAmount = 653.31,
                     progressPercentage = 40,
@@ -76,7 +68,7 @@ fun SavingsScreen(
                 ),
                 SavingsGoal(
                     title = "Wedding",
-                    painter = weddingPainter,
+                    iconId = R.drawable.wedding_me,
                     goalAmount = 34700.0,
                     savedAmount = 296.25,
                     progressPercentage = 10,
@@ -135,7 +127,7 @@ fun SavingsScreen(
                 ) {
                     items(uiState.savingsGoals) { goal ->
                         CategoryItem(
-                            painter = goal.painter,
+                            icon = goal.iconId,
                             name = goal.title,
                             onClick = {
                                 if (goal.route.isNotEmpty()) {

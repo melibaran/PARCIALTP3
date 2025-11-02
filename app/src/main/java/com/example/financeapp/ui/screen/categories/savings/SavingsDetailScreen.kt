@@ -20,9 +20,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
+import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,30 +43,12 @@ fun SavingsDetailScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = goal.title,
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                            fontSize = 20.sp,
-                            color = Honeydew
-                        )
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.bring_back),
-                            contentDescription = "Back",
-                            tint = Honeydew,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Caribbean_green
-                )
+            TopBar(
+                title = goal.title,
+                showBackButton = true,
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = { /* No notification icon for this screen */ },
+                containerColor = Caribbean_green
             )
         },
         containerColor = Caribbean_green
@@ -95,7 +77,7 @@ fun SavingsDetailScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            painter = goal.painter,
+                            painter = painterResource(id = goal.iconId),
                             contentDescription = goal.title,
                             modifier = Modifier.size(70.dp),
                             tint = Color.Unspecified
