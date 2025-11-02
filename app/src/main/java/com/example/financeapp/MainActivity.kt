@@ -53,6 +53,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainActivityPreview() {
     FinanceAppTheme {
-        LoginScreen(onLoginClick = {}, onSignUpClick = {}, onForgotPasswordClick = {})
+
+
     }
 }

@@ -15,7 +15,6 @@ import com.example.financeapp.ui.screen.login.ForgotPasswordScreen
 import com.example.financeapp.ui.screen.login.NewPasswordScreen
 import com.example.financeapp.ui.screen.login.PasswordChangedScreen
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
-import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
 import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
 import com.example.financeapp.ui.screen.settings.SettingsScreen
 import com.example.financeapp.ui.screen.login.SecurityPinScreen
@@ -82,43 +81,13 @@ fun NavGraph(startDestination: String = "login") {
             PasswordChangedScreen()
         }
 
-        composable("settings") {
-            SettingsScreen(
-                navController = navController,
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("notification_settings") },
-                onPasswordClick = { navController.navigate("password_settings") },
-                onDeleteAccountClick = { navController.navigate("delete_account") }
-            )
-        }
 
-        composable("notification_settings") {
-            NotificationSettingsScreen1(
-                navController = navController,
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = {  }
-            )
-        }
-
-        composable("password_settings") {
-            PasswordSettingsScreen(
-                navController = navController,
-                onBackClick = { navController.navigateUp() }
-            )
-        }
 
         composable("main_app") {
             MainScreen()
         }
     }
 }
-        composable("delete_account") {
-            DeleteAccountScreen(
-                navController = navController,
-                onBackClick = { navController.navigateUp() },
-                onDeleteConfirmed = { /* TODO: manejar borrado aquí (ViewModel/API) */ },
-                onCancel = { navController.navigateUp() }
-            )
-        }
-    }
-}
+
+
+

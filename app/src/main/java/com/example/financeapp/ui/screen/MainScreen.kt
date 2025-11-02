@@ -9,6 +9,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
+import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
+import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
+import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
+import com.example.financeapp.ui.screen.settings.SettingsScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
 import com.example.financeapp.ui.screens.AccountBalanceScreen
@@ -75,6 +79,38 @@ fun MainScreen() {
             }
             composable(route = "profile") {
                 HelpCenterScreen(navController = navController)
+            }
+            composable("settings") {
+                SettingsScreen(
+                    navController = navController,
+                    onBackClick = { navController.navigateUp() },
+                    onNotificationClick = { navController.navigate("notification_settings") },
+                    onPasswordClick = { navController.navigate("password_settings") },
+                    onDeleteAccountClick = { navController.navigate("delete_account") }
+                )
+            }
+
+            composable("notification_settings") {
+                NotificationSettingsScreen1(
+                    navController = navController,
+                    onBackClick = { navController.navigateUp() },
+                    onNotificationClick = {  }
+                )
+            }
+
+            composable("password_settings") {
+                PasswordSettingsScreen(
+                    navController = navController,
+                    onBackClick = { navController.navigateUp() }
+                )
+            }
+            composable("delete_account") {
+                DeleteAccountScreen(
+                    navController = navController,
+                    onBackClick = { navController.navigateUp() },
+                    onDeleteConfirmed = { /* TODO: manejar borrado aquí (ViewModel/API) */ },
+                    onCancel = { navController.navigateUp() }
+                )
             }
         }
     }
