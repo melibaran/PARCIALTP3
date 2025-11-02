@@ -30,7 +30,7 @@ import com.example.financeapp.ui.screens.OnlineSupportScreen
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.theme.poppinsFamily
-import com.example.financeapp.ui.screen.login.LoginScreen
+import com.example.financeapp.ui.theme.screen.login.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,6 +53,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainActivityPreview() {
     FinanceAppTheme {
-        LoginScreen (onLoginClick = {}, onSignUpClick = {}, onForgotPasswordClick = {})
+        LoginScreen(onLoginClick = {}, onSignUpClick = {}, onForgotPasswordClick = {})
     }
 }

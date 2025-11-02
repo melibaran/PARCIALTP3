@@ -1,15 +1,16 @@
 package com.example.financeapp.ui.navigation
 
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.ui.screen.MainScreen
 import com.example.financeapp.ui.screen.login.SignUpScreen
-import com.example.financeapp.ui.theme.screen.forgotpassword.ForgotPasswordScreen
+import com.example.financeapp.ui.screen.login.ForgotPasswordScreen
+import com.example.financeapp.ui.screen.login.NewPasswordScreen
+import com.example.financeapp.ui.screen.login.PasswordChangedScreen
 import com.example.financeapp.ui.theme.screen.login.LoginScreen
-import com.example.financeapp.ui.theme.screen.securitypin.SecurityPinScreen
+import com.example.financeapp.ui.screen.login.SecurityPinScreen
 
 
 private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")
@@ -33,7 +34,7 @@ fun NavGraph(startDestination: String = "login") {
         composable("signup") {
             SignUpScreen(
                 onSignUpClick = {
-                    navController.navigate("main_app") {
+                    navController.navigate("forgot_password") {
                         popUpTo("signup") { inclusive = true }
                     }
                 },
@@ -43,7 +44,9 @@ fun NavGraph(startDestination: String = "login") {
 
         composable("forgot_password") {
             ForgotPasswordScreen(
-                onNextStepClick = { navController.navigate("security_pin") },
+                onNextStepClick = {
+                    navController.navigate("security_pin"){
+                    popUpTo("forgot_password") { inclusive = true }}},
                 onSignUpClick = { navController.navigate("signup") }
             )
         }
@@ -51,11 +54,24 @@ fun NavGraph(startDestination: String = "login") {
         composable("security_pin") {
             SecurityPinScreen(
                 onContinueClick = {
-                    navController.navigate("main_app") {
-                        popUpTo("login") { inclusive = true }
+                    navController.navigate("new_password") {
+                        popUpTo("security_pin") { inclusive = true }
                     }
                 }
             )
+        }
+        composable(route = "new_password") {
+            NewPasswordScreen(
+                onChangeClick = {
+                    navController.navigate("screen_newPassword") {
+                        popUpTo("new_password") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(route = "screen_newPassword") {
+            PasswordChangedScreen()
         }
 
         composable("main_app") {
