@@ -104,18 +104,18 @@ fun TransactionScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* TODO */ }) {
+                    IconButton(onClick = { navController.navigate("notifications") }) {
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
-                                .clip(CircleShape)
-                                .background(Color.White),
+                                .background(Color.White, shape = CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            androidx.compose.foundation.Image(
+                            Icon(
                                 painter = painterResource(R.drawable.bell),
                                 contentDescription = "Notifications",
-                                modifier = Modifier.padding(6.dp)
+                                modifier = Modifier.size(24.dp),
+                                tint = Void
                             )
                         }
                     }

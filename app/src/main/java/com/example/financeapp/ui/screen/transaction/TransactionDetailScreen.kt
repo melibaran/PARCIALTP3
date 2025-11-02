@@ -93,7 +93,7 @@ fun TransactionDetailScreen(
                 }
             },
             actions = {
-                IconButton(onClick = { /* TODO */ }) {
+                IconButton(onClick = { navController.navigate("notifications") }) {
                     Box(
                         modifier = Modifier
                             .size(40.dp)

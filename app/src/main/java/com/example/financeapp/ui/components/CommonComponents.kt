@@ -147,7 +147,7 @@ fun BalanceSummaryCard(
             }
             Spacer(modifier = Modifier.height(16.dp))
             LinearProgressIndicator(
-                progress = currentProgress.value,
+                progress = { currentProgress.value },  // ✅ Lambda en lugar de valor directo
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(20.dp)
@@ -180,12 +180,16 @@ fun TransactionItem(
 ) {
     val amountColor = if (isExpense) Ocean_blue else MaterialTheme.colorScheme.primary
 
-    // Selección de color para el fondo circular del icono según el icono
     val iconBgColor = when (iconResId) {
         R.drawable.salary -> Light_blue
-        R.drawable.food -> Light_blue
-        R.drawable.groceries -> Vivid_blue
-        R.drawable.rent -> Ocean_blue
+        R.drawable.food_default -> Light_blue
+        R.drawable.groceries_default -> Vivid_blue
+        R.drawable.rent_default -> Ocean_blue
+        R.drawable.transport_default -> Light_blue
+        R.drawable.medicine_default -> Vivid_blue
+        R.drawable.gift_default -> Ocean_blue
+        R.drawable.entertaiment_default -> Light_blue
+        R.drawable.saving_default -> Vivid_blue
         else -> MaterialTheme.colorScheme.secondaryContainer
     }
 

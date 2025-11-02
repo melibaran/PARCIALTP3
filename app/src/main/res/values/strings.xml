@@ -39,4 +39,111 @@
     <string name="date_apr_15_lunch">12:30 - April 15</string>
     <string name="date_mar_31">20:50 - March 31</string>
     <string name="add_expenses">Add Expenses</string>
+    <string name="settings">Settings</string>
+    <string name="go_back">Back</string>
+    <string name="notifications">Notification</string>
+    <string name="notifications_settings">Notification Settings</string>
+    <string name="password_settings">Password Settings</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="general_notification">General Notification</string>
+    <string name="sound">Sound</string>
+    <string name="sound_call">Sound Call</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="transaction_update">Transaction Update</string>
+    <string name="expense_reminder">Expense Reminder </string>
+    <string name="budget_otifications">Budget Notifications</string>
+    <string name="low_balance_alerts">Low Balance Alerts</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="password">Password Settings</string>
+    <string name="change_password">Change Password</string>
+
+    <string name="date_label">Date</string>
+    <string name="category_label">Category</string>
+    <string name="select_category">Select the category</string>
+    <string name="amount_label">Amount</string>
+    <string name="expense_title_label">Expense Title</string>
+    <string name="enter_message">Enter Message</string>
+    <string name="save_button">Save</string>
+
+    <string name="delete_account_title">Delete Account</string>
+    <string name="delete_account_confirm_title">Are You Sure You Want To Delete\nYour Account?</string>
+    <string name="delete_account_warning">This action will permanently delete all of your data, and you will not be able to recover it. Please keep the following in mind before proceeding:</string>
+    <string name="enter_password_to_confirm">Please Enter Your Password To Confirm\nDeletion Of Your Account.</string>
+    <string name="password_hint">Password</string>
+    <string name="yes_delete_account">Yes, Delete Account</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="item1">All your expenses, income and associated transactions will be eliminated.</string>
+    <string name="item2">You will not be able to access your account or any related\ninformation.</string>
+    <string name="item3">This action cannot be undone.</string>
+    <string name="message_delete">By deleting your account, you agree that you understand the consequences of this action and that you agree to permanently delete your account and all associated data.</string>
+    <string name="logout_confirm_title">Are you sure you want to log out?</string>
+
+    <string name="profile_title">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="security">Security</string>
+    <string name="setting">Setting</string>
+    <string name="help">Help</string>
+    <string name="logout">Logout</string>
+
+    <string name="edit_my_profile_title">Edit My Profile</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="username_label">Username</string>
+    <string name="phone_label">Phone</string>
+    <string name="email_address_label">Email Address</string>
+    <string name="push_notifications">Push Notifications</string>
+    <string name="turn_dark_theme">Turn Dark Theme</string>
+    <string name="update_profile">Update Profile</string>
+    
+    <string name="security_title">Security</string>
+    <string name="change_pin">Change Pin</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="terms_and_conditions">Terms And Conditions</string>
+    <string name="terms_and_conditions_title">Terms And Conditions</string>
+    <string name="terms_accept_checkbox">I accept all the terms and conditions</string>
+    <string name="accept">Accept</string>
+    
+    <string name="fingerprint_title">Fingerprint</string>
+    <string name="add_fingerprint">Add A Fingerprint</string>
+    <string name="add_fingerprint_title">Add Fingerprint</string>
+    <string name="use_fingerprint_to_access">Use Fingerprint To Access</string>
+    <string name="fingerprint_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</string>
+    <string name="use_touch_id">Use Touch Id</string>
+    <string name="fingerprint_added_successfully">Fingerprint Has Been\nChanged Successfully</string>
+    <string name="delete">Delete</string>
+    <string name="fingerprint_deleted_successfully">The Fingerprint Has\nBeen Successfully\nDeleted.</string>
+    
+    <string name="current_pin_label">Current Pin</string>
+    <string name="new_pin_label">New Pin</string>
+    <string name="confirm_pin_label">Confirm Pin</string>
+    
+    <string name="error_current_pin_length">Current PIN must be 4 digits</string>
+    <string name="error_new_pin_length">New PIN must be 4 digits</string>
+    <string name="error_pins_dont_match">PINs don\'t match</string>
+    <string name="error_pin_same_as_current">New PIN must be different from current PIN</string>
+    <string name="error_change_pin_failed">Failed to change PIN</string>
+    
+    <string name="pin_changed_successfully">Pin Has Been\nChanged Successfully</string>
+
+    <!-- Password settings errors -->
+    <string name="error_current_password_length">Current password must be at least 6 characters</string>
+    <string name="error_new_password_length">New password must be at least 6 characters</string>
+    <string name="error_passwords_dont_match">Passwords dont match</string>
+    <string name="error_password_same_as_current">New password must be different from current password</string>
+    <string name="error_change_password_failed">Failed to change password</string>
+
+    <string name="password_succesful"> Password Has been Changed successfully </string>
+
+    <!-- SampleData strings -->
+    <string name="food">Food</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="gift">Gift</string>
+    <string name="date_apr_28">14:30 - April 28</string>
+    <string name="date_apr_22">19:30 - April 22</string>
+    <string name="date_apr_20">11:00 - April 20</string>
+    <string name="movie">Movie</string>
+    <string name="birthday">Birthday</string>
+
 </resources>
