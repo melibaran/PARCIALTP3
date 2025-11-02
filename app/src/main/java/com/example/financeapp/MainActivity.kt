@@ -21,6 +21,7 @@ import com.example.financeapp.ui.navigation.NavGraph
 import com.example.financeapp.ui.screen.changepin.ChangePinScreen
 import com.example.financeapp.ui.screen.fingerprint.FingerprintScreen
 import com.example.financeapp.ui.screen.fingerprint.FingerprintDetailScreen
+import com.example.financeapp.ui.screen.fingerprint.AddFingerprintScreen
 import com.example.financeapp.ui.screen.EditProfileScreen
 import com.example.financeapp.ui.screen.LoginScreen
 import com.example.financeapp.ui.screen.ProfileScreen
@@ -254,6 +255,31 @@ class MainActivity : ComponentActivity() {
                                 onBackClick = { navController.navigateUp() },
                                 onFingerprintClick = { fingerprint ->
                                     navController.navigate("fingerprint_detail/${fingerprint.id}/${fingerprint.name}")
+                                },
+                                onAddFingerprintClick = {
+                                    navController.navigate("add_fingerprint")
+                                }
+                            )
+                        }
+                        
+                        composable("add_fingerprint") {
+                            AddFingerprintScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onUseTouchIdClick = {
+                                    navController.navigate("fingerprint_added_success") {
+                                        popUpTo("add_fingerprint") { inclusive = true }
+                                    }
+                                }
+                            )
+                        }
+                        
+                        composable("fingerprint_added_success") {
+                            SuccessScreen(
+                                message = stringResource(R.string.fingerprint_added_successfully),
+                                onComplete = {
+                                    navController.navigate("fingerprint") {
+                                        popUpTo("fingerprint") { inclusive = true }
+                                    }
                                 }
                             )
                         }
