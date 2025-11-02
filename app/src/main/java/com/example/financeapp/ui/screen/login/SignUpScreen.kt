@@ -107,8 +107,7 @@ fun SignUpScreen(
 
         Spacer(Modifier.height(24.dp))
 
-        PrimaryButton(text = "Sign Up", onClick = onSignUpClick, enabled = true)
-
+        PrimaryButton(text = "Sign Up", onClick = onSignUpClick, enabled = fullName.isNotBlank() && email.isNotBlank() && mobileNumber.isNotBlank() && dateOfBirth.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank())
         Spacer(Modifier.height(16.dp))
 
         BottomAuthText(

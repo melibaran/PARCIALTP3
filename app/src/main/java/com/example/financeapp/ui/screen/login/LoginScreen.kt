@@ -52,8 +52,7 @@ fun LoginScreen(onLoginClick: () -> Unit = {},
         )
 
         Spacer(Modifier.height(36.dp))
-        PrimaryButton(text = "Log In", onClick = onLoginClick,)
-
+        PrimaryButton(text = "Log In", onClick = onLoginClick, enabled = email.isNotBlank() && password.isNotBlank())
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             TextButton(onClick = onForgotPasswordClick) {
                 Text("Forgot Password?", color = Void, fontFamily = poppinsFamily)
