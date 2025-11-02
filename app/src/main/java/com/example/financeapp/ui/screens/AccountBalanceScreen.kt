@@ -56,38 +56,12 @@ fun AccountBalanceScreen(navController: NavController) {
         ) {
             // Balance Header
             com.example.financeapp.ui.components.BalanceHeader(
-                totalBalance = "$7,783.00",
-                totalExpense = "-$1,187.40",
-                budget = "$20,000.00",
-                progressPercentage = 0.3f,
-                progressText = "30%"
+                totalBalance = 7783.00,
+                totalExpense = 1187.40,
+                budget = 20000.00,
+                progressPercentage = 30
             )
 
-            Column(
-                modifier = Modifier.padding(horizontal = 21.dp)
-            ) {
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.check),
-                        contentDescription = "Check",
-                        modifier = Modifier.size(13.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = stringResource(R.string.goal_description),
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            color = Fence_green
-                        )
-                    )
-                }
-            }
 
             Spacer(modifier = Modifier.height(8.dp))
 

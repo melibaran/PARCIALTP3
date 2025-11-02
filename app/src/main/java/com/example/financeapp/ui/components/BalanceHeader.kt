@@ -31,15 +31,22 @@ import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Ocean_blue
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun BalanceHeader(
-    totalBalance: String,
-    totalExpense: String,
-    budget: String,
-    progressPercentage: Float = 0.3f,
-    progressText: String = "30%"
+    totalBalance: Double,
+    totalExpense: Double,
+    budget: Double,
+    progressPercentage: Int,
+    progressText: String = "$progressPercentage%"
 ) {
+    val formatter = NumberFormat.getNumberInstance(Locale.US).apply {
+        minimumFractionDigits = 2
+        maximumFractionDigits = 2
+    }
+
     Column {
         Spacer(modifier = Modifier.height(4.dp))
 
@@ -72,7 +79,7 @@ fun BalanceHeader(
                     )
                 }
                 Text(
-                    text = totalBalance,
+                    text = "$${formatter.format(totalBalance)}",
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -111,7 +118,7 @@ fun BalanceHeader(
                     )
                 }
                 Text(
-                    text = totalExpense,
+                    text = "-$${formatter.format(totalExpense)}",
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.SemiBold,
                         color = Ocean_blue
@@ -139,7 +146,7 @@ fun BalanceHeader(
                         modifier = Modifier
                             .fillMaxHeight()
                             .clip(RoundedCornerShape(20.dp))
-                            .fillMaxWidth(progressPercentage)
+                            .fillMaxWidth(progressPercentage / 100f)
                             .background(Fence_green)
                     )
                     Row(
@@ -154,7 +161,7 @@ fun BalanceHeader(
                             style = MaterialTheme.typography.labelSmall
                         )
                         Text(
-                            text = budget,
+                            text = "$${formatter.format(budget)}",
                             modifier = Modifier.padding(end = 8.dp),
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = Fence_green
@@ -162,6 +169,27 @@ fun BalanceHeader(
                         )
                     }
                 }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.check),
+                    contentDescription = "Check",
+                    modifier = Modifier.size(13.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = stringResource(R.string.goal_description),
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = Fence_green
+                    )
+                )
             }
         }
     }
