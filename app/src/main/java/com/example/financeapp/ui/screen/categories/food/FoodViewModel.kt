@@ -25,7 +25,7 @@ class FoodViewModel @Inject constructor() : ViewModel() {
                 title = "Dinner",
                 amount = 26.00,
                 dateTime = "18:27 - April 30",
-                iconId = R.drawable.food,
+                iconId = R.drawable.food_vector,
                 month = "April"
             ),
             FoodTransaction(
@@ -33,7 +33,7 @@ class FoodViewModel @Inject constructor() : ViewModel() {
                 title = "Delivery Pizza",
                 amount = 18.35,
                 dateTime = "15:00 - April 24",
-                iconId = R.drawable.food,
+                iconId = R.drawable.food_vector,
                 month = "April"
             ),
             FoodTransaction(
@@ -41,7 +41,7 @@ class FoodViewModel @Inject constructor() : ViewModel() {
                 title = "Lunch",
                 amount = 15.40,
                 dateTime = "12:30 - April 15",
-                iconId = R.drawable.food,
+                iconId = R.drawable.food_vector,
                 month = "April"
             ),
             FoodTransaction(
@@ -49,7 +49,7 @@ class FoodViewModel @Inject constructor() : ViewModel() {
                 title = "Brunch",
                 amount = 12.13,
                 dateTime = "9:30 - April 08",
-                iconId = R.drawable.food,
+                iconId = R.drawable.food_vector,
                 month = "April"
             ),
             FoodTransaction(
@@ -57,7 +57,7 @@ class FoodViewModel @Inject constructor() : ViewModel() {
                 title = "Dinner",
                 amount = 27.20,
                 dateTime = "20:50 - March 31",
-                iconId = R.drawable.food,
+                iconId = R.drawable.food_vector,
                 month = "March"
             )
         )

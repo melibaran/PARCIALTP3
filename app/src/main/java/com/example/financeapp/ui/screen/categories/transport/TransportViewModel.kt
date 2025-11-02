@@ -22,43 +22,44 @@ class TransportViewModel @Inject constructor() : ViewModel() {
         val mockTransactions = listOf(
             TransportTransaction(
                 id = "1",
-                title = "Taxi",
-                amount = 25.00,
-                dateTime = "18:30 - April 29",
-                iconId = R.drawable.transport,
-                month = "April"
+                title = "Fuel",
+                amount = 3.53,
+                dateTime = "18:27 - March 20",
+                iconId = R.drawable.transport_vector,
+                month = "March"
             ),
             TransportTransaction(
                 id = "2",
-                title = "Bus Ticket",
-                amount = 12.50,
-                dateTime = "08:15 - April 26",
-                iconId = R.drawable.transport,
-                month = "April"
+                title = "Car Parts",
+                amount = 26.75,
+                dateTime = "15:00 - March 30",
+                iconId = R.drawable.transport_vector,
+                month = "March"
             ),
+
             TransportTransaction(
-                id = "3",
-                title = "Uber",
-                amount = 18.75,
-                dateTime = "20:00 - April 20",
-                iconId = R.drawable.transport,
-                month = "April"
-            ),
+            id = "3",
+            title = "New Tires",
+            amount = 373.99,
+            dateTime = "12:47 - February 10",
+            iconId = R.drawable.transport_vector,
+            month = "February"
+        ),
             TransportTransaction(
-                id = "4",
-                title = "Metro Card",
-                amount = 30.00,
-                dateTime = "07:00 - April 15",
-                iconId = R.drawable.transport,
-                month = "April"
+            id = "4",
+            title = "Car Wash",
+            amount = 9.74,
+            dateTime = "9:30 - February 10",
+            iconId = R.drawable.transport_vector,
+            month = "February"
             ),
             TransportTransaction(
                 id = "5",
-                title = "Taxi",
-                amount = 22.00,
-                dateTime = "19:30 - March 28",
-                iconId = R.drawable.transport,
-                month = "March"
+                title = "Public transport",
+                amount = 1.24,
+                dateTime = "9:30 - February 10",
+                iconId = R.drawable.transport_vector,
+                month = "February"
             )
         )
 

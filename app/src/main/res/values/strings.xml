@@ -131,4 +131,14 @@
 
     <string name="password_succesful"> Password Has been Changed successfully </string>
 
+    <!-- SampleData strings -->
+    <string name="food">Food</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="gift">Gift</string>
+    <string name="date_apr_28">14:30 - April 28</string>
+    <string name="date_apr_22">19:30 - April 22</string>
+    <string name="date_apr_20">11:00 - April 20</string>
+    <string name="movie">Movie</string>
+    <string name="birthday">Birthday</string>
+
 </resources>

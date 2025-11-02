@@ -2,7 +2,6 @@ package com.example.financeapp.ui.screen.categories.savings.car
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
@@ -18,7 +17,7 @@ fun CarSavingsScreen(
 ) {
     val carGoal = SavingsGoal(
         title = "Car",
-        painter = painterResource(id = R.drawable.car),
+        iconId = R.drawable.car,
         goalAmount = 14390.0,
         savedAmount = 596.25,
         progressPercentage = 15,

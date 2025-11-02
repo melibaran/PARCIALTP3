@@ -22,43 +22,35 @@ class MedicineViewModel @Inject constructor() : ViewModel() {
         val mockTransactions = listOf(
             MedicineTransaction(
                 id = "1",
-                title = "Pharmacy",
-                amount = 45.00,
-                dateTime = "14:20 - April 28",
-                iconId = R.drawable.medicine,
+                title = "Acetominophen",
+                amount = 2.00,
+                dateTime = "12:11 - April 30",
+                iconId = R.drawable.medicine_vector,
                 month = "April"
             ),
             MedicineTransaction(
                 id = "2",
-                title = "Doctor Visit",
-                amount = 120.00,
-                dateTime = "10:00 - April 22",
-                iconId = R.drawable.medicine,
-                month = "April"
+                title = "Vitamin C",
+                amount = 8.20,
+                dateTime = "12:30 - March 20",
+                iconId = R.drawable.medicine_vector,
+                month = "March"
             ),
             MedicineTransaction(
                 id = "3",
-                title = "Medication",
-                amount = 65.50,
-                dateTime = "16:45 - April 18",
-                iconId = R.drawable.medicine,
-                month = "April"
+                title = "Muscle Pain Cream",
+                amount = 10.13,
+                dateTime = "9:30 - March 12",
+                iconId = R.drawable.medicine_vector,
+                month = "March"
             ),
             MedicineTransaction(
                 id = "4",
-                title = "Lab Tests",
-                amount = 85.00,
-                dateTime = "09:00 - April 10",
-                iconId = R.drawable.medicine,
-                month = "April"
-            ),
-            MedicineTransaction(
-                id = "5",
-                title = "Pharmacy",
-                amount = 55.00,
-                dateTime = "18:30 - March 29",
-                iconId = R.drawable.medicine,
-                month = "March"
+                title = "Aspirin",
+                amount = 2.20,
+                dateTime = "18:30 - February 02",
+                iconId = R.drawable.medicine_vector,
+                month = "February"
             )
         )
 
