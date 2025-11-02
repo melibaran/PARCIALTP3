@@ -34,6 +34,7 @@ import com.example.financeapp.ui.theme.poppinsFamily
 fun FingerprintScreen(
     onBackClick: () -> Unit,
     onFingerprintClick: (FingerprintItem) -> Unit,
+    onAddFingerprintClick: () -> Unit,
     viewModel: FingerprintViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -42,7 +43,7 @@ fun FingerprintScreen(
         uiState = uiState,
         onBackClick = onBackClick,
         onFingerprintClick = onFingerprintClick,
-        onAddFingerprintClick = { viewModel.addFingerprint() }
+        onAddFingerprintClick = onAddFingerprintClick
     )
 }
 

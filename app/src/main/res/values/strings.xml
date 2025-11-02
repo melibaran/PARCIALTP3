@@ -107,6 +107,11 @@
     
     <string name="fingerprint_title">Fingerprint</string>
     <string name="add_fingerprint">Add A Fingerprint</string>
+    <string name="add_fingerprint_title">Add Fingerprint</string>
+    <string name="use_fingerprint_to_access">Use Fingerprint To Access</string>
+    <string name="fingerprint_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</string>
+    <string name="use_touch_id">Use Touch Id</string>
+    <string name="fingerprint_added_successfully">Fingerprint Has Been\nChanged Successfully</string>
     <string name="delete">Delete</string>
     <string name="fingerprint_deleted_successfully">The Fingerprint Has\nBeen Successfully\nDeleted.</string>
     
