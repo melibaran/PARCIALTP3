@@ -1,9 +1,8 @@
-package com.example.financeapp.ui.theme.screen.signup
+package com.example.financeapp.ui.screen.login
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,7 +21,6 @@ import com.example.financeapp.ui.components.AuthTextField
 import com.example.financeapp.ui.components.BottomAuthText
 import com.example.financeapp.ui.components.PasswordTextField
 import com.example.financeapp.ui.components.PrimaryButton
-import com.example.financeapp.ui.theme.Cyprus
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
@@ -109,7 +107,7 @@ fun SignUpScreen(
 
         Spacer(Modifier.height(24.dp))
 
-        PrimaryButton(text = "Sign Up", onClick = onSignUpClick)
+        PrimaryButton(text = "Sign Up", onClick = onSignUpClick, enabled = true)
 
         Spacer(Modifier.height(16.dp))
 

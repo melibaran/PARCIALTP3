@@ -8,9 +8,9 @@ import com.example.financeapp.ui.screen.MainScreen
 import com.example.financeapp.ui.screen.login.ForgotPasswordScreen
 import com.example.financeapp.ui.screen.login.NewPasswordScreen
 import com.example.financeapp.ui.screen.login.PasswordChangedScreen
-import com.example.financeapp.ui.theme.screen.login.LoginScreen
+import com.example.financeapp.ui.screen.login.LoginScreen
 import com.example.financeapp.ui.screen.login.SecurityPinScreen
-import com.example.financeapp.ui.theme.screen.signup.SignUpScreen
+import com.example.financeapp.ui.screen.login.SignUpScreen
 
 
 private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")
