@@ -4,9 +4,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.financeapp.ui.components.BalanceHeader
+import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.screen.categories.arquitectura.*
 import com.example.financeapp.ui.theme.*
 
@@ -26,10 +27,12 @@ fun GiftScreen(
 
     Scaffold(
         topBar = {
-            FinanceHeader(
+            TopBar(
                 title = "Gift",
+                showBackButton = true,
                 onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("notifications") }
+                onNotificationClick = { navController.navigate("notifications") },
+                containerColor = Caribbean_green
             )
         },
         bottomBar = {
@@ -44,17 +47,12 @@ fun GiftScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            CategoryBalanceExpenseRow(
-                balance = uiState.balance,
-                totalExpense = uiState.totalExpense
+            BalanceHeader(
+                totalBalance = uiState.balance,
+                totalExpense = uiState.totalExpense,
+                budget = uiState.budget,
+                progressPercentage = uiState.expensePercentage
             )
-
-            CategoryProgressBar(
-                expensePercentage = uiState.expensePercentage,
-                budget = uiState.budget
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             CategoryTransactionList(
                 transactions = uiState.transactions.map { giftTx ->

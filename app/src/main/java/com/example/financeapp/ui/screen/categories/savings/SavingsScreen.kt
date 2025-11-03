@@ -8,24 +8,22 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
+import com.example.financeapp.ui.components.BalanceHeader
 import com.example.financeapp.ui.components.CategoryItem
-import com.example.financeapp.ui.screen.categories.arquitectura.BaseFinanceScreen
-import com.example.financeapp.ui.screen.categories.arquitectura.FinanceDisplayData
-import com.example.financeapp.ui.screen.categories.arquitectura.FinanceGridContainer
+import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.screen.categories.savings.SavingsGoal
 import com.example.financeapp.ui.screen.categories.savings.SavingsViewModel
 import com.example.financeapp.ui.theme.*
 
@@ -33,98 +31,91 @@ import com.example.financeapp.ui.theme.*
 fun SavingsScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: SavingsViewModel = hiltViewModel()
+    viewModel: SavingsViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    BaseFinanceScreen(
-        title = "Savings",
-        navController = navController,
-        data = FinanceDisplayData(
-            balance = uiState.balance.toDoubleOrNull() ?: 0.0,
-            totalExpense = uiState.totalExpense.toDoubleOrNull() ?: 0.0,
-            budget = uiState.budget.toDoubleOrNull() ?: 0.0,
-            expensePercentage = uiState.expensePercentage
-        ),
-        modifier = modifier,
-        topContent = null, // Savings no tiene el card superior
-        progressBarContent = { data ->
-            // Progress bar personalizado para Savings con barra negra
-            Column(
-                modifier = Modifier.padding(horizontal = 21.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(28.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Honeydew)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .clip(RoundedCornerShape(20.dp))
-                                .fillMaxWidth(data.expensePercentage / 100f)
-                                .background(Void)
-                        )
-                        Row(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = "${data.expensePercentage}%",
-                                modifier = Modifier.padding(start = 12.dp),
-                                color = Honeydew,
-                                style = TextStyle(
-                                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                    fontSize = 13.sp,
-                                )
-                            )
-                            Text(
-                                text = "${data.budget}",
-                                modifier = Modifier.padding(end = 12.dp),
-                                style = TextStyle(
-                                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                    color = Void,
-                                    fontSize = 13.sp,
-                                )
-                            )
-                        }
-                    }
-                }
+    // Inicializar objetivos de ahorro por defecto
+    LaunchedEffect(Unit) {
+        if (uiState.savingsGoals.isEmpty()) {
+            val defaultGoals = listOf(
+                SavingsGoal(
+                    title = "Car",
+                    iconId = R.drawable.car,
+                    goalAmount = 14390.0,
+                    savedAmount = 596.25,
+                    progressPercentage = 15,
+                    deposits = emptyMap(),
+                    route = "car_savings"
+                ),
+                SavingsGoal(
+                    title = "New House",
+                    iconId = R.drawable.newhome,
+                    goalAmount = 569200.0,
+                    savedAmount = 625.48,
+                    progressPercentage = 30,
+                    deposits = emptyMap(),
+                    route = "house_savings"
+                ),
+                SavingsGoal(
+                    title = "Travel",
+                    iconId = R.drawable.travel,
+                    goalAmount = 1962.93,
+                    savedAmount = 653.31,
+                    progressPercentage = 40,
+                    deposits = emptyMap(),
+                    route = "travel_savings"
+                ),
+                SavingsGoal(
+                    title = "Wedding",
+                    iconId = R.drawable.wedding_me,
+                    goalAmount = 34700.0,
+                    savedAmount = 296.25,
+                    progressPercentage = 10,
+                    deposits = emptyMap(),
+                    route = "wedding_savings"
+                )
+            )
+            defaultGoals.forEach { viewModel.addSavingsGoal(it) }
+        }
+    }
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.check),
-                        contentDescription = "Check Icon",
-                        tint = Void,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "${data.expensePercentage}% Of Your Expenses, Looks Good.",
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                            color = Void,
-                            fontSize = 14.sp,
-                        )
-                    )
-                }
-            }
+    Scaffold(
+        topBar = {
+            TopBar(
+                title = "Savings",
+                showBackButton = true,
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = { navController.navigate("notifications") },
+                containerColor = Caribbean_green
+            )
         },
-        bottomContent = {
-            FinanceGridContainer {
+        containerColor = Caribbean_green
+    ) { paddingValues ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Balance Header
+            BalanceHeader(
+                totalBalance = uiState.balance,
+                totalExpense = uiState.totalExpense,
+                budget = uiState.budget,
+                progressPercentage = uiState.expensePercentage
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            // Grid de savings goals
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
+                    .background(Honeydew)
+            ) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(3),
                     modifier = Modifier
@@ -138,7 +129,11 @@ fun SavingsScreen(
                         CategoryItem(
                             icon = goal.iconId,
                             name = goal.title,
-                            onClick = { /* TODO: Navigate to goal details */ }
+                            onClick = {
+                                if (goal.route.isNotEmpty()) {
+                                    navController.navigate(goal.route)
+                                }
+                            }
                         )
                     }
                 }
@@ -166,5 +161,5 @@ fun SavingsScreen(
                 }
             }
         }
-    )
+    }
 }
