@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
 import com.example.financeapp.ui.theme.*
-import com.google.android.material.color.utilities.Blend
 
 @Composable
 fun AuthScreenLayout(
@@ -155,9 +154,10 @@ fun PasswordTextField(
 
 @Composable
     fun PrimaryButton(
-        text: String,
-        onClick: () -> Unit
-    ) {
+    text: String,
+    onClick: () -> Unit,
+    enabled: Boolean
+) {
         Button(
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Caribbean_green),
@@ -167,7 +167,8 @@ fun PasswordTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(55.dp)
-                .padding(horizontal = 20.dp, vertical = 5.dp)
+                .padding(horizontal = 20.dp, vertical = 5.dp),
+            enabled = enabled
         ) {
             Box (modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Image(
