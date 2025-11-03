@@ -109,7 +109,7 @@ fun NotificationScreen(navController: NavController) {
                 showBackButton = true,
                 centerTitle = true,
                 onBackClick = { navController.popBackStack() },
-                onNotificationClick = { navController.navigate("notifications") },
+                onNotificationClick = { /* No-op */ },
                 containerColor = Caribbean_green
             )
         },

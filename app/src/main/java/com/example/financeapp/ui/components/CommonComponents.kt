@@ -28,6 +28,9 @@ import com.example.financeapp.ui.theme.Vivid_blue
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.lerp
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Honeydew
+import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.Light_green
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -97,73 +100,123 @@ fun TopBar(
 }
 
 @Composable
-fun BalanceSummaryCard(
+fun BalanceHeader(
     totalBalance: Double,
     totalExpense: Double,
-    progress: Float,
-    goalAmount: Double,
-    description: String
+    budget: Double,
+    progressPercentage: Int
 ) {
-    var animationPlayed by remember { mutableStateOf(false) }
-    val currentProgress = animateFloatAsState(
-        targetValue = if (animationPlayed) progress else 0f,
-        animationSpec = tween(durationMillis = 1000),
-        label = "progressAnimation"
-    )
-
-    LaunchedEffect(Unit) {
-        animationPlayed = true
+    val formatter = java.text.NumberFormat.getNumberInstance(java.util.Locale.US).apply {
+        minimumFractionDigits = 2
+        maximumFractionDigits = 2
     }
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround,
-                verticalAlignment = Alignment.CenterVertically
+    Column(modifier = Modifier.fillMaxWidth()) {
+        // Total Balance y Total Expense
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Columna de Balance
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(painter = painterResource(id = R.drawable.arrow_up), contentDescription = null, modifier = Modifier.size(16.dp))
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(stringResource(R.string.total_balance), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodyMedium)
-                    }
-                    Text(String.format(java.util.Locale.US, "$%,.2f", totalBalance), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                    Image(painter = painterResource(id = R.drawable.arrow_up), contentDescription = null, modifier = Modifier.size(16.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = stringResource(R.string.total_balance),
+                        style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onBackground)
+                    )
                 }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(painter = painterResource(id = R.drawable.arrow_down), contentDescription = null, modifier = Modifier.size(16.dp))
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(stringResource(R.string.total_expense), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodyMedium)
-                    }
-                    Text(String.format(java.util.Locale.US, "-$%,.2f", totalExpense), color = Ocean_blue, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                }
+                Text(
+                    text = "$${formatter.format(totalBalance)}",
+                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold, color = Color.White)
+                )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            LinearProgressIndicator(
-                progress = { currentProgress.value },  // ✅ Lambda en lugar de valor directo
+
+            // Divisor Vertical
+            VerticalDivider(
+                modifier = Modifier.height(48.dp).padding(horizontal = 14.dp),
+                thickness = 1.dp,
+                color = Light_green
+            )
+
+            // Columna de Gastos
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                    Image(painter = painterResource(id = R.drawable.arrow_down), contentDescription = null, modifier = Modifier.size(16.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = stringResource(R.string.total_expense),
+                        style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onBackground)
+                    )
+                }
+                Text(
+                    text = "-$${formatter.format(totalExpense)}",
+                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.SemiBold, color = Ocean_blue)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Barra de Progreso
+        Column(modifier = Modifier.padding(horizontal = 21.dp)) {
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(20.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-                color = MaterialTheme.colorScheme.onBackground,
-                trackColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f)
-            )
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("${(progress * 100).toInt()}%", color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodySmall)
-                Text(String.format(java.util.Locale.US, "$%,.2f", goalAmount), color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodySmall)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Honeydew)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .clip(RoundedCornerShape(20.dp))
+                        .fillMaxWidth(progressPercentage / 100f)
+                        .background(Fence_green)
+                )
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "$progressPercentage%",
+                        modifier = Modifier.padding(start = 8.dp),
+                        color = Honeydew,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                    Text(
+                        text = "$${formatter.format(budget)}",
+                        modifier = Modifier.padding(end = 8.dp),
+                        style = MaterialTheme.typography.labelSmall.copy(color = Fence_green)
+                    )
+                }
             }
+
             Spacer(modifier = Modifier.height(8.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(painter = painterResource(id = R.drawable.check), contentDescription = "Check")
+
+            // Descripción de la meta
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(painter = painterResource(id = R.drawable.check), contentDescription = "Check", modifier = Modifier.size(13.dp))
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(description, color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.bodySmall)
+                Text(
+                    text = stringResource(R.string.goal_description),
+                    style = MaterialTheme.typography.bodySmall.copy(color = Fence_green)
+                )
             }
         }
     }
@@ -227,9 +280,9 @@ fun TransactionItem(
                 Text(category, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 if (category.isNotEmpty()) {
                     VerticalDivider(
-                        modifier = Modifier.padding(horizontal = 8.dp),
+                        modifier = Modifier.padding(horizontal = 8.dp).height(32.dp),
                         thickness = 1.dp,
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
                     )
                 }
                 Text(amount, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, color = amountColor)
@@ -249,9 +302,10 @@ fun SectionHeader(title: String) {
 }
 
 @Composable
-fun VerticalDivider(modifier: Modifier = Modifier, thickness: Dp = 1.dp, color: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f)) {
-    Box(modifier = modifier
-        .width(thickness)
-        .background(color)
+fun VerticalDivider(modifier: Modifier = Modifier, thickness: Dp = 1.dp, color: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)) {
+    Box(
+        modifier
+            .width(thickness)
+            .background(color = color)
     )
 }
