@@ -21,12 +21,13 @@ import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
 import com.example.financeapp.ui.screen.settings.SettingsScreen
 import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
 import com.example.financeapp.ui.screen.transaction.TransactionScreen
-import com.example.financeapp.ui.screens.AccountBalanceScreen
-import com.example.financeapp.ui.screens.ChatDetailScreen
-import com.example.financeapp.ui.screens.HelpCenterScreen
-import com.example.financeapp.ui.screens.HomeScreen
-import com.example.financeapp.ui.screens.NotificationScreen
-import com.example.financeapp.ui.screens.OnlineSupportScreen
+import com.example.financeapp.ui.screen.accountbalance.AccountBalanceScreen
+import com.example.financeapp.ui.screen.chatdetail.ChatDetailScreen
+import com.example.financeapp.ui.screen.helpcenter.HelpCenterScreen
+import com.example.financeapp.ui.screen.home.HomeScreen
+import com.example.financeapp.ui.screen.notification.NotificationScreen
+import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
+// Profile/EditProfile/Security/Success are in the same package and don't need imports
 import com.example.financeapp.ui.theme.Caribbean_green
 
 

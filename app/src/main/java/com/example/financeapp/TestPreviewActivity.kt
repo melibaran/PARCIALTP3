@@ -12,9 +12,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import com.example.financeapp.ui.screens.AccountBalanceScreen
+import com.example.financeapp.ui.screen.accountbalance.AccountBalanceScreen
+import com.example.financeapp.ui.screen.home.HomeScreen
 import com.example.financeapp.ui.screen.categories.food.FoodScreen
-import com.example.financeapp.ui.screens.HomeScreen
 import com.example.financeapp.ui.theme.FinanceAppTheme
 
 class TestPreviewActivity : ComponentActivity() {

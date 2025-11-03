@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screens
+package com.example.financeapp.ui.screen.accountbalance
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -194,3 +194,4 @@ private fun IncomeExpenseCard(
         }
     }
 }
+

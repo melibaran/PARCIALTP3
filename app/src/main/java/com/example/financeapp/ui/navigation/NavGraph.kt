@@ -15,6 +15,12 @@ import com.example.financeapp.ui.screen.login.SignUpScreen
 import com.example.financeapp.ui.screen.onBoarding.InicioFinWise
 import com.example.financeapp.ui.screen.onBoarding.OnBoardingScreen
 import com.example.financeapp.ui.screen.onBoarding.SuccessScreenInicio
+import com.example.financeapp.ui.screen.accountbalance.AccountBalanceScreen
+import com.example.financeapp.ui.screen.chatdetail.ChatDetailScreen
+import com.example.financeapp.ui.screen.helpcenter.HelpCenterScreen
+import com.example.financeapp.ui.screen.home.HomeScreen
+import com.example.financeapp.ui.screen.notification.NotificationScreen
+import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
 
 
 private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")
@@ -111,5 +117,24 @@ fun NavGraph(startDestination: String = "inicio-pre") {
         composable("main_app") {
             MainScreen()
         }
-}
+
+        composable("home") {
+            HomeScreen(navController)
+        }
+        composable("account_balance") {
+            AccountBalanceScreen(navController)
+        }
+        composable("notifications") {
+            NotificationScreen(navController)
+        }
+        composable("help_center") {
+            HelpCenterScreen(navController)
+        }
+        composable("online_support") {
+            OnlineSupportScreen(navController)
+        }
+        composable("chat_detail/{chatId}") { backStackEntry ->
+            ChatDetailScreen(navController, backStackEntry.arguments?.getString("chatId") ?: "")
+        }
+    }
 }
