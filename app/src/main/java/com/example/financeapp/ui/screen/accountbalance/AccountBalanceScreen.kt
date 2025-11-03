@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.data.sampleTransactions
+import com.example.financeapp.ui.components.BalanceHeader
 import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.components.TransactionListItem
 import com.example.financeapp.ui.screen.transaction.TransactionItem as TxItem
@@ -55,7 +56,7 @@ fun AccountBalanceScreen(navController: NavController) {
                 .padding(innerPadding)
         ) {
             // Balance Header
-            com.example.financeapp.ui.components.BalanceHeader(
+            BalanceHeader(
                 totalBalance = 7783.00,
                 totalExpense = 1187.40,
                 budget = 20000.00,
