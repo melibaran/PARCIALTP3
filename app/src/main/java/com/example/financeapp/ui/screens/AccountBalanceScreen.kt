@@ -27,7 +27,6 @@ import com.example.financeapp.ui.screen.transaction.TransactionItem as TxItem
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_blue
-import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Ocean_blue
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Fence_green
@@ -55,150 +54,14 @@ fun AccountBalanceScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            Spacer(modifier = Modifier.height(4.dp))
+            // Balance Header
+            com.example.financeapp.ui.components.BalanceHeader(
+                totalBalance = 7783.00,
+                totalExpense = 1187.40,
+                budget = 20000.00,
+                progressPercentage = 30
+            )
 
-            // Total Balance y Total Expense Row
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.arrow_up),
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = stringResource(R.string.total_balance),
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
-                        )
-                    }
-                    Text(
-                        text = "$7,783.00",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    )
-                }
-
-                com.example.financeapp.ui.components.VerticalDivider(
-                    modifier = Modifier
-                        .height(48.dp)
-                        .padding(horizontal = 14.dp),
-                    thickness = 1.dp,
-                    color = Light_green
-                )
-
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.arrow_down),
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = stringResource(R.string.total_expense),
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
-                        )
-                    }
-                    Text(
-                        text = "-$1,187.40",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.SemiBold,
-                            color = Ocean_blue
-                        )
-                    )
-                }
-            }
-
-            // Progress Bar
-            Column(
-                modifier = Modifier.padding(horizontal = 21.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(20.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Honeydew)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .clip(RoundedCornerShape(20.dp))
-                                .fillMaxWidth(0.3f)
-                                .background(Fence_green)
-                        )
-                        Row(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = "30%",
-                                modifier = Modifier.padding(start = 8.dp),
-                                color = Honeydew,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                            Text(
-                                text = "$20,000.00",
-                                modifier = Modifier.padding(end = 8.dp),
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    color = Fence_green
-                                )
-                            )
-                        }
-                    }
-                }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.check),
-                        contentDescription = "Check",
-                        modifier = Modifier.size(13.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = stringResource(R.string.goal_description),
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            color = Fence_green
-                        )
-                    )
-                }
-            }
 
             Spacer(modifier = Modifier.height(8.dp))
 
