@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.financeapp.R
 import com.example.financeapp.ui.screen.MainScreen
 import com.example.financeapp.ui.screen.SuccessScreen
 import com.example.financeapp.ui.screen.login.ForgotPasswordScreen
@@ -12,12 +13,13 @@ import com.example.financeapp.ui.screen.login.LoginScreen
 import com.example.financeapp.ui.screen.login.SecurityPinScreen
 import com.example.financeapp.ui.screen.login.SignUpScreen
 import com.example.financeapp.ui.screen.onBoarding.InicioFinWise
+import com.example.financeapp.ui.screen.onBoarding.OnBoardingScreen
 import com.example.financeapp.ui.screen.onBoarding.SuccessScreenInicio
 
 
 private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")
 @Composable
-fun NavGraph(startDestination: String = "login") {
+fun NavGraph(startDestination: String = "inicio-pre") {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = startDestination) {
@@ -29,12 +31,22 @@ fun NavGraph(startDestination: String = "login") {
         }
         composable(route= "inicio"){
             InicioFinWise( onLoginClick = {
-                navController.navigate("main_app") {
-                    popUpTo("login") { inclusive = true }
+                navController.navigate("onboarding") {
+                    popUpTo("inicio") { inclusive = true }
                 }
             },
-                onSignUpClick = { navController.navigate("signup") },
-                onForgotPasswordClick = { navController.navigate("forgot_password")}
+                onSignUpClick = { navController.navigate("onboarding") },
+                onForgotPasswordClick = { navController.navigate("onBoarding")}
+            )
+        }
+        composable (route = "onboarding") {
+            OnBoardingScreen(title = " Welcome to \n Expense Manager", imageRes = R.drawable.ilustracion_mano,
+                onNext = { navController.navigate("onboarding1")}
+            )
+        }
+        composable(route = "onboarding1") {
+            OnBoardingScreen(title = "¿Are You Ready To\n Take Control Of \nYour Finaces?", imageRes = R.drawable.card_mobile,
+                onNext = { navController.navigate("login")}
             )
         }
         composable("login") {

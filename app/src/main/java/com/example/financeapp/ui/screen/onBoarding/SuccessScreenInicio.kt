@@ -60,8 +60,8 @@ fun SuccessScreenInicio(
                 text = message,
                 fontFamily = poppinsFamily,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 20.sp,
-                color = Color.White,
+                fontSize = 40.sp,
+                color = Caribbean_green,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 32.dp)
             )
