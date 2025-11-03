@@ -1,8 +1,12 @@
 package com.example.financeapp.ui.screen.login
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,6 +20,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.financeapp.ui.components.AuthScreenLayout
 import com.example.financeapp.ui.components.AuthTextField
 import com.example.financeapp.ui.components.BottomAuthText
@@ -28,7 +33,8 @@ import com.example.financeapp.ui.theme.poppinsFamily
 @Composable
 fun SignUpScreen(
     onSignUpClick: () -> Unit = {},
-    onLoginClick: () -> Unit = {}
+    onLoginClick: () -> Unit = {},
+    viewModel: SignUpViewModel = hiltViewModel()
 ) {
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -36,21 +42,50 @@ fun SignUpScreen(
     var dateOfBirth by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    
+    val signUpState by viewModel.signUpState.collectAsState()
+    
+    LaunchedEffect(signUpState) {
+        when (val state = signUpState) {
+            is SignUpState.Success -> {
+                onSignUpClick()
+                viewModel.resetState()
+            }
+            is SignUpState.Error -> {
+                errorMessage = state.message
+            }
+            else -> {
+                errorMessage = null
+            }
+        }
+    }
 
     AuthScreenLayout(title = "Create Account") {
+        
+        errorMessage?.let { error ->
+            Text(
+                text = error,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+        }
+        
         AuthTextField(
             value = fullName,
             onValueChange = { fullName = it },
             label = "Full Name",
-            placeholder = "example@example.com"
+            placeholder = "Juan Pérez"
         )
         Spacer(Modifier.height(16.dp))
         AuthTextField(
             value = email,
             onValueChange = { email = it },
             label = "Email",
-            placeholder = "example@example.com",
-            keyboardType = KeyboardType.Email
+            placeholder = "example@example.com"
         )
         Spacer(Modifier.height(16.dp))
         AuthTextField(
@@ -107,7 +142,28 @@ fun SignUpScreen(
 
         Spacer(Modifier.height(24.dp))
 
-        PrimaryButton(text = "Sign Up", onClick = onSignUpClick, enabled = fullName.isNotBlank() && email.isNotBlank() && mobileNumber.isNotBlank() && dateOfBirth.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank())
+        if (signUpState is SignUpState.Loading) {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            PrimaryButton(
+                text = "Sign Up", 
+                onClick = { 
+                    errorMessage = null
+                    viewModel.signUp(
+                        fullName = fullName,
+                        email = email,
+                        password = password,
+                        confirmPassword = confirmPassword
+                    )
+                }, 
+                enabled = fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
+            )
+        }
 
         Spacer(Modifier.height(16.dp))
 

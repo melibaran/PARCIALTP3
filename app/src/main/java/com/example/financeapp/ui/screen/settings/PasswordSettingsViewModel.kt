@@ -3,6 +3,7 @@ package com.example.financeapp.ui.screen.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financeapp.core.ResourceProvider
+import com.example.financeapp.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,11 +17,14 @@ private const val PASSWORD_MIN_LEN = 6
 
 @HiltViewModel
 class PasswordSettingsViewModel @Inject constructor(
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PasswordSettingsUiState())
     val uiState: StateFlow<PasswordSettingsUiState> = _uiState.asStateFlow()
+ 
+    private var currentUserEmail: String = ""
 
     fun onCurrentPasswordChange(pw: String) {
         if (pw.length <= 32) {
@@ -52,26 +56,46 @@ class PasswordSettingsViewModel @Inject constructor(
         _uiState.update { it.copy(confirmPasswordVisible = !it.confirmPasswordVisible) }
     }
 
+    fun setCurrentUser(email: String) {
+        currentUserEmail = email
+    }
+    
     fun changePassword() {
         val state = _uiState.value
 
         if (state.currentPassword.length < PASSWORD_MIN_LEN) {
-            _uiState.update { it.copy(errorMessage = "Current password must be at least $PASSWORD_MIN_LEN characters") }
+            _uiState.update { 
+                it.copy(errorMessage = resourceProvider.getString(
+                    com.example.financeapp.R.string.error_current_password_length
+                )) 
+            }
             return
         }
 
         if (state.newPassword.length < PASSWORD_MIN_LEN) {
-            _uiState.update { it.copy(errorMessage = "New password must be at least $PASSWORD_MIN_LEN characters") }
+            _uiState.update { 
+                it.copy(errorMessage = resourceProvider.getString(
+                    com.example.financeapp.R.string.error_new_password_length
+                )) 
+            }
             return
         }
 
         if (state.newPassword != state.confirmPassword) {
-            _uiState.update { it.copy(errorMessage = "Passwords don't match") }
+            _uiState.update { 
+                it.copy(errorMessage = resourceProvider.getString(
+                    com.example.financeapp.R.string.error_passwords_dont_match
+                )) 
+            }
             return
         }
 
         if (state.currentPassword == state.newPassword) {
-            _uiState.update { it.copy(errorMessage = "New password must be different from current password") }
+            _uiState.update { 
+                it.copy(errorMessage = resourceProvider.getString(
+                    com.example.financeapp.R.string.error_password_same_as_current
+                )) 
+            }
             return
         }
 
@@ -79,10 +103,55 @@ class PasswordSettingsViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
             try {
-                delay(1200)
-                _uiState.update { it.copy(isLoading = false, isSuccess = true) }
+                val user = userRepository.getUserByEmail(currentUserEmail)
+                
+                if (user == null) {
+                    _uiState.update { 
+                        it.copy(
+                            isLoading = false, 
+                            errorMessage = resourceProvider.getString(
+                                com.example.financeapp.R.string.error_user_not_found_signin_again
+                            )
+                        ) 
+                    }
+                    return@launch
+                }
+
+                if (user.password != state.currentPassword) {
+                    _uiState.update { 
+                        it.copy(
+                            isLoading = false, 
+                            errorMessage = resourceProvider.getString(
+                                com.example.financeapp.R.string.error_current_password_incorrect
+                            )
+                        ) 
+                    }
+                    return@launch
+                }
+
+                val rowsAffected = userRepository.updatePassword(currentUserEmail, state.newPassword)
+                
+                if (rowsAffected > 0) {
+                    _uiState.update { it.copy(isLoading = false, isSuccess = true) }
+                } else {
+                    _uiState.update { 
+                        it.copy(
+                            isLoading = false, 
+                            errorMessage = resourceProvider.getString(
+                                com.example.financeapp.R.string.error_update_password_failed
+                            )
+                        ) 
+                    }
+                }
             } catch (e: Exception) {
-                _uiState.update { it.copy(isLoading = false, errorMessage = e.message ?: "Failed to change password") }
+                _uiState.update { 
+                    it.copy(
+                        isLoading = false, 
+                        errorMessage = e.message ?: resourceProvider.getString(
+                            com.example.financeapp.R.string.error_change_password_failed
+                        )
+                    ) 
+                }
             }
         }
     }
