@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.ui.unit.Dp
 
 
-data class git BottomNavItem(
+data class BottomNavItem(
     @DrawableRes val icon: Int,
     val label: String,
     val route: String,
