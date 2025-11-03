@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screens
+package com.example.financeapp.ui.screen.notification
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

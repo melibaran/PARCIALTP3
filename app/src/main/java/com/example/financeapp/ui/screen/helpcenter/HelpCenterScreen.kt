@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screens
+package com.example.financeapp.ui.screen.helpcenter
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
