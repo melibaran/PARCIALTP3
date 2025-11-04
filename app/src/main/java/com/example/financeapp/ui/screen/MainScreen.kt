@@ -217,7 +217,9 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 DeleteAccountScreen(
                     navController = navController,
                     onBackClick = { navController.navigateUp() },
-                    onDeleteConfirmed = { /* TODO: manejar borrado aquí (ViewModel/API) */ },
+                    onDeleteConfirmed = { password ->
+                        onLogout()
+                    },
                     onCancel = { navController.navigateUp() }
                 )
             }
