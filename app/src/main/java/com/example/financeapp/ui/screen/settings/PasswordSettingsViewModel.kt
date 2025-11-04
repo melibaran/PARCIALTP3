@@ -93,8 +93,12 @@ class PasswordSettingsViewModel @Inject constructor(
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            delay(500)
-            _uiState.update { it.copy(isLoading = false, isSuccess = true) }
+            try {
+                delay(1200)
+                _uiState.update { it.copy(isLoading = false, isSuccess = true) }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(isLoading = false, errorMessage = e.message ?: "Failed to change password") }
+            }
         }
     }
 
