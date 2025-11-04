@@ -99,8 +99,8 @@ fun AuthTextField(
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Caribbean_green,
             unfocusedBorderColor = Light_green,
-            unfocusedContainerColor = Light_green,
-            focusedContainerColor = Light_green
+            focusedContainerColor = Light_green,
+            unfocusedContainerColor = Light_green
         )
     )
 }
@@ -140,7 +140,7 @@ fun PasswordTextField(
         ),
         trailingIcon = {
             val image = if (passwordVisible)
-                painterResource(id= com.example.financeapp.R.drawable.ojoabierto)
+                painterResource(id= R.drawable.ojoabierto)
             else painterResource(id= R.drawable.ojocerrado)
 
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
@@ -164,6 +164,7 @@ fun PasswordTextField(
             shape = RoundedCornerShape(0.dp),
             contentPadding = PaddingValues(0.dp),
             elevation = null,
+            enabled = enabled,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(55.dp)
@@ -286,4 +287,3 @@ fun BottomDesign(
         )
     }
 }
-

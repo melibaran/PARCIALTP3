@@ -4,25 +4,58 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
-import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
+import com.example.financeapp.R
 import com.example.financeapp.ui.screen.MainScreen
-import com.example.financeapp.ui.screen.login.SignUpScreen
+import com.example.financeapp.ui.screen.SuccessScreen
 import com.example.financeapp.ui.screen.login.ForgotPasswordScreen
 import com.example.financeapp.ui.screen.login.NewPasswordScreen
-import com.example.financeapp.ui.screen.login.PasswordChangedScreen
-import com.example.financeapp.ui.theme.screen.login.LoginScreen
-import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
-import com.example.financeapp.ui.screen.settings.SettingsScreen
+import com.example.financeapp.ui.screen.login.LoginScreen
 import com.example.financeapp.ui.screen.login.SecurityPinScreen
+import com.example.financeapp.ui.screen.login.SignUpScreen
+import com.example.financeapp.ui.screen.onBoarding.InicioFinWise
+import com.example.financeapp.ui.screen.onBoarding.OnBoardingScreen
+import com.example.financeapp.ui.screen.onBoarding.SuccessScreenInicio
+import com.example.financeapp.ui.screen.accountbalance.AccountBalanceScreen
+import com.example.financeapp.ui.screen.chatdetail.ChatDetailScreen
+import com.example.financeapp.ui.screen.helpcenter.HelpCenterScreen
+import com.example.financeapp.ui.screen.home.HomeScreen
+import com.example.financeapp.ui.screen.notification.NotificationScreen
+import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
 
 
 private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")
 @Composable
-fun NavGraph(startDestination: String = "login") {
+fun NavGraph(startDestination: String = "inicio-pre") {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = startDestination) {
+        composable(route= "inicio-pre"){
+            SuccessScreenInicio("FinWise",
+                onComplete = {navController.navigate("inicio") {
+                    popUpTo("inicio-pre") { inclusive = true }
+                }
+                })
+        }
+        composable(route= "inicio"){
+            InicioFinWise( onLoginClick = {
+                navController.navigate("onboarding") {
+                    popUpTo("inicio") { inclusive = true }
+                }
+            },
+                onSignUpClick = { navController.navigate("onboarding") },
+                onForgotPasswordClick = { navController.navigate("onBoarding")}
+            )
+        }
+        composable (route = "onboarding") {
+            OnBoardingScreen(title = " Welcome to \n Expense Manager", imageRes = R.drawable.ilustracion_mano,
+                onNext = { navController.navigate("onboarding1")}
+            )
+        }
+        composable(route = "onboarding1") {
+            OnBoardingScreen(title = "¿Are You Ready To\n Take Control Of \nYour Finaces?", imageRes = R.drawable.card_mobile,
+                onNext = { navController.navigate("login")}
+            )
+        }
         composable("login") {
             LoginScreen(
                 onLoginClick = {
@@ -50,7 +83,7 @@ fun NavGraph(startDestination: String = "login") {
             ForgotPasswordScreen(
                 onNextStepClick = {
                     navController.navigate("security_pin"){
-                    popUpTo("forgot_password") { inclusive = true }}},
+                        popUpTo("forgot_password") { inclusive = true }}},
                 onSignUpClick = { navController.navigate("signup") }
             )
         }
@@ -75,45 +108,40 @@ fun NavGraph(startDestination: String = "login") {
         }
 
         composable(route = "screen_newPassword") {
-            PasswordChangedScreen()
+            SuccessScreen(message = "Password Has Been \nChanged Successfully",
+                onComplete = {navController.navigate("login") {
+                    popUpTo("sceen_newPassword") { inclusive = true }
+                } })
         }
 
-        composable("settings") {
-            SettingsScreen(
-                navController = navController,
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("notification_settings") },
-                onPasswordClick = { navController.navigate("password_settings") },
-                onDeleteAccountClick = { navController.navigate("delete_account") }
-            )
-        }
-
-        composable("notification_settings") {
-            NotificationSettingsScreen1(
-                navController = navController,
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = {  }
-            )
-        }
-
-        composable("password_settings") {
-            PasswordSettingsScreen(
-                navController = navController,
-                onBackClick = { navController.navigateUp() }
-            )
-        }
-
-        composable("delete_account") {
-            DeleteAccountScreen(
-                navController = navController,
-                onBackClick = { navController.navigateUp() },
-                onDeleteConfirmed = { /* TODO: manejar borrado aquí (ViewModel/API) */ },
-                onCancel = { navController.navigateUp() }
-            )
-        }
 
         composable("main_app") {
-            MainScreen()
+            MainScreen(
+                onLogout = {
+                    navController.navigate("login") {
+                        popUpTo("main_app") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable("home") {
+            HomeScreen(navController)
+        }
+        composable("account_balance") {
+            AccountBalanceScreen(navController)
+        }
+        composable("notifications") {
+            NotificationScreen(navController)
+        }
+        composable("help_center") {
+            HelpCenterScreen(navController)
+        }
+        composable("online_support") {
+            OnlineSupportScreen(navController)
+        }
+        composable("chat_detail/{chatId}") { backStackEntry ->
+            ChatDetailScreen(navController, backStackEntry.arguments?.getString("chatId") ?: "")
         }
     }
 }

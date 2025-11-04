@@ -8,7 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -43,9 +49,9 @@ fun SignUpScreen(
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    
+
     val signUpState by viewModel.signUpState.collectAsState()
-    
+
     LaunchedEffect(signUpState) {
         when (val state = signUpState) {
             is SignUpState.Success -> {
@@ -61,8 +67,10 @@ fun SignUpScreen(
         }
     }
 
+    val formValid = fullName.isNotBlank() && email.isNotBlank() && mobileNumber.isNotBlank() && dateOfBirth.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
+
     AuthScreenLayout(title = "Create Account") {
-        
+
         errorMessage?.let { error ->
             Text(
                 text = error,
@@ -73,19 +81,20 @@ fun SignUpScreen(
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             )
         }
-        
+
         AuthTextField(
             value = fullName,
             onValueChange = { fullName = it },
             label = "Full Name",
-            placeholder = "Juan Pérez"
+            placeholder = "Juan Perez"
         )
         Spacer(Modifier.height(16.dp))
         AuthTextField(
             value = email,
             onValueChange = { email = it },
             label = "Email",
-            placeholder = "example@example.com"
+            placeholder = "example@example.com",
+            keyboardType = KeyboardType.Email
         )
         Spacer(Modifier.height(16.dp))
         AuthTextField(
@@ -100,15 +109,15 @@ fun SignUpScreen(
             value = dateOfBirth,
             onValueChange = { dateOfBirth = it },
             label = "Date Of Birth",
-            placeholder = "DD / MM / YYYY"
+            placeholder = "DD / MM / YYYY",
+            keyboardType = KeyboardType.Phone
         )
         Spacer(Modifier.height(16.dp))
         PasswordTextField(
             value = password,
             onValueChange = { password = it },
             label = "Password",
-            placeholder = "**********",
-
+            placeholder = "**********"
         )
         Spacer(Modifier.height(16.dp))
         PasswordTextField(
@@ -127,13 +136,9 @@ fun SignUpScreen(
             fontSize = 14.sp,
             text = buildAnnotatedString {
                 append("By continuing, you agree to\n")
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Terms of Use")
-                }
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) { append("Terms of Use") }
                 append(" and ")
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Privacy Policy")
-                }
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) { append("Privacy Policy") }
                 append(".")
             },
             modifier = Modifier.padding(horizontal = 16.dp).align(Alignment.CenterHorizontally),
@@ -151,8 +156,8 @@ fun SignUpScreen(
             }
         } else {
             PrimaryButton(
-                text = "Sign Up", 
-                onClick = { 
+                text = "Sign Up",
+                onClick = {
                     errorMessage = null
                     viewModel.signUp(
                         fullName = fullName,
@@ -160,8 +165,8 @@ fun SignUpScreen(
                         password = password,
                         confirmPassword = confirmPassword
                     )
-                }, 
-                enabled = fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
+                },
+                enabled = formValid
             )
         }
 

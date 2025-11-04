@@ -1,8 +1,7 @@
-package com.example.financeapp.ui.screens
+package com.example.financeapp.ui.screen.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,18 +13,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.data.sampleTransactions
-import com.example.financeapp.ui.components.BalanceSummaryCard
+import com.example.financeapp.ui.components.BalanceHeader
 import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.components.TransactionListItem
 import com.example.financeapp.ui.screen.transaction.TransactionItem as TxItem
@@ -61,150 +58,14 @@ fun HomeScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            Spacer(modifier = Modifier.height(4.dp))
+            // Balance Header
+            BalanceHeader(
+                totalBalance = 7783.00,
+                totalExpense = 1187.40,
+                budget = 20000.00,
+                progressPercentage = 30
+            )
 
-            // Total Balance y Total Expense Row
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.arrow_up),
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = stringResource(R.string.total_balance),
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
-                        )
-                    }
-                    Text(
-                        text = "$7,783.00",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    )
-                }
-
-                com.example.financeapp.ui.components.VerticalDivider(
-                    modifier = Modifier
-                        .height(48.dp)
-                        .padding(horizontal = 14.dp),
-                    thickness = 1.dp,
-                    color = Light_green
-                )
-
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.arrow_down),
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = stringResource(R.string.total_expense),
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
-                        )
-                    }
-                    Text(
-                        text = "-$1,187.40",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.SemiBold,
-                            color = Ocean_blue
-                        )
-                    )
-                }
-            }
-
-            // Progress Bar
-            Column(
-                modifier = Modifier.padding(horizontal = 21.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(20.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Honeydew)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .clip(RoundedCornerShape(20.dp))
-                                .fillMaxWidth(0.3f)
-                                .background(com.example.financeapp.ui.theme.Fence_green)
-                        )
-                        Row(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = "30%",
-                                modifier = Modifier.padding(start = 8.dp),
-                                color = Honeydew,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                            Text(
-                                text = "$20,000.00",
-                                modifier = Modifier.padding(end = 8.dp),
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    color = com.example.financeapp.ui.theme.Fence_green
-                                )
-                            )
-                        }
-                    }
-                }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.check),
-                        contentDescription = "Check",
-                        modifier = Modifier.size(13.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = stringResource(R.string.goal_description),
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            color = com.example.financeapp.ui.theme.Fence_green
-                        )
-                    )
-                }
-            }
 
             // Transactions List con card de Savings y tabs
             LazyColumn(
@@ -444,3 +305,4 @@ fun HomeScreen(navController: NavController) {
         }
     }
 }
+

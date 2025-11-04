@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -25,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.financeapp.R
+import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDatePicker
 import com.example.financeapp.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,48 +55,13 @@ fun AddExpensesScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        stringResource(id = R.string.add_expenses),
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            color = Void,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            painter = painterResource(R.drawable.bring_back),
-                            contentDescription = "Back",
-                            tint = Color.White,
-                            modifier = Modifier.size(19.dp)
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { navController.navigate("notifications") }) {
-                        Box(
-                            modifier = Modifier
-                                .size(40.dp)
-                                .background(Color.White, shape = CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.bell),
-                                contentDescription = "Notifications",
-                                modifier = Modifier.size(24.dp),
-                                tint = Void
-                            )
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Caribbean_green
-                )
+            TopBar(
+                title = stringResource(id = R.string.add_expenses),
+                showBackButton = true,
+                centerTitle = true,
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = { navController.navigate("notifications") },
+                containerColor = Caribbean_green
             )
         },
         bottomBar = {
@@ -398,179 +364,10 @@ fun AddExpensesScreen(
         }
     }
 
-    // DatePicker Dialog
-    if (showDatePicker) {
-        var selectedMonth by remember { mutableStateOf("April") }
-        var selectedYear by remember { mutableStateOf("2023") }
-        var showMonthDropdown by remember { mutableStateOf(false) }
-        var showYearDropdown by remember { mutableStateOf(false) }
-
-        val months = listOf("January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December")
-        val years = (2020..2030).map { it.toString() }
-
-        AlertDialog(
-            onDismissRequest = { showDatePicker = false },
-            confirmButton = { },
-            modifier = Modifier.width(310.dp),
-            containerColor = Honeydew,
-            shape = RoundedCornerShape(5.dp),
-            text = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp)
-                ) {
-                    // Month and Year selectors
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // Month Dropdown
-                        Box {
-                            TextButton(
-                                onClick = { showMonthDropdown = !showMonthDropdown },
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
-                            ) {
-                                Text(
-                                    text = "$selectedMonth ▼",
-                                    style = TextStyle(
-                                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                        color = Caribbean_green,
-                                        fontSize = 16.sp
-                                    )
-                                )
-                            }
-                            DropdownMenu(
-                                expanded = showMonthDropdown,
-                                onDismissRequest = { showMonthDropdown = false },
-                                modifier = Modifier
-                                    .background(Honeydew)
-                                    .heightIn(max = 150.dp)
-                            ) {
-                                months.forEach { month ->
-                                    DropdownMenuItem(
-                                        text = {
-                                            Text(
-                                                month,
-                                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                                color = Void
-                                            )
-                                        },
-                                        onClick = {
-                                            selectedMonth = month
-                                            showMonthDropdown = false
-                                        }
-                                    )
-                                }
-                            }
-                        }
-
-                        // Year Dropdown
-                        Box {
-                            TextButton(
-                                onClick = { showYearDropdown = !showYearDropdown },
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
-                            ) {
-                                Text(
-                                    text = "$selectedYear ▼",
-                                    style = TextStyle(
-                                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                        color = Caribbean_green,
-                                        fontSize = 16.sp
-                                    )
-                                )
-                            }
-                            DropdownMenu(
-                                expanded = showYearDropdown,
-                                onDismissRequest = { showYearDropdown = false },
-                                modifier = Modifier
-                                    .background(Honeydew)
-                                    .heightIn(max = 150.dp)
-                            ) {
-                                years.forEach { year ->
-                                    DropdownMenuItem(
-                                        text = {
-                                            Text(
-                                                year,
-                                                fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                                color = Void
-                                            )
-                                        },
-                                        onClick = {
-                                            selectedYear = year
-                                            showYearDropdown = false
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(14.dp))
-
-                    // Days of week
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun").forEach { day ->
-                            Text(
-                                text = day,
-                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                color = Light_blue,
-                                fontSize = 12.sp,
-                                modifier = Modifier.weight(1f),
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    // Calendar grid
-                    val daysInMonth = listOf(
-                        listOf("", "", "", "", "", "1", "2"),
-                        listOf("3", "4", "5", "6", "7", "8", "9"),
-                        listOf("10", "11", "12", "13", "14", "15", "16"),
-                        listOf("17", "18", "19", "20", "21", "22", "23"),
-                        listOf("24", "25", "26", "27", "28", "29", "30")
-                    )
-
-                    daysInMonth.forEach { week ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            week.forEach { day ->
-                                Box(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .aspectRatio(1f)
-                                        .padding(1.dp)
-                                        .then(
-                                            if (day.isNotEmpty()) {
-                                                Modifier.clickable { showDatePicker = false }
-                                            } else Modifier
-                                        ),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    if (day.isNotEmpty()) {
-                                        Text(
-                                            text = day,
-                                            fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                            color = Void,
-                                            fontSize = 14.sp
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        )
-    }
+    // DatePicker Dialog - Usando el componente reutilizable
+    CategoryDatePicker(
+        showDatePicker = showDatePicker,
+        onDismiss = { showDatePicker = false }
+    )
 }
 

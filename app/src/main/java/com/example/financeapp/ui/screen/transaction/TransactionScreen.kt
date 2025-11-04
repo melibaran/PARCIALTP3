@@ -28,8 +28,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -50,6 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
+import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.components.TransactionListItem
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Fence_green
@@ -81,48 +80,13 @@ fun TransactionScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "Transaction",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            color = Void,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(
-                            painter = painterResource(R.drawable.bring_back),
-                            contentDescription = "Back",
-                            tint = Color.White,
-                            modifier = Modifier.size(19.dp)
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { navController.navigate("notifications") }) {
-                        Box(
-                            modifier = Modifier
-                                .size(40.dp)
-                                .background(Color.White, shape = CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.bell),
-                                contentDescription = "Notifications",
-                                modifier = Modifier.size(24.dp),
-                                tint = Void
-                            )
-                        }
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Caribbean_green
-                )
+            TopBar(
+                title = "Transaction",
+                showBackButton = true,
+                centerTitle = true,
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = { navController.navigate("notifications") },
+                containerColor = Caribbean_green
             )
         },
         containerColor = Caribbean_green
