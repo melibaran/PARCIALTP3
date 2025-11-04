@@ -1,5 +1,7 @@
 package com.example.financeapp.infrastructure.api
 
+import com.example.financeapp.core.ApiKeyInterceptor
+import com.example.financeapp.core.Config
 import com.example.financeapp.domain.infrastructure.api.ApiClient
 import com.example.financeapp.domain.model.LoginRequest as DomainLoginRequest
 import com.example.financeapp.domain.model.SignUpRequest as DomainSignUpRequest
@@ -14,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApiClientMockServer(
-    private val baseUrl: String = "https://d9811bf4-5e67-4a8c-bdcf-603cbbfc0275.mock.pstmn.io/"
+    private val baseUrl: String = Config.baseUrl
 ) : ApiClient {
 
     private val apiService: ApiService
@@ -24,6 +26,7 @@ class ApiClientMockServer(
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(ApiKeyInterceptor())
             .build()
 
         val retrofit = Retrofit.Builder()
@@ -47,8 +50,13 @@ class ApiClientMockServer(
         return response.body()!!.toDomain()
     }
 
-    override suspend fun getTransactions(apiKey: String): UserTransactions {
-        val response = apiService.getTransactions(apiKey)
+    override suspend fun getTransactions(): UserTransactions {
+        val response = apiService.getTransactions()
+        return response.body()!!.toDomain()
+    }
+
+    override suspend fun getUserById(userId: Int): UserProfile {
+        val response = apiService.getUserById(userId)
         return response.body()!!.toDomain()
     }
 }

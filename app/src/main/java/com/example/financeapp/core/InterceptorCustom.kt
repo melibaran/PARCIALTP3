@@ -1,16 +1,19 @@
 package com.example.financeapp.core
 
-/*    object InterceptorCustom : Interceptor {
+import okhttp3.Interceptor
+import okhttp3.Response
 
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val apiKey = Config.apiKey
+class ApiKeyInterceptor : Interceptor {
 
-            var request = chain.request()
-            request = request.newBuilder()
-                .header("X-Api-Key", apiKey?:"")
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .build()
-            return chain.proceed(request)
-        }
-    }*/
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val apiKey = Config.apiKey
+
+        val request = chain.request().newBuilder()
+            .header("x-api-key", apiKey)
+            .header("Accept", "application/json")
+            .header("Content-Type", "application/json")
+            .build()
+        
+        return chain.proceed(request)
+    }
+}
