@@ -1,13 +1,11 @@
 package com.example.financeapp.ui.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,8 +20,8 @@ import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
 import com.example.financeapp.ui.screen.categories.rent.RentScreen
 import com.example.financeapp.ui.screen.categories.gift.GiftScreen
 import com.example.financeapp.ui.screen.categories.entertainment.EntertainmentScreen
-//import com.example.financeapp.ui.screen.categories.savings.SavingsScreen
 import com.example.financeapp.ui.screen.changepin.ChangePinScreen
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.financeapp.ui.screen.fingerprint.AddFingerprintScreen
 import com.example.financeapp.ui.screen.fingerprint.FingerprintDetailScreen
 import com.example.financeapp.ui.screen.fingerprint.FingerprintScreen
@@ -39,10 +37,6 @@ import com.example.financeapp.ui.screen.helpcenter.HelpCenterScreen
 import com.example.financeapp.ui.screen.home.HomeScreen
 import com.example.financeapp.ui.screen.notification.NotificationScreen
 import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
-// Profile/EditProfile/Security/Success are in the same package and don't need imports
-import com.example.financeapp.ui.theme.Caribbean_green
-import com.example.financeapp.ui.theme.Honeydew
-
 
 @Composable
 fun MainScreen(onLogout: () -> Unit = {}) {
@@ -59,10 +53,10 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 }
             )
         }
-    ) {
+    ) { paddingValues ->
         NavHost(
             navController = navController,
-            modifier = Modifier.padding(0.dp),
+            modifier = Modifier.padding(paddingValues),
             startDestination = "home",
         ) {
             // Rutas para la bottom navigation
@@ -111,9 +105,48 @@ fun MainScreen(onLogout: () -> Unit = {}) {
             composable("entertainment") {
                 EntertainmentScreen(navController = navController)
             }
-            // composable("savings") {
-            //     SavingsScreen(navController = navController)
-            // }
+            composable("savings") { backStackEntry ->
+                com.example.financeapp.ui.screen.savings.SavingsScreen(
+                    navController = navController,
+                    viewModel = hiltViewModel(backStackEntry)
+                )
+            }
+            composable("car_savings") { backStackEntry ->
+                val parentEntry = remember(backStackEntry) {
+                    navController.getBackStackEntry("savings")
+                }
+                com.example.financeapp.ui.screen.categories.savings.car.CarSavingsScreen(
+                    navController = navController,
+                    viewModel = hiltViewModel(parentEntry)
+                )
+            }
+            composable("house_savings") { backStackEntry ->
+                val parentEntry = remember(backStackEntry) {
+                    navController.getBackStackEntry("savings")
+                }
+                com.example.financeapp.ui.screen.categories.savings.newHouse.HouseSavingsScreen(
+                    navController = navController,
+                    viewModel = hiltViewModel(parentEntry)
+                )
+            }
+            composable("travel_savings") { backStackEntry ->
+                val parentEntry = remember(backStackEntry) {
+                    navController.getBackStackEntry("savings")
+                }
+                com.example.financeapp.ui.screen.categories.savings.travel.TravelSavingsScreen(
+                    navController = navController,
+                    viewModel = hiltViewModel(parentEntry)
+                )
+            }
+            composable("wedding_savings") { backStackEntry ->
+                val parentEntry = remember(backStackEntry) {
+                    navController.getBackStackEntry("savings")
+                }
+                com.example.financeapp.ui.screen.categories.savings.wedding.WeddingSavingsScreen(
+                    navController = navController,
+                    viewModel = hiltViewModel(parentEntry)
+                )
+            }
 
             composable("add_expenses") {
                 AddExpensesScreen(navController = navController)
