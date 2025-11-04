@@ -1,16 +1,29 @@
 package com.example.financeapp.ui.screen.categories.food
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.ui.components.BalanceHeader
 import com.example.financeapp.ui.components.TopBar
-import com.example.financeapp.ui.screen.categories.arquitectura.*
-import com.example.financeapp.ui.theme.*
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddExpensesButton
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDatePicker
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryTransactionItem
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryTransactionList
+import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Light_blue
+import com.example.financeapp.ui.theme.Ocean_blue
+import com.example.financeapp.ui.theme.Vivid_blue
 
 @Composable
 fun FoodScreen(
