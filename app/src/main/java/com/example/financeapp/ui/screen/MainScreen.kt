@@ -10,7 +10,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.FinanceBottomBar
+import com.example.financeapp.ui.screen.categories.AddExpensesScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
+import com.example.financeapp.ui.screen.categories.food.FoodScreen
+import com.example.financeapp.ui.screen.categories.transport.TransportScreen
+import com.example.financeapp.ui.screen.categories.medicine.MedicineScreen
+import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
+import com.example.financeapp.ui.screen.categories.rent.RentScreen
+import com.example.financeapp.ui.screen.categories.gift.GiftScreen
+import com.example.financeapp.ui.screen.categories.entertainment.EntertainmentScreen
+//import com.example.financeapp.ui.screen.categories.savings.SavingsScreen
 import com.example.financeapp.ui.screen.changepin.ChangePinScreen
 import com.example.financeapp.ui.screen.fingerprint.AddFingerprintScreen
 import com.example.financeapp.ui.screen.fingerprint.FingerprintDetailScreen
@@ -72,6 +81,37 @@ fun MainScreen(onLogout: () -> Unit = {}) {
             composable(route = "layers") {
                 CategoriesScreen(navController = navController)
             }
+
+            // Rutas de categorías
+            composable("food") {
+                FoodScreen(navController = navController)
+            }
+            composable("transport") {
+                TransportScreen(navController = navController)
+            }
+            composable("medicine") {
+                MedicineScreen(navController = navController)
+            }
+            composable("groceries") {
+                GroceriesScreen(navController = navController)
+            }
+            composable("rent") {
+                RentScreen(navController = navController)
+            }
+            composable("gift") {
+                GiftScreen(navController = navController)
+            }
+            composable("entertainment") {
+                EntertainmentScreen(navController = navController)
+            }
+           // composable("savings") {
+           //     SavingsScreen(navController = navController)
+           // }
+
+            composable("add_expenses") {
+                AddExpensesScreen(navController = navController)
+            }
+
             composable(route = "notifications") {
                 NotificationScreen(navController = navController)
             }
