@@ -13,6 +13,8 @@ interface ApiClient {
 
     suspend fun signUp(request: SignUpRequest): UserProfile
 
-    suspend fun getTransactions(apiKey: String = "123456789"): UserTransactions
+    suspend fun getTransactions(): UserTransactions
+
+    suspend fun getUserById(userId: Int): UserProfile
 }
 
