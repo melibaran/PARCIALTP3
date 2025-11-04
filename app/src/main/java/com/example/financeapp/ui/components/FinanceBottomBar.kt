@@ -29,6 +29,7 @@ import com.example.financeapp.ui.navigation.BottomNavItem
 import com.example.financeapp.ui.navigation.BottomNavViewModel
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
 
 

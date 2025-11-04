@@ -208,26 +208,14 @@ fun HomeScreen(navController: NavController) {
 
                                     Spacer(modifier = Modifier.height(8.dp))
 
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.food),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(28.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Column {
-                                        Text(
-                                            text = stringResource(R.string.food_last_week),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onBackground
-                                        )
-                                        Text(
-                                            text = "-$100.00",
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            color = Ocean_blue
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.food),
+                                            contentDescription = null,
+                                            modifier = Modifier.size(28.dp)
                                         )
                                         Spacer(modifier = Modifier.width(8.dp))
                                         Column {
