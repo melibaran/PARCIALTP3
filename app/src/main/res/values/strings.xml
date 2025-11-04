@@ -146,4 +146,17 @@
     <string name="movie">Movie</string>
     <string name="birthday">Birthday</string>
 
+    <string name="error_user_not_found">User not found</string>
+    <string name="error_incorrect_password">Incorrect password</string>
+    <string name="error_unknown_login">Unknown error while logging in</string>
+    <string name="error_all_fields_required">All fields are required</string>
+    <string name="error_passwords_mismatch">Passwords do not match</string>
+    <string name="error_password_min_length">Password must be at least 6 characters</string>
+    <string name="error_email_already_in_use">Email is already in use</string>
+    <string name="error_create_user_failed">Failed to create user</string>
+    <string name="error_unknown_signup">Unknown error while registering user</string>
+    <string name="error_user_not_found_signin_again">User not found. Please sign in again.</string>
+    <string name="error_current_password_incorrect">Current password is incorrect</string>
+    <string name="error_update_password_failed">Failed to update password</string>
+
 </resources>

@@ -51,33 +51,48 @@ class PasswordSettingsViewModel @Inject constructor(
     fun toggleConfirmPasswordVisibility() {
         _uiState.update { it.copy(confirmPasswordVisible = !it.confirmPasswordVisible) }
     }
-
+    
     fun changePassword() {
         val state = _uiState.value
 
         if (state.currentPassword.length < PASSWORD_MIN_LEN) {
-            _uiState.update { it.copy(errorMessage = "Current password must be at least $PASSWORD_MIN_LEN characters") }
+            _uiState.update { 
+                it.copy(errorMessage = resourceProvider.getString(
+                    com.example.financeapp.R.string.error_current_password_length
+                )) 
+            }
             return
         }
 
         if (state.newPassword.length < PASSWORD_MIN_LEN) {
-            _uiState.update { it.copy(errorMessage = "New password must be at least $PASSWORD_MIN_LEN characters") }
+            _uiState.update { 
+                it.copy(errorMessage = resourceProvider.getString(
+                    com.example.financeapp.R.string.error_new_password_length
+                )) 
+            }
             return
         }
 
         if (state.newPassword != state.confirmPassword) {
-            _uiState.update { it.copy(errorMessage = "Passwords don't match") }
+            _uiState.update { 
+                it.copy(errorMessage = resourceProvider.getString(
+                    com.example.financeapp.R.string.error_passwords_dont_match
+                )) 
+            }
             return
         }
 
         if (state.currentPassword == state.newPassword) {
-            _uiState.update { it.copy(errorMessage = "New password must be different from current password") }
+            _uiState.update { 
+                it.copy(errorMessage = resourceProvider.getString(
+                    com.example.financeapp.R.string.error_password_same_as_current
+                )) 
+            }
             return
         }
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-
             try {
                 delay(1200)
                 _uiState.update { it.copy(isLoading = false, isSuccess = true) }

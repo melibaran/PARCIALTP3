@@ -70,7 +70,11 @@ fun TopBar(
         navigationIcon = {
             if (showBackButton) {
                 IconButton(onClick = onBackClick) {
-                    Image(painter = painterResource(id = R.drawable.bring_back), contentDescription = "Back")
+                    Image(
+                        painter = painterResource(id = R.drawable.bring_back),
+                        contentDescription = "Back",
+                        modifier = Modifier.size(19.dp)
+                    )
                 }
             }
         },
@@ -78,7 +82,7 @@ fun TopBar(
             IconButton(onClick = onNotificationClick) {
                 Box(
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(40.dp)
                         .clip(CircleShape)
                         .background(Color.White),
                     contentAlignment = Alignment.Center
@@ -86,7 +90,7 @@ fun TopBar(
                     Image(
                         painter = painterResource(id = R.drawable.bell),
                         contentDescription = "Notifications",
-                        modifier = Modifier.size(28.dp)
+                        modifier = Modifier.size(20.dp)
                     )
                 }
             }

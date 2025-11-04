@@ -49,7 +49,9 @@ fun MainScreen(onLogout: () -> Unit = {}) {
     val navController = rememberNavController()
 
     Scaffold(
-        containerColor = Caribbean_green,
+        topBar = {
+
+        },
         bottomBar = {
             FinanceBottomBar(
                 onNavigate = { route ->
@@ -157,6 +159,18 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     onBackClick = { navController.navigateUp() }
                 )
             }
+
+            composable("password_success") {
+                SuccessScreen(
+                    message = stringResource(R.string.password_succesful),
+                    onComplete = {
+                        navController.navigate("settings") {
+                            popUpTo("password_success") { inclusive = true }
+                        }
+                    }
+                )
+            }
+
             composable("delete_account") {
                 DeleteAccountScreen(
                     navController = navController,

@@ -33,7 +33,7 @@ fun NavGraph(startDestination: String = "inicio-pre") {
             SuccessScreenInicio("FinWise",
                 onComplete = {navController.navigate("inicio") {
                     popUpTo("inicio-pre") { inclusive = true }
-                } 
+                }
                 })
         }
         composable(route= "inicio"){
@@ -113,7 +113,6 @@ fun NavGraph(startDestination: String = "inicio-pre") {
                     popUpTo("sceen_newPassword") { inclusive = true }
                 } })
         }
-
 
         composable("main_app") {
             MainScreen(
