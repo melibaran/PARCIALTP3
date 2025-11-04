@@ -40,6 +40,7 @@ fun BalanceHeader(
     totalExpense: Double,
     budget: Double,
     progressPercentage: Int,
+    modifier: Modifier = Modifier,
     progressText: String = "$progressPercentage%"
 ) {
     val formatter = NumberFormat.getNumberInstance(Locale.US).apply {
@@ -47,7 +48,7 @@ fun BalanceHeader(
         maximumFractionDigits = 2
     }
 
-    Column {
+    Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(4.dp))
 
         // Total Balance y Total Expense Row

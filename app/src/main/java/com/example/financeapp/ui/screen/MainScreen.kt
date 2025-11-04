@@ -1,10 +1,13 @@
 package com.example.financeapp.ui.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -38,11 +41,13 @@ import com.example.financeapp.ui.screen.notification.NotificationScreen
 import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
 // Profile/EditProfile/Security/Success are in the same package and don't need imports
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Honeydew
 
 
 @Composable
 fun MainScreen(onLogout: () -> Unit = {}) {
     val navController = rememberNavController()
+
     Scaffold(
         containerColor = Caribbean_green,
         bottomBar = {
@@ -52,10 +57,10 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 }
             )
         }
-    ) { innerPadding ->
+    ) {
         NavHost(
             navController = navController,
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(0.dp),
             startDestination = "home",
         ) {
             // Rutas para la bottom navigation
@@ -104,9 +109,9 @@ fun MainScreen(onLogout: () -> Unit = {}) {
             composable("entertainment") {
                 EntertainmentScreen(navController = navController)
             }
-           // composable("savings") {
-           //     SavingsScreen(navController = navController)
-           // }
+            // composable("savings") {
+            //     SavingsScreen(navController = navController)
+            // }
 
             composable("add_expenses") {
                 AddExpensesScreen(navController = navController)
@@ -142,7 +147,7 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 NotificationSettingsScreen1(
                     navController = navController,
                     onBackClick = { navController.navigateUp() },
-                    onNotificationClick = {  }
+                    onNotificationClick = { }
                 )
             }
 
@@ -170,7 +175,7 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     onEditProfileClick = { navController.navigate("edit_profile") },
                     onSecurityClick = { navController.navigate("security") },
                     onSettingClick = {
-                        navController.navigate("settings"){
+                        navController.navigate("settings") {
                             popUpTo("home") { inclusive = true }
                         }
                     },
@@ -255,7 +260,9 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     onBackClick = { navController.navigateUp() },
                     onDeleteClick = {
                         navController.navigate("fingerprint_deleted_success") {
-                            popUpTo("fingerprint_detail/{fingerprintId}/{fingerprintName}") { inclusive = true }
+                            popUpTo("fingerprint_detail/{fingerprintId}/{fingerprintName}") {
+                                inclusive = true
+                            }
                         }
                     }
                 )
