@@ -114,7 +114,6 @@ fun NavGraph(startDestination: String = "inicio-pre") {
                 } })
         }
 
-
         composable("main_app") {
             MainScreen(
                 onLogout = {

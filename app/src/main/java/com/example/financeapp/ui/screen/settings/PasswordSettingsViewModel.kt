@@ -3,7 +3,6 @@ package com.example.financeapp.ui.screen.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financeapp.core.ResourceProvider
-import com.example.financeapp.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,14 +16,11 @@ private const val PASSWORD_MIN_LEN = 6
 
 @HiltViewModel
 class PasswordSettingsViewModel @Inject constructor(
-    private val resourceProvider: ResourceProvider,
-    private val userRepository: UserRepository
+    private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PasswordSettingsUiState())
     val uiState: StateFlow<PasswordSettingsUiState> = _uiState.asStateFlow()
- 
-    private var currentUserEmail: String = ""
 
     fun onCurrentPasswordChange(pw: String) {
         if (pw.length <= 32) {
@@ -54,10 +50,6 @@ class PasswordSettingsViewModel @Inject constructor(
 
     fun toggleConfirmPasswordVisibility() {
         _uiState.update { it.copy(confirmPasswordVisible = !it.confirmPasswordVisible) }
-    }
-
-    fun setCurrentUser(email: String) {
-        currentUserEmail = email
     }
     
     fun changePassword() {
@@ -101,58 +93,8 @@ class PasswordSettingsViewModel @Inject constructor(
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-
-            try {
-                val user = userRepository.getUserByEmail(currentUserEmail)
-                
-                if (user == null) {
-                    _uiState.update { 
-                        it.copy(
-                            isLoading = false, 
-                            errorMessage = resourceProvider.getString(
-                                com.example.financeapp.R.string.error_user_not_found_signin_again
-                            )
-                        ) 
-                    }
-                    return@launch
-                }
-
-                if (user.password != state.currentPassword) {
-                    _uiState.update { 
-                        it.copy(
-                            isLoading = false, 
-                            errorMessage = resourceProvider.getString(
-                                com.example.financeapp.R.string.error_current_password_incorrect
-                            )
-                        ) 
-                    }
-                    return@launch
-                }
-
-                val rowsAffected = userRepository.updatePassword(currentUserEmail, state.newPassword)
-                
-                if (rowsAffected > 0) {
-                    _uiState.update { it.copy(isLoading = false, isSuccess = true) }
-                } else {
-                    _uiState.update { 
-                        it.copy(
-                            isLoading = false, 
-                            errorMessage = resourceProvider.getString(
-                                com.example.financeapp.R.string.error_update_password_failed
-                            )
-                        ) 
-                    }
-                }
-            } catch (e: Exception) {
-                _uiState.update { 
-                    it.copy(
-                        isLoading = false, 
-                        errorMessage = e.message ?: resourceProvider.getString(
-                            com.example.financeapp.R.string.error_change_password_failed
-                        )
-                    ) 
-                }
-            }
+            delay(500)
+            _uiState.update { it.copy(isLoading = false, isSuccess = true) }
         }
     }
 
