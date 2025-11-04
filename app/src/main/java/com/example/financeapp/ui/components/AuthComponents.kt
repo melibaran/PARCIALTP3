@@ -45,7 +45,8 @@ fun AuthScreenLayout(
                 text = title,
                 fontFamily = poppinsFamily,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 32.sp,
+                fontSize = 30.sp,
+                lineHeight = 30.sp,
                 color = Void,
                 textAlign = TextAlign.Center
             )
