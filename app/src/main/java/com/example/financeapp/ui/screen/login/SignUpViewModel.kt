@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financeapp.R
 import com.example.financeapp.core.ResourceProvider
+import com.example.financeapp.domain.infrastructure.api.ApiClient
+import com.example.financeapp.domain.model.SignUpRequest as DomainSignUpRequest
 import com.example.financeapp.domain.model.User
 import com.example.financeapp.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val userRepository: UserRepository,
+    private val apiClient: ApiClient,
     private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
@@ -75,10 +78,19 @@ class SignUpViewModel @Inject constructor(
                 val userId = userRepository.insertUser(newUser)
 
                 if (userId > 0) {
+                    val signUpRequest = DomainSignUpRequest(
+                        id = userId.toInt(),
+                        username = fullName,
+                        email = email,
+                        password = password
+                    )
+                    val userProfile = apiClient.signUp(signUpRequest)
+
                     _signUpState.value = SignUpState.Success(
                         userId = userId.toInt(),
                         email = email,
-                        fullName = fullName
+                        fullName = fullName,
+                        userProfile = userProfile
                     )
                 } else {
                     _signUpState.value = SignUpState.Error(
@@ -105,7 +117,8 @@ sealed class SignUpState {
     data class Success(
         val userId: Int,
         val email: String,
-        val fullName: String
+        val fullName: String,
+        val userProfile: com.example.financeapp.domain.model.UserProfile? = null
     ) : SignUpState()
     data class Error(val message: String) : SignUpState()
 }
