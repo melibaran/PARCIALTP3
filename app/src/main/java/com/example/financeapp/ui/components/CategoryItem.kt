@@ -60,14 +60,17 @@ fun CategoryItem(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.clickable(
-            interactionSource = interactionSource,
-            indication = null
-        ) { onClick() }
+        modifier = Modifier
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) { onClick() }
     ) {
+        Spacer(modifier = Modifier.height(12.dp))
+
         Box(
             modifier = Modifier
-                .size(64.dp)
+                .size(75.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(backgroundColor),
             contentAlignment = Alignment.Center
@@ -75,12 +78,17 @@ fun CategoryItem(
             Icon(
                 painter = painterResource(id = iconResId),
                 contentDescription = name,
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(48.dp),
                 tint = Color.Unspecified
             )
         }
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(text = name, style = MaterialTheme.typography.bodyMedium)
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = name,
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }
 

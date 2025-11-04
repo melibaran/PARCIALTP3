@@ -201,7 +201,7 @@ fun HomeScreen(navController: NavController) {
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.food_default),
+                                        painter = painterResource(id = R.drawable.food),
                                         contentDescription = null,
                                         modifier = Modifier.size(28.dp)
                                     )

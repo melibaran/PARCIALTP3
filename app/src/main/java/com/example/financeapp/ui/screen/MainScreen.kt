@@ -37,14 +37,15 @@ import com.example.financeapp.ui.screen.home.HomeScreen
 import com.example.financeapp.ui.screen.notification.NotificationScreen
 import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
 // Profile/EditProfile/Security/Success are in the same package and don't need imports
-import com.example.financeapp.ui.theme.Caribbean_green
 
 
 @Composable
 fun MainScreen(onLogout: () -> Unit = {}) {
     val navController = rememberNavController()
     Scaffold(
-        containerColor = Caribbean_green,
+        topBar = {
+
+        },
         bottomBar = {
             FinanceBottomBar(
                 onNavigate = { route ->
@@ -52,10 +53,10 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 }
             )
         }
-    ) { innerPadding ->
+    ) { paddingValues ->
         NavHost(
             navController = navController,
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(paddingValues),
             startDestination = "home",
         ) {
             // Rutas para la bottom navigation
