@@ -70,7 +70,7 @@ fun CategoryTransactionList(
                             .fillMaxWidth()
                             .padding(
                                 bottom = 8.dp,
-                                top = if (isFirstDisplayedMonth) 0.dp else 8.dp
+                                top = if (isFirstDisplayedMonth) 16.dp else 8.dp
                             ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
@@ -106,7 +106,7 @@ fun CategoryTransactionList(
                                     painter = painterResource(calendarIcon),
                                     contentDescription = "Calendar",
                                     tint = Color.Unspecified,
-                                    modifier = Modifier.size(24.dp)
+                                    modifier = Modifier.size(28.dp)
                                 )
                             }
                         }

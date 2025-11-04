@@ -27,11 +27,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.financeapp.R
 import com.example.financeapp.ui.navigation.BottomNavItem
 import com.example.financeapp.ui.navigation.BottomNavViewModel
-import com.example.financeapp.ui.theme.Light_green
+import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Caribbean_green
 
 
-private val BarBackground = Light_green
+private val BarBackground = Honeydew
 private val ActiveTurquoise = Caribbean_green
 private val InactiveIcon = Color(0xFFA0A0A0)
 

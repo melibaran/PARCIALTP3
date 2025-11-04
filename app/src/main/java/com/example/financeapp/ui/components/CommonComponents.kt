@@ -70,7 +70,11 @@ fun TopBar(
         navigationIcon = {
             if (showBackButton) {
                 IconButton(onClick = onBackClick) {
-                    Image(painter = painterResource(id = R.drawable.bring_back), contentDescription = "Back")
+                    Image(
+                        painter = painterResource(id = R.drawable.bring_back),
+                        contentDescription = "Back",
+                        modifier = Modifier.size(19.dp)
+                    )
                 }
             }
         },

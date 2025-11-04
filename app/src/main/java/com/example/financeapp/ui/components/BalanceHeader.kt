@@ -48,7 +48,6 @@ fun BalanceHeader(
     }
 
     Column {
-        Spacer(modifier = Modifier.height(4.dp))
 
         // Total Balance y Total Expense Row
         Row(
@@ -58,7 +57,7 @@ fun BalanceHeader(
         ) {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -89,7 +88,7 @@ fun BalanceHeader(
 
             VerticalDivider(
                 modifier = Modifier
-                    .height(48.dp)
+                    .height(40.dp)
                     .padding(horizontal = 14.dp),
                 thickness = 1.dp,
                 color = Light_green
@@ -97,7 +96,7 @@ fun BalanceHeader(
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -138,7 +137,7 @@ fun BalanceHeader(
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                        .height(20.dp)
+                        .height(16.dp)
                         .clip(RoundedCornerShape(20.dp))
                         .background(Honeydew)
                 ) {
@@ -192,5 +191,7 @@ fun BalanceHeader(
                 )
             }
         }
+
+        Spacer(modifier = Modifier.height(12.dp))
     }
 }
