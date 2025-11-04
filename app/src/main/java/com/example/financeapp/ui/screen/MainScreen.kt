@@ -32,7 +32,7 @@ import com.example.financeapp.ui.theme.Caribbean_green
 
 
 @Composable
-fun MainScreen() {
+fun MainScreen(onLogout: () -> Unit = {}) {
     val navController = rememberNavController()
     Scaffold(
         containerColor = Caribbean_green,
@@ -140,12 +140,12 @@ fun MainScreen() {
                         }
                     },
                     onLogoutClick = {
-                        navController.navigate("login") {
-                            popUpTo("home") { inclusive = true }
-                        }
+                        // Delega al NavController raíz
+                        onLogout()
                     }
                 )
             }
+
 
             composable("edit_profile") {
                 EditProfileScreen(
