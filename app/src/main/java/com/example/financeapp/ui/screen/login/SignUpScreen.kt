@@ -1,8 +1,6 @@
 package com.example.financeapp.ui.screen.login
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,9 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.ui.components.AuthScreenLayout
 import com.example.financeapp.ui.components.AuthTextField
-import com.example.financeapp.ui.components.BottomAuthText
 import com.example.financeapp.ui.components.PasswordTextField
 import com.example.financeapp.ui.components.PrimaryButton
+import com.example.financeapp.ui.components.BottomAuthText
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
@@ -37,12 +35,14 @@ fun SignUpScreen(
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
+    val formValid = fullName.isNotBlank() && email.isNotBlank() && mobileNumber.isNotBlank() && dateOfBirth.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
+
     AuthScreenLayout(title = "Create Account") {
         AuthTextField(
             value = fullName,
             onValueChange = { fullName = it },
             label = "Full Name",
-            placeholder = "example@example.com"
+            placeholder = "Juan Perez"
         )
         Spacer(Modifier.height(16.dp))
         AuthTextField(
@@ -65,15 +65,15 @@ fun SignUpScreen(
             value = dateOfBirth,
             onValueChange = { dateOfBirth = it },
             label = "Date Of Birth",
-            placeholder = "DD / MM / YYYY"
+            placeholder = "DD / MM / YYYY",
+            keyboardType = KeyboardType.Phone
         )
         Spacer(Modifier.height(16.dp))
         PasswordTextField(
             value = password,
             onValueChange = { password = it },
             label = "Password",
-            placeholder = "**********",
-
+            placeholder = "**********"
         )
         Spacer(Modifier.height(16.dp))
         PasswordTextField(
@@ -92,13 +92,9 @@ fun SignUpScreen(
             fontSize = 14.sp,
             text = buildAnnotatedString {
                 append("By continuing, you agree to\n")
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Terms of Use")
-                }
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) { append("Terms of Use") }
                 append(" and ")
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Privacy Policy")
-                }
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) { append("Privacy Policy") }
                 append(".")
             },
             modifier = Modifier.padding(horizontal = 16.dp).align(Alignment.CenterHorizontally),
@@ -107,7 +103,7 @@ fun SignUpScreen(
 
         Spacer(Modifier.height(24.dp))
 
-        PrimaryButton(text = "Sign Up", onClick = onSignUpClick, enabled = fullName.isNotBlank() && email.isNotBlank() && mobileNumber.isNotBlank() && dateOfBirth.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank())
+        PrimaryButton(text = "Sign Up", onClick = onSignUpClick, enabled = formValid)
         Spacer(Modifier.height(16.dp))
 
         BottomAuthText(

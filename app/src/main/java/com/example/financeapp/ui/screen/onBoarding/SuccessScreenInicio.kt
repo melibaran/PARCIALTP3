@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
 import kotlinx.coroutines.delay
@@ -61,7 +62,7 @@ fun SuccessScreenInicio(
                 fontFamily = poppinsFamily,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 40.sp,
-                color = Caribbean_green,
+                color = Honeydew,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 32.dp)
             )

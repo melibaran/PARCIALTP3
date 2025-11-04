@@ -27,7 +27,8 @@ fun NavGraph(startDestination: String = "inicio-pre") {
             SuccessScreenInicio("FinWise",
                 onComplete = {navController.navigate("inicio") {
                     popUpTo("inicio-pre") { inclusive = true }
-                } })
+                } 
+                })
         }
         composable(route= "inicio"){
             InicioFinWise( onLoginClick = {
@@ -109,7 +110,13 @@ fun NavGraph(startDestination: String = "inicio-pre") {
 
 
         composable("main_app") {
-            MainScreen()
+            MainScreen(
+                onLogout = {
+                    navController.navigate("login") {
+                        popUpTo("main_app") { inclusive = true }
+                    }
+                }
+            )
         }
 }
 }

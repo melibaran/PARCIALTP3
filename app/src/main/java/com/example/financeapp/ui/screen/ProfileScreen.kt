@@ -10,6 +10,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
+import com.example.financeapp.ui.screen.login.LogoutDialog
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Void
@@ -36,6 +39,7 @@ fun ProfileScreen(
     onHelpClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {}
 ) {
+    val showLogoutDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -131,7 +135,9 @@ fun ProfileScreen(
                         ProfileMenuItem(
                             icon = R.drawable.logout,
                             text = stringResource(R.string.logout),
-                            onClick = onLogoutClick
+                            onClick = {
+                                showLogoutDialog.value = true
+                            }
                         )
 
                         Spacer(modifier = Modifier.height(24.dp))
@@ -139,7 +145,7 @@ fun ProfileScreen(
                 }
             }
         }
-        
+
         Box(
             modifier = Modifier
                 .align(Alignment.TopCenter)
@@ -156,6 +162,16 @@ fun ProfileScreen(
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape)
+            )
+        }
+
+        if (showLogoutDialog.value) {
+            LogoutDialog(
+                onConfirm = {
+                    showLogoutDialog.value = false
+                    onLogoutClick()
+                },
+                onDismiss = { showLogoutDialog.value = false }
             )
         }
     }
@@ -227,4 +243,3 @@ fun ProfileMenuItemPreview() {
         )
     }
 }
-
