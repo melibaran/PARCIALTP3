@@ -93,12 +93,19 @@ fun PinInputField(
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    LaunchedEffect(Unit) {
+        kotlinx.coroutines.delay(200)
+        try {
+            focusRequester.requestFocus()
+            keyboardController?.show()
+        } catch (_: Exception) {
+        }
+    }
+
     Box(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
-        // Campo de entrada invisible pero focusable para capturar números
         BasicTextField(
             value = pin,
             onValueChange = {
@@ -111,21 +118,25 @@ fun PinInputField(
             ),
             modifier = Modifier
                 .width(1.dp)
-                .height(0.dp)
-                .focusRequester(focusRequester)
-                .focusable()
-                .background(Color.Transparent)
-
+                .height(1.dp)
+                .focusRequester(focusRequester),
+            decorationBox = { innerTextField ->
+                Box(modifier = Modifier.size(0.dp)) {
+                    innerTextField()
+                }
+            }
         )
 
         Row(
-
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    focusRequester.requestFocus()
-                    keyboardController?.show()
+                    try {
+                        focusRequester.requestFocus()
+                        keyboardController?.show()
+                    } catch (_: Exception) {
+                    }
                 },
             horizontalArrangement = Arrangement.Center
         ) {
@@ -136,7 +147,6 @@ fun PinInputField(
                         .size(48.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    // Imagen de fondo tomada de drawable/ellipse_181
                     Image(
                         painter = painterResource(id = R.drawable.ellipse_181),
                         contentDescription = null,
