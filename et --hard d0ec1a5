@@ -1,0 +1,172 @@
+[33m4c48ff1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfix/savings[m[33m, [m[1;31morigin/fix/savings[m[33m)[m fix navhost savings screen
+[33md0ec1a5[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #47 from melibaran/fix/food-category
+[33m59ee04f[m[33m ([m[1;31morigin/fix/food-category[m[33m)[m se arregla algo
+[33m0046598[m Merge pull request #46 from melibaran/fix/main-branch
+[33me26541d[m[33m ([m[1;31morigin/fix/main-branch[m[33m)[m fix
+[33m35fbbc3[m Merge pull request #43 from melibaran/fix/transaction-icons
+[33mbf7f773[m Merge pull request #45 from melibaran/prubaErrores
+[33m2447287[m[33m ([m[1;31morigin/prubaErrores[m[33m)[m Merge branch 'main' into prubaErrores
+[33m1f0066c[m cambios de diseño
+[33mb8015f9[m Merge pull request #44 from melibaran/fix/designDisplayApp
+[33mef0a835[m[33m ([m[1;31morigin/fix/transaction-icons[m[33m)[m Fixed transaction icons
+[33m30a5006[m[33m ([m[1;31morigin/fix/designDisplayApp[m[33m)[m CategoriesScreens-fixDesignV1
+[33m605c6b2[m fix-categoriesScreen
+[33m8893d8c[m Merge pull request #39 from melibaran/feature/add-local-storage-with-room
+[33m01de8e9[m[33m ([m[1;31morigin/feature/add-local-storage-with-room[m[33m)[m Applied fix
+[33m35e9864[m Added default user
+[33m0c80633[m Fixed settings and main
+[33medcd5ef[m Merge branch 'main' into feature/add-local-storage-with-room
+[33m9c896dd[m Merge pull request #41 from melibaran/fix/login/pin
+[33mad05297[m[33m ([m[1;31morigin/fix/login/pin[m[33m)[m se resuelve el pin
+[33m10645ec[m Merge pull request #40 from melibaran/fix/CategorieScreen-MainScreen
+[33m2a6771f[m[33m ([m[1;31morigin/fix/CategorieScreen-MainScreen[m[33m)[m fix navegation categories-icons
+[33m6142bc4[m Added readme
+[33md3600b9[m Added user local storage
+[33mc7fa380[m Merge pull request #38 from melibaran/login/logout
+[33mab11d51[m[33m ([m[1;31morigin/login/logout[m[33m)[m agrego logout
+[33m4482481[m Merge pull request #37 from melibaran/refactor/screen-structure
+[33ma191607[m[33m ([m[1;31morigin/refactor/screen-structure[m[33m)[m fix bell notifications
+[33ma00865c[m composables components
+[33m4ea2e41[m Merge pull request #36 from melibaran/refactor/screen-structure
+[33md2c9e4f[m fix
+[33md713b40[m Refactor: Unify screen structure into a single directory
+[33m15cac74[m Merge pull request #35 from melibaran/feature/add-login-password-v2
+[33m2e4535a[m[33m ([m[1;31morigin/feature/add-login-password-v2[m[33m)[m Merge branch 'main' into feature/add-login-password-v2
+[33m5223f35[m agrego screen onBoarding
+[33mc4f4082[m Merge pull request #34 from melibaran/feature/layers-screen
+[33m4b5ad25[m modificaciones
+[33m30e4b44[m modificaciones
+[33md595de4[m[33m ([m[1;31morigin/feature/layers-screen[m[33m)[m TopBar y BalanceHeader componentizados
+[33mc960197[m perfil hecho
+[33m8716e1d[m Merge branch 'main' into login/password
+[33mbaad068[m perfil hecho
+[33m4836339[m Merge pull request #33 from melibaran/feature/add-fingerprint-screen
+[33mce18f89[m[33m ([m[1;31morigin/feature/add-fingerprint-screen[m[33m)[m Added add fingerprint screen
+[33m0ff665a[m BalanceHeader componentizado
+[33mf74bedb[m checkpoint unificar BalanceHeader
+[33mdd9a295[m TODO optimizar BalanceHeader con el resto de las screens
+[33mec223f9[m Merge pull request #32 from melibaran/fix/categorieScreen
+[33m139931f[m[33m ([m[1;31morigin/fix/categorieScreen[m[33m)[m fix/CategoriesScreens-calendar-iconList
+[33m6906bea[m fix/foodScreen
+[33m3c140ae[m Merge pull request #31 from feature/layers-screen
+[33m1a759ea[m categories y savings grid
+[33me0022d7[m adding screen SuccesfulPasswordChange
+[33mdd00aa1[m adding viewModel and UIstate
+[33m8272ecd[m Merge pull request #30 from melibaran/feature/terms-screen
+[33mce61f08[m[33m ([m[1;31morigin/feature/terms-screen[m[33m)[m Added terms and conditions screen
+[33m3cc2cd9[m Merge pull request #28 from melibaran/fixing-gradleversion
+[33m8fba12a[m[33m ([m[1;31morigin/fixing-gradleversion[m[33m)[m Merge branch 'main' into fixing-gradleversion
+[33md5ecaca[m adding DeteleAccountScreen2
+[33mc1259e0[m adding DeteleAccountScreen
+[33m1b2bac5[m Merge pull request #29 from melibaran/feature/fingerprint
+[33me5e11fe[m[33m ([m[1;31morigin/feature/fingerprint[m[33m)[m Added fingerprinbt deleted screen notification
+[33md948287[m Added FingerPrintDetail screen
+[33m619890b[m Add DeleteAccountScreen
+[33mb1b6082[m Added fingerprint screen
+[33ma9f14d1[m Merge pull request #27 from melibaran/feature/add-security-screens
+[33m725f378[m[33m ([m[1;31morigin/feature/add-security-screens[m[33m)[m Added successfully screen
+[33m6b4a130[m Change pin screen was added.
+[33m3670b0b[m Merge pull request #26 from melibaran/feature/GroceriesScreen-Entertaiment
+[33m89a93cd[m[33m ([m[1;31morigin/feature/GroceriesScreen-Entertaiment[m[33m)[m Merge branch 'main' into feature/GroceriesScreen-Entertaiment
+[33m852c033[m feature-screensMedicine-screensRent-screensGift
+[33m32890ed[m Added security screen
+[33mb4f699b[m feature/ScreensEntertaiment-groceries-calendar
+[33m5d3a389[m Merge pull request #25 from melibaran/feature/add-profile-edit-screen
+[33m0e5d23b[m[33m ([m[1;31morigin/feature/add-profile-edit-screen[m[33m)[m Added edit profile screen
+[33m4f42a82[m Merge pull request #24 from melibaran/fixing-gradleversion
+[33mcf68dc8[m fixing version errors
+[33ma46ba3b[m 2 imports agregados
+[33m630ddcc[m Merge branch 'main' of https://github.com/melibaran/PARCIALTP3
+[33m863a501[m fix/settings-string.xml
+[33m632ff4f[m Merge pull request #23 from melibaran/settingsScren
+[33m067c4b8[m[33m ([m[1;31morigin/settingsScren[m[33m)[m Merge branch 'main' into settingsScren
+[33m7098ccb[m fixinf passwordSettingsScreen
+[33m869b85d[m Merge pull request #22 from melibaran/feature/FoodScreen-build
+[33ma12558b[m[33m ([m[1;31morigin/feature/FoodScreen-build[m[33m)[m Merge branch 'main' into feature/FoodScreen-build
+[33m3146a7e[m feature/FoodScreen-TransportScreen
+[33mbd09a94[m Merge pull request #21 from melibaran/fix/profile-screen
+[33m65b269e[m[33m ([m[1;31morigin/fix/profile-screen[m[33m)[m Deleted scroll in profle screen
+[33m77bc7f1[m Merge pull request #20 from melibaran/settingsScren
+[33mcdc52d5[m ad notificationSettings
+[33mdec6ceb[m Fixed profile image position
+[33mc31f2dc[m Added profile image
+[33ma6e6b0e[m fixed icons of profile screen
+[33me469cb5[m Merge pull request #19 from melibaran/feature/categorieScreen-bottomNotification
+[33m88f29ac[m Added security icon in profile screen
+[33mf2a4ffc[m Merge pull request #18 from melibaran/feature/layers-screen
+[33m46abcf5[m Merge branch 'main' into feature/layers-screen
+[33m575f386[m feature new saving layers 2
+[33m96824bc[m feature new saving layers
+[33m5ca83e1[m[33m ([m[1;31morigin/feature/categorieScreen-bottomNotification[m[33m)[m Catergories
+[33m9c7b465[m Fixed edit profile icon
+[33m28b6808[m Merge pull request #17 from melibaran/feature/add-profile-screen
+[33mde5b64b[m[33m ([m[1;31morigin/feature/add-profile-screen[m[33m)[m Added profile screen
+[33m65e3815[m fix navhost
+[33mff9f175[m[33m ([m[1;31morigin/feature/mainActivity-build[m[33m)[m add navegation
+[33mbbd5ac9[m Merge pull request #16 from melibaran/feature/categorieScreen-bottomNotification
+[33m5806de4[m AddNotificationToTransactionScreen
+[33m91b935c[m feature/categorieScreen-AddBottomNotification
+[33mc1ce338[m cambios
+[33mbca4d5d[m Merge pull request #13 from melibaran/DetailsTrnasactionScreen
+[33m8b3ff1d[m[33m ([m[1;31morigin/DetailsTrnasactionScreen[m[33m)[m Merge branch 'main' into DetailsTrnasactionScreen
+[33m53cc9b4[m[33m ([m[1;31morigin/feature/category-build[m[33m)[m Merge branch 'main' into feature/category-build
+[33m8ea9e99[m Merge pull request #15 from melibaran/feature/category-build
+[33m3485c88[m Added change
+[33m78ac389[m Se agrega navegacion desde login
+[33m3710155[m feature/CategorieScreen-build
+[33ma386b61[m feature/CategorieScreen-build
+[33m01370c4[m Finishing Transaction Screen and integration
+[33mcd79670[m Merge pull request #14 from melibaran/img-home
+[33md3bc83b[m add Income List
+[33m053ab6a[m[33m ([m[1;31morigin/img-home[m[33m)[m screens
+[33mf1304ad[m screens support
+[33mad70d5d[m Add calendar
+[33meb95acb[m Add integration with Backend
+[33me07d578[m Add Cards to Screen
+[33m9c0fb90[m Merge pull request #12 from melibaran/img-home
+[33mc404e83[m Merge branch 'main' into img-home
+[33m469403e[m Home and Account Balance/Food
+[33m9264dbf[m fix design
+[33m1a6b8b2[m cambios del merge
+[33m76094fc[m cambios
+[33m3167ea8[m navegacion entre TransactionScreens
+[33m140fcb6[m[33m ([m[1;31morigin/login/sign-up[m[33m)[m creacion de login/signup
+[33m62f211f[m Merge pull request #11 from melibaran/feature/integrate-api-with-transaction-screen
+[33m2826bfa[m[33m ([m[1;31morigin/feature/integrate-api-with-transaction-screen[m[33m)[m Added integration with transactions endpoint of mock api(Hecho con @MelissaBaran).
+[33m34aed97[m Merge remote-tracking branch 'origin/main' into img-home
+[33m287b278[m Merge remote-tracking branch 'origin/img-home' into img-home
+[33m2fc6e67[m feat(img-home): integrar cambios de UI del home y agregar TestPreviewActivity
+[33md8bcf35[m Merge pull request #10 from melibaran/Meli
+[33m3177dcc[m[33m ([m[1;31morigin/Meli[m[33m)[m cambio barra de progreso
+[33m4d5af89[m Merge pull request #9 from melibaran/Meli
+[33m2ab6fbf[m final transactionScreen
+[33mc9eacca[m screens
+[33m3ed02c3[m Merge pull request #8 from melibaran/Meli
+[33m5f9bb79[m screen home-food-balance n1
+[33m4b23bf8[m cambios diseño
+[33m01c7383[m Merge pull request #7 from melibaran/Meli
+[33m5e508ee[m screen Transaction
+[33ma560223[m fixed error
+[33mfcd62bd[m cambios
+[33meb2157d[m Merge pull request #6 from melibaran/feature/add-retrofit
+[33me8834a8[m img
+[33mb00c7a7[m[33m ([m[1;31morigin/feature/add-retrofit[m[33m)[m Improved models of api
+[33m7b01d87[m Added api models in domain layer
+[33mf8ae3c0[m Added apiClient with retrofit
+[33mf87e801[m changing letters
+[33m575cf58[m Add TransactionScreen
+[33me37b31b[m fix en background color
+[33mca0f024[m Merge pull request #5 from melibaran/nav-bar
+[33mf338e40[m[33m ([m[1;31morigin/nav-bar[m[33m)[m Merge branch 'main' into nav-bar
+[33ma0f16c2[m Fix-navbar-design
+[33m3eea178[m add-integration
+[33m9ef2272[m nav-bar
+[33me3ca3a7[m fixing designs color and letters
+[33m059e134[m Merge pull request #3 from melibaran/change-foler-name
+[33mff25308[m adding structure
+[33m0f8639e[m Merge pull request #2 from melibaran/change-foler-name
+[33m039da84[m add design
+[33mb5c9817[m Merge pull request #1 from melibaran/change-foler-name
+[33m9c6455c[m Renamed project folder
+[33mb7440af[m Agrego estructura base
+[33m4e28ddd[m Initial commit
