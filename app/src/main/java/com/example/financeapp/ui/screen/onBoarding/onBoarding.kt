@@ -30,7 +30,7 @@ import com.example.financeapp.ui.theme.*
 fun OnBoardingScreen(
     title: String,
     imageRes: Int,
-    onNext: () -> Unit
+    onNext: () -> Unit,
 ) {
     AuthScreenLayout(title = title){
 
@@ -64,6 +64,7 @@ fun OnBoardingScreen(
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 18.sp,
                             color = Void,
+                            lineHeight = 10.sp,
                             modifier = Modifier.clickable { onNext() }
                         )
                         Spacer(Modifier.height(12.dp))

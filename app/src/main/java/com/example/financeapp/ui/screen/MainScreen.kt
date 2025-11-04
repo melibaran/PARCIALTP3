@@ -356,6 +356,24 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     }
                 )
             }
+            composable("home") {
+                HomeScreen(navController)
+            }
+            composable("account_balance") {
+                AccountBalanceScreen(navController)
+            }
+            composable("notifications") {
+                NotificationScreen(navController)
+            }
+            composable("help_center") {
+                HelpCenterScreen(navController)
+            }
+            composable("online_support") {
+                OnlineSupportScreen(navController)
+            }
+            composable("chat_detail/{chatId}") { backStackEntry ->
+                ChatDetailScreen(navController, backStackEntry.arguments?.getString("chatId") ?: "")
+            }
         }
     }
 }
