@@ -29,6 +29,7 @@ import com.example.financeapp.ui.navigation.BottomNavItem
 import com.example.financeapp.ui.navigation.BottomNavViewModel
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Void
 
 
 private val BarBackground = Honeydew
@@ -56,9 +57,10 @@ fun FinanceBottomBar(
             .fillMaxWidth()
             .padding(16.dp),
         shape = RoundedCornerShape(24.dp),
-        color = BarBackground,
+        color = Light_green,
         tonalElevation = 0.dp,
-        shadowElevation = 4.dp
+        contentColor = Color.Transparent
+
     ) {
         Row(
             modifier = Modifier
@@ -75,6 +77,7 @@ fun FinanceBottomBar(
                         viewModel.onNavItemSelected(item.route)
                         onNavigate(item.route)
                     }
+
                 )
             }
         }
@@ -103,7 +106,7 @@ private fun BottomNavItem(
             Icon(
                 painter = painterResource(id = item.icon),
                 contentDescription = item.label,
-                tint = if (isSelected) Color.White else InactiveIcon,
+                tint = if (isSelected) Void else Void,
                 modifier = Modifier.size(width = item.width, height = item.height)
             )
         }
