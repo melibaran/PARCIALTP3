@@ -2,6 +2,8 @@ package com.example.financeapp.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.financeapp.data.dao.UserDao
 import com.example.financeapp.data.repository.UserRepositoryImpl
 import com.example.financeapp.domain.infrastructure.api.ApiClient
@@ -27,7 +29,16 @@ import javax.inject.Singleton
             context,
             AppDatabase::class.java,
             "finance-app-db"
-        ).build()
+        )
+        .addCallback(object : RoomDatabase.Callback() {
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
+                db.execSQL(
+                    "INSERT INTO user (email, first_name, last_name, password) VALUES ('test@email.com', 'Test', 'User', '123456')"
+                )
+            }
+        })
+        .build()
     }
 
     @Provides

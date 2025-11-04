@@ -2,6 +2,15 @@
 
 Una aplicación Android de finanzas personales construida con Jetpack Compose y arquitectura MVVM.
 
+## 🔑 Usuario por Defecto
+
+La aplicación incluye un usuario de prueba creado automáticamente:
+
+- **Email:** `test@email.com`
+- **Password:** `123456`
+
+Puedes usar estas credenciales para iniciar sesión sin necesidad de registrarte.
+
 ## 📱 Instrucciones de Uso
 
 ### Primer Uso
