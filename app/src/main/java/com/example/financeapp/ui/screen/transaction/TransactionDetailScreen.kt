@@ -2,6 +2,8 @@ package com.example.financeapp.ui.screen.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -13,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +33,7 @@ import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.components.TransactionListItem
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDatePicker
 import com.example.financeapp.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,6 +48,7 @@ fun TransactionDetailScreen(
     viewModel: TransactionViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    var showDatePicker by remember { mutableStateOf(false) }
 
     val coloresDeCirculo = remember {
         listOf(
@@ -251,13 +256,91 @@ fun TransactionDetailScreen(
                     .background(Honeydew)
                     .padding(16.dp)
             ) {
-                itemsIndexed(filteredTransactions) { index, transaction ->
-                    TransactionListItem(
-                        transaction = transaction,
-                        circleBgColor = coloresDeCirculo[index % coloresDeCirculo.size]
-                    )
+                val availableMonths = viewModel.getAvailableMonths()
+                var globalIndex = 0
+                var displayedMonthCount = 0
+
+                availableMonths.forEach { month ->
+                    val monthTransactions = when {
+                        showIncome -> viewModel.getTransactionsByMonth(month).filter { it.isIncome }
+                        showExpense -> viewModel.getTransactionsByMonth(month).filter { !it.isIncome }
+                        else -> viewModel.getTransactionsByMonth(month)
+                    }
+
+                    if (monthTransactions.isNotEmpty()) {
+                        val isFirstDisplayedMonth = displayedMonthCount == 0
+
+                        item(key = "header_$month") {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        bottom = 8.dp,
+                                        top = if (isFirstDisplayedMonth) 16.dp else 8.dp
+                                    ),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    month,
+                                    style = TextStyle(
+                                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                                        color = Fence_green,
+                                        fontSize = 20.sp,
+                                    ),
+                                    modifier = Modifier.weight(1f)
+                                )
+
+                                if (isFirstDisplayedMonth) {
+                                    val calendarInteractionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+                                    val isCalendarPressed by calendarInteractionSource.collectIsPressedAsState()
+
+                                    val calendarIcon = if (isCalendarPressed) {
+                                        R.drawable.calendar_pressed
+                                    } else {
+                                        R.drawable.calendar_default
+                                    }
+
+                                    IconButton(
+                                        onClick = { showDatePicker = true },
+                                        modifier = Modifier
+                                            .size(32.26.dp, 30.dp)
+                                            .clip(RoundedCornerShape(4.dp)),
+                                        interactionSource = calendarInteractionSource
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(calendarIcon),
+                                            contentDescription = "Calendar",
+                                            tint = Color.Unspecified,
+                                            modifier = Modifier.size(28.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        itemsIndexed(
+                            monthTransactions,
+                            key = { _, item -> item.id }
+                        ) { localIndex, transaction ->
+                            val itemColor = coloresDeCirculo.getOrElse(globalIndex + localIndex) { Light_blue }
+
+                            TransactionListItem(
+                                transaction = transaction,
+                                circleBgColor = itemColor
+                            )
+                        }
+
+                        globalIndex += monthTransactions.size
+                        displayedMonthCount++
+                    }
                 }
             }
         }
     }
+
+    CategoryDatePicker(
+        showDatePicker = showDatePicker,
+        onDismiss = { showDatePicker = false }
+    )
 }
