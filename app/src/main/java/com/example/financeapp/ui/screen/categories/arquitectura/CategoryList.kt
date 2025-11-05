@@ -130,9 +130,6 @@ fun CategoryTransactionList(
             }
         }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
     }
 }
 

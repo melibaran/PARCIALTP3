@@ -1,14 +1,10 @@
 package com.example.financeapp.ui.screen.categories.groceries
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.ui.components.BalanceHeader
-import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.screen.categories.arquitectura.*
 import com.example.financeapp.ui.theme.*
 
@@ -25,52 +21,36 @@ fun GroceriesScreen(
         listOf(Light_blue, Vivid_blue, Ocean_blue, Vivid_blue, Light_blue)
     }
 
-    Column(
-        modifier = modifier.fillMaxSize()
-    ) {
-        TopBar(
-            title = "Groceries",
-            showBackButton = true,
-            centerTitle = true,
-            onBackClick = { navController.navigateUp() },
-            onNotificationClick = { navController.navigate("notifications") },
-            containerColor = Caribbean_green
-        )
+    CategoryDesign(
+        title = "Groceries",
+        content = {
+            BalanceHeader( totalBalance = 7783.00, totalExpense = 1187.40, budget = 20000.00, progressPercentage = 30)
+            CategoryTransactionList(
+                transactions = uiState.transactions.map { groceriesTx ->
+                    CategoryTransactionItem(
+                        id = groceriesTx.id,
+                        title = groceriesTx.title,
+                        dateTime = groceriesTx.dateTime,
+                        amount = groceriesTx.amount,
+                        iconId = groceriesTx.iconId,
+                        month = groceriesTx.month
+                    )
+                },
+                availableMonths = viewModel.getAvailableMonths(),
+                onDatePickerClick = { showDatePicker = true },
+                modifier = Modifier.weight(1f),
+                circleColors = coloresDeCirculo
+            )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        BalanceHeader(
-            totalBalance = uiState.balance,
-            totalExpense = uiState.totalExpense,
-            budget = uiState.budget,
-            progressPercentage = uiState.expensePercentage
-        )
-
-        CategoryTransactionList(
-            transactions = uiState.transactions.map { groceriesTx ->
-                CategoryTransactionItem(
-                    id = groceriesTx.id,
-                    title = groceriesTx.title,
-                    dateTime = groceriesTx.dateTime,
-                    amount = groceriesTx.amount,
-                    iconId = groceriesTx.iconId,
-                    month = groceriesTx.month
-                )
-            },
-            availableMonths = viewModel.getAvailableMonths(),
-            onDatePickerClick = { showDatePicker = true },
-            modifier = Modifier.weight(1f),
-            circleColors = coloresDeCirculo
-        )
-
-        CategoryAddExpensesButton(
-            onClick = { navController.navigate("add_expenses") }
-        )
-    }
+            CategoryAddExpensesButton(
+                onClick = { navController.navigate("add_expenses") }
+            )
+        },
+        navController = navController
+    )
 
     CategoryDatePicker(
         showDatePicker = showDatePicker,
         onDismiss = { showDatePicker = false }
     )
 }
-

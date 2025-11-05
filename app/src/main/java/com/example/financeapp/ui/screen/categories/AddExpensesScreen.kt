@@ -1,7 +1,6 @@
 package com.example.financeapp.ui.screen.categories
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
@@ -19,7 +18,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -65,29 +63,29 @@ fun AddExpensesScreen(
             )
         },
         bottomBar = {
-            // Bottom bar con botón Save centrado
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                   //.background(Honeydew)
-                    .padding(vertical = 16.dp),
-                contentAlignment = Alignment.Center
+                    .background(Honeydew)
+                    .padding(bottom = 24.dp, top = 16.dp),
+                contentAlignment = Alignment.TopCenter
             ) {
                 Button(
                     onClick = { navController.navigateUp() },
                     modifier = Modifier
-                        .width(169.dp)
-                        .height(36.dp),
+                        .padding(horizontal = 95.dp)
+                        .fillMaxWidth()
+                        .height(48.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Caribbean_green
                     ),
-                    shape = RoundedCornerShape(18.dp)
+                    shape = RoundedCornerShape(24.dp)
                 ) {
                     Text(
                         text = stringResource(id = R.string.save_button),
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                            color = Honeydew,
+                            color = Void,
                             fontSize = 16.sp,
                         )
                     )
@@ -108,15 +106,16 @@ fun AddExpensesScreen(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .weight(1f)
                     .padding(horizontal = 16.dp, vertical = 4.dp),
-                shape = RoundedCornerShape(24.dp),
+                shape = RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = Honeydew
                 )
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .padding(horizontal = 24.dp, vertical = 24.dp),
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.spacedBy(20.dp)
@@ -359,8 +358,6 @@ fun AddExpensesScreen(
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 

@@ -1,17 +1,27 @@
 package com.example.financeapp.ui.screen.categories.food
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.financeapp.R
 import com.example.financeapp.ui.components.BalanceHeader
-import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.components.PrimaryButton
 import com.example.financeapp.ui.screen.categories.arquitectura.*
 import com.example.financeapp.ui.theme.*
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodScreen(
     navController: NavController,
@@ -25,35 +35,10 @@ fun FoodScreen(
         listOf(Light_blue, Vivid_blue, Ocean_blue, Vivid_blue, Light_blue)
     }
 
-    Scaffold(
-        topBar = {
-            TopBar(
-                title = "Food",
-                showBackButton = true,
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
-            )
-        },
-        bottomBar = {
-            CategoryAddExpensesButton(
-                onClick = { navController.navigate("add_expenses") }
-            )
-        },
-        containerColor = Caribbean_green
-    ) { paddingValues ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            BalanceHeader(
-                totalBalance = uiState.balance,
-                totalExpense = uiState.totalExpense,
-                budget = uiState.budget,
-                progressPercentage = uiState.expensePercentage
-            )
-
+    CategoryDesign(
+        title = "Food",
+        content = {
+            BalanceHeader( totalBalance = 7783.00, totalExpense = 1187.40, budget = 20000.00, progressPercentage = 30)
             CategoryTransactionList(
                 transactions = uiState.transactions.map { foodTx ->
                     CategoryTransactionItem(
@@ -70,11 +55,15 @@ fun FoodScreen(
                 modifier = Modifier.weight(1f),
                 circleColors = coloresDeCirculo
             )
-        }
-    }
+            CategoryAddExpensesButton(
+                onClick = { navController.navigate("add_expenses") }
+            )
+        },
+        navController = navController
+    )
 
     CategoryDatePicker(
         showDatePicker = showDatePicker,
-        onDismiss = { showDatePicker = false}
-        )
+        onDismiss = { showDatePicker = false }
+    )
 }
