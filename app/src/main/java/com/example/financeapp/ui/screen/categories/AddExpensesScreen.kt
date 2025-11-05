@@ -334,7 +334,7 @@ fun AddExpensesScreen(
                     Spacer(modifier = Modifier.height(28.dp))
                 CategoryAddExpensesButton(
                     onClick = {navController.navigateUp()},
-                    tittle = "Save"
+                    title = "Save"
                 )
                 }
             }

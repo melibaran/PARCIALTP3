@@ -44,7 +44,7 @@ fun GiftScreen(
 
             CategoryAddExpensesButton(
                 onClick = { navController.navigate("add_expenses") },
-                tittle = "Add Expenses"
+                title = "Add Expenses"
             )
         },
         navController = navController

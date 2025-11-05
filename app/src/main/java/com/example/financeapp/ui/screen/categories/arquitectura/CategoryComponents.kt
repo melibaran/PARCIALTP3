@@ -46,7 +46,7 @@ fun CategoryDesign(title: String,content:@Composable ColumnScope.() -> Unit,navC
 @Composable
 fun CategoryAddExpensesButton(
     onClick: () -> Unit,
-    tittle : String
+    title : String
 ) {
     Box(
         modifier = Modifier
@@ -67,7 +67,7 @@ fun CategoryAddExpensesButton(
             shape = RoundedCornerShape(24.dp)
         ) {
             Text(
-                text = tittle,
+                text = title,
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                     color = Honeydew,
@@ -81,7 +81,7 @@ fun CategoryAddExpensesButton(
 @Composable
 fun CategoryAddSavingsButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    title : String
 ) {
     Box(
         modifier = Modifier
@@ -102,7 +102,7 @@ fun CategoryAddSavingsButton(
             shape = RoundedCornerShape(24.dp)
         ) {
             Text(
-                text = "Add Savings",
+                text = title,
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                     color = Honeydew,

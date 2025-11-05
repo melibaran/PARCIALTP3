@@ -22,7 +22,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddExpensesButton
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDatePicker
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddSavingsButton
 import com.example.financeapp.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,36 +58,6 @@ fun AddSavingsScreen(
                 onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
             )
-        },
-        bottomBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Honeydew)
-                    .padding(bottom = 24.dp, top = 16.dp),
-                contentAlignment = Alignment.TopCenter
-            ) {
-                Button(
-                    onClick = { navController.navigateUp() },
-                    modifier = Modifier
-                        .padding(horizontal = 95.dp)
-                        .fillMaxWidth()
-                        .height(48.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Caribbean_green
-                    ),
-                    shape = RoundedCornerShape(24.dp)
-                ) {
-                    Text(
-                        text = "Save",
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                            color = Void,
-                            fontSize = 16.sp,
-                        )
-                    )
-                }
-            }
         },
         containerColor = Caribbean_green
     ) { paddingValues ->
@@ -351,6 +323,13 @@ fun AddSavingsScreen(
                             maxLines = 6
                         )
                     }
+
+                    Spacer(modifier = Modifier.height(28.dp))
+
+                    CategoryAddSavingsButton(
+                        onClick = {navController.navigateUp()},
+                        title = "Save"
+                    )
                 }
             }
         }

@@ -57,7 +57,8 @@ fun CarSavingsScreen(
             )
 
             CategoryAddSavingsButton(
-                onClick = { navController.navigate("add_savings") }
+                onClick = { navController.navigate("add_savings") },
+                title = "Add Savings"
             )
         },
         navController = navController
