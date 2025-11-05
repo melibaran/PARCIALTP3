@@ -305,13 +305,6 @@ fun DeleteAccountScreen(
                             onClick = {
                                 showConfirmDialog = false
                                 onDeleteConfirmed(password)
-                                // Navegar a Welcome y limpiar back stack para que sea la pantalla inicial
-                                navController.navigate("welcome") {
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        inclusive = true
-                                    }
-                                    launchSingleTop = true
-                                }
                              },
                              colors = ButtonDefaults.buttonColors(containerColor = Caribbean_green),
                              modifier = Modifier

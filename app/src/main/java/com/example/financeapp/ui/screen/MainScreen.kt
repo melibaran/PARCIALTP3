@@ -5,7 +5,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,12 +19,12 @@ import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
 import com.example.financeapp.ui.screen.categories.rent.RentScreen
 import com.example.financeapp.ui.screen.categories.gift.GiftScreen
 import com.example.financeapp.ui.screen.categories.entertainment.EntertainmentScreen
-import com.example.financeapp.ui.screen.changepin.ChangePinScreen
+import com.example.financeapp.ui.screen.profile.changepin.ChangePinScreen
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.financeapp.ui.screen.fingerprint.AddFingerprintScreen
-import com.example.financeapp.ui.screen.fingerprint.FingerprintDetailScreen
-import com.example.financeapp.ui.screen.fingerprint.FingerprintScreen
+import com.example.financeapp.ui.screen.profile.fingerprint.AddFingerprintScreen
+import com.example.financeapp.ui.screen.profile.fingerprint.FingerprintDetailScreen
+import com.example.financeapp.ui.screen.profile.fingerprint.FingerprintScreen
 import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
 import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
@@ -38,11 +37,20 @@ import com.example.financeapp.ui.screen.helpcenter.HelpCenterScreen
 import com.example.financeapp.ui.screen.home.HomeScreen
 import com.example.financeapp.ui.screen.notification.NotificationScreen
 import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
+import com.example.financeapp.ui.screen.profile.EditProfileScreen
+import com.example.financeapp.ui.screen.profile.ProfileScreen
+import com.example.financeapp.ui.screen.profile.SecurityScreen
+import com.example.financeapp.ui.screen.profile.TermsAndConditionsScreen
 
+
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.NavGraph.Companion.findStartDestination
 
 @Composable
 fun MainScreen(onLogout: () -> Unit = {}) {
     val navController = rememberNavController()
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.destination?.route
 
     Scaffold(
         topBar = {
@@ -50,15 +58,22 @@ fun MainScreen(onLogout: () -> Unit = {}) {
         },
         bottomBar = {
             FinanceBottomBar(
+                currentRoute = currentRoute,
                 onNavigate = { route ->
-                    navController.navigate(route)
+                    navController.navigate(route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 }
             )
         }
-    ) {
+    ) { innerPadding ->
         NavHost(
             navController = navController,
-            modifier = Modifier.padding(0.dp),
+            modifier = Modifier.padding(innerPadding),
             startDestination = "home",
         ) {
             // Rutas para la bottom navigation
@@ -175,7 +190,24 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 ChatDetailScreen(navController = navController, chatId = chatId)
             }
             composable(route = "profile") {
-                HelpCenterScreen(navController = navController)
+                ProfileScreen(
+                    onEditProfileClick = { navController.navigate("edit_profile") },
+                    onSecurityClick = { navController.navigate("security") },
+                    onSettingClick = {
+                        navController.navigate("settings") {
+                            popUpTo("home") { inclusive = true }
+                        }
+                    },
+                    onHelpClick = {
+                        navController.navigate("help_center") {
+                            popUpTo("home") { inclusive = true }
+                        }
+                    },
+                    onLogoutClick = {
+                        onLogout()
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
+                )
             }
             composable("settings") {
                 SettingsScreen(
@@ -217,7 +249,9 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 DeleteAccountScreen(
                     navController = navController,
                     onBackClick = { navController.navigateUp() },
-                    onDeleteConfirmed = { /* TODO: manejar borrado aquí (ViewModel/API) */ },
+                    onDeleteConfirmed = { password ->
+                        onLogout()
+                    },
                     onCancel = { navController.navigateUp() }
                 )
             }
@@ -243,7 +277,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     onLogoutClick = {
                         // Delega al NavController raíz
                         onLogout()
-                    }
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 
@@ -251,7 +286,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
             composable("edit_profile") {
                 EditProfileScreen(
                     onBackClick = { navController.navigateUp() },
-                    onUpdateClick = { }
+                    onUpdateClick = { navController.navigate("profile") },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 
@@ -260,7 +296,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     onBackClick = { navController.navigateUp() },
                     onChangePinClick = { navController.navigate("change_pin") },
                     onFingerprintClick = { navController.navigate("fingerprint") },
-                    onTermsClick = { navController.navigate("terms_and_conditions") }
+                    onTermsClick = { navController.navigate("terms_and_conditions") },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 
@@ -271,7 +308,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                         navController.navigate("profile") {
                             popUpTo("profile") { inclusive = true }
                         }
-                    }
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 
@@ -283,7 +321,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     },
                     onAddFingerprintClick = {
                         navController.navigate("add_fingerprint")
-                    }
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 
@@ -342,7 +381,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                         navController.navigate("pin_success") {
                             popUpTo("change_pin") { inclusive = true }
                         }
-                    }
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 

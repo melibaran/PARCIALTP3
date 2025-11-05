@@ -1,5 +1,6 @@
 package com.example.financeapp.ui.screen.home
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -285,8 +286,7 @@ fun HomeScreen(navController: NavController) {
                     // Lista de transacciones
                     val filtered = sampleTransactions.filter { it.titleResId != R.string.transport }
                     itemsIndexed(filtered) { index, tx ->
-                        val iconId =
-                            if (tx.iconResId == R.drawable.salary) R.drawable.salary_white else tx.iconResId
+                        val iconId = getIconForCategory(tx.titleResId)
                         val mapped = TxItem(
                             id = "tx_$index",
                             iconId = iconId,
@@ -328,5 +328,18 @@ fun HomeScreen(navController: NavController) {
                 )
             }
         }
+    }
+}
+
+private fun getIconForCategory(@StringRes titleResId: Int): Int {
+    return when (titleResId) {
+        R.string.groceries -> R.drawable.groceries_vector
+        R.string.rent -> R.drawable.rent_vector
+        R.string.transport -> R.drawable.transport_vector
+        R.string.food -> R.drawable.food_vector
+        R.string.entertainment -> R.drawable.entertaiment_vector
+        R.string.gift -> R.drawable.gift_vector
+        R.string.salary -> R.drawable.salary_white
+        else -> R.drawable.expense
     }
 }

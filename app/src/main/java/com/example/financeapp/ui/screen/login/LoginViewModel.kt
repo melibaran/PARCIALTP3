@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financeapp.R
 import com.example.financeapp.core.ResourceProvider
+import com.example.financeapp.domain.infrastructure.api.ApiClient
+import com.example.financeapp.domain.model.LoginRequest as DomainLoginRequest
 import com.example.financeapp.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository,
+    private val apiClient: ApiClient,
     private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
@@ -42,10 +45,17 @@ class LoginViewModel @Inject constructor(
                     return@launch
                 }
 
+                val loginRequest = DomainLoginRequest(
+                    username = email,
+                    password = password
+                )
+                val userToken = apiClient.login(loginRequest)
+
                 _loginState.value = LoginState.Success(
                     userId = user.id,
                     email = user.email,
-                    fullName = "${user.firstName} ${user.lastName}"
+                    fullName = "${user.firstName} ${user.lastName}",
+                    token = userToken.token
                 )
 
             } catch (e: Exception) {
@@ -67,7 +77,8 @@ sealed class LoginState {
     data class Success(
         val userId: Int,
         val email: String,
-        val fullName: String
+        val fullName: String,
+        val token: String? = null
     ) : LoginState()
     data class Error(val message: String) : LoginState()
 }

@@ -27,12 +27,12 @@ class TransactionViewModel @Inject constructor(
     }
 
 
-    fun loadTransactions(apiKey: String = "123456789") {
+    fun loadTransactions() {
         viewModelScope.launch {
             try {
                 _uiState.value = _uiState.value.copy(isLoading = true, error = null)
                 
-                val userTransactions = apiClient.getTransactions(apiKey)
+                val userTransactions = apiClient.getTransactions()
                 
                 val transactionItems = TransactionMapper.toTransactionItems(userTransactions.transactions)
                 

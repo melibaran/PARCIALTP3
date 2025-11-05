@@ -31,10 +31,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.financeapp.ui.components.AuthScreenLayout
 import com.example.financeapp.ui.components.AuthTextField
+import com.example.financeapp.ui.components.BottomDesign
 import com.example.financeapp.ui.components.PasswordTextField
 import com.example.financeapp.ui.components.PrimaryButton
 import com.example.financeapp.ui.components.SecondaryButton
 import com.example.financeapp.ui.theme.Ocean_blue
+import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
 
@@ -137,6 +139,12 @@ fun LoginScreen(
             }
             Text(annotatedText)
         }
+
+        BottomDesign(
+            onSignUpClick = { onSignUpClick() },
+            modifier = Modifier ,
+            linkColor = Vivid_blue
+        )
     }
 }
 

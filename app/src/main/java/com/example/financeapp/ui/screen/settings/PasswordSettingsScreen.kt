@@ -41,15 +41,6 @@ fun PasswordSettingsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(uiState.errorMessage) {
-        uiState.errorMessage?.let {
-            snackbarHostState.showSnackbar(it)
-            viewModel.clearError()
-        }
-    }
-
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
             viewModel.resetSuccess()
@@ -59,8 +50,47 @@ fun PasswordSettingsScreen(
         }
     }
 
+    if (uiState.errorMessage != null) {
+        AlertDialog(
+            onDismissRequest = { viewModel.clearError() },
+            title = {
+                Text(
+                    text = "Error",
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                        fontSize = 20.sp,
+                        color = Void
+                    )
+                )
+            },
+            text = {
+                Text(
+                    text = uiState.errorMessage ?: "",
+                    style = TextStyle(
+                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                        fontSize = 16.sp,
+                        color = Void
+                    )
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = { viewModel.clearError() }) {
+                    Text(
+                        text = "OK",
+                        style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                            fontSize = 16.sp,
+                            color = Caribbean_green
+                        )
+                    )
+                }
+            },
+            containerColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        )
+    }
+
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopBar(
                 title = stringResource(R.string.password_settings),

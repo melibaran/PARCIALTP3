@@ -1,6 +1,7 @@
 package com.example.financeapp.ui.screen.accountbalance
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -43,7 +44,9 @@ fun AccountBalanceScreen(navController: NavController) {
             TopBar(
                 title = stringResource(R.string.account_balance_title),
                 showBackButton = true,
-                onBackClick = { navController.popBackStack() },
+                onBackClick = { navController.navigate("home") {
+                    popUpTo("home") { inclusive = true }
+                } },
                 onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
             )
@@ -125,7 +128,7 @@ fun AccountBalanceScreen(navController: NavController) {
 
                 // Lista de transacciones
                 itemsIndexed(sampleTransactions) { index, transaction ->
-                    val iconId = if (transaction.iconResId == R.drawable.salary) R.drawable.salary_white else transaction.iconResId
+                    val iconId = getIconForCategory(transaction.titleResId)
                     val mapped = TxItem(
                         id = "tx_$index",
                         iconId = iconId,
@@ -153,6 +156,19 @@ fun AccountBalanceScreen(navController: NavController) {
                 }
             }
         }
+    }
+}
+
+private fun getIconForCategory(@StringRes titleResId: Int): Int {
+    return when (titleResId) {
+        R.string.groceries -> R.drawable.groceries_vector
+        R.string.rent -> R.drawable.rent_vector
+        R.string.transport -> R.drawable.transport_vector
+        R.string.food -> R.drawable.food_vector
+        R.string.entertainment -> R.drawable.entertaiment_vector
+        R.string.gift -> R.drawable.gift_vector
+        R.string.salary -> R.drawable.salary_white
+        else -> R.drawable.expense
     }
 }
 
