@@ -177,11 +177,10 @@ fun ProfileScreen(
             }
         }
 
-        // avatar centrado (se mantiene la superposición)
         Box(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = 130.dp)
+                .offset(y = 80.dp)
                 .size(100.dp)
                 .clip(CircleShape)
                 .background(Color.White),
