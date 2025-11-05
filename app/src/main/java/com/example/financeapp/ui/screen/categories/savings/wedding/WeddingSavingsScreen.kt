@@ -99,25 +99,14 @@ fun WeddingSavingsScreen(
                                 modifier = Modifier.weight(1f)
                             ) {
                                 // Goal section
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.saving_default),
-                                        contentDescription = "Goal",
-                                        modifier = Modifier.size(16.dp),
-                                        tint = Void
+                                Text(
+                                    text = "Goal",
+                                    style = TextStyle(
+                                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                        fontSize = 12.sp,
+                                        color = Void
                                     )
-                                    Text(
-                                        text = "Goal",
-                                        style = TextStyle(
-                                            fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                            fontSize = 12.sp,
-                                            color = Void
-                                        )
-                                    )
-                                }
+                                )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = "$${String.format("%.2f", goal.goalAmount)}",
@@ -131,25 +120,14 @@ fun WeddingSavingsScreen(
                                 Spacer(modifier = Modifier.height(16.dp))
 
                                 // Amount Saved section
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.saving_default),
-                                        contentDescription = "Amount Saved",
-                                        modifier = Modifier.size(16.dp),
-                                        tint = Void
+                                Text(
+                                    text = "Amount Saved",
+                                    style = TextStyle(
+                                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                        fontSize = 12.sp,
+                                        color = Void
                                     )
-                                    Text(
-                                        text = "Amount Saved",
-                                        style = TextStyle(
-                                            fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                            fontSize = 12.sp,
-                                            color = Void
-                                        )
-                                    )
-                                }
+                                )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = "$${String.format("%.2f", goal.savedAmount)}",
