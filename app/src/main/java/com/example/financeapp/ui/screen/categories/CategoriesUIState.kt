@@ -7,7 +7,8 @@ data class CategoriesUIState(
     val expensePercentage: Int = 30,
     val categories: List<CategoryItem> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val showDialog: Boolean = false
 )
 
 data class CategoryItem(
