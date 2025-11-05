@@ -1,5 +1,6 @@
 package com.example.financeapp.ui.screen.categories.savings.newHouse
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -284,19 +286,13 @@ fun HouseSavingsScreen(
                                         color = Void
                                     )
                                 )
-                                Icon(
-                                    painter = painterResource(id = R.drawable.calendar_default),
-                                    contentDescription = "Calendar",
-                                    modifier = Modifier.size(16.dp),
-                                    tint = Void
-                                )
                             }
 
                             Spacer(modifier = Modifier.height(12.dp))
                         }
 
                         items(deposits) { deposit ->
-                            DepositItem(deposit = deposit, iconId = goal.iconId)
+                            DepositItem(deposit = deposit, iconRes = R.drawable.newhome)
                             Spacer(modifier = Modifier.height(8.dp))
                         }
                     }
@@ -331,7 +327,7 @@ fun HouseSavingsScreen(
 }
 
 @Composable
-private fun DepositItem(deposit: Deposit, iconId: Int) {
+private fun DepositItem(deposit: Deposit, iconRes: Int = R.drawable.newhome) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -345,16 +341,16 @@ private fun DepositItem(deposit: Deposit, iconId: Int) {
         ) {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(52.dp) // igual que Travel
                     .clip(CircleShape)
                     .background(Light_blue),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = iconId),
+                Image(
+                    painter = painterResource(id = iconRes),
                     contentDescription = "Transaction",
-                    modifier = Modifier.size(20.dp),
-                    tint = Color.White
+                    modifier = Modifier.size(28.dp), // igual que Travel
+                    contentScale = androidx.compose.ui.layout.ContentScale.Fit
                 )
             }
             Column {

@@ -284,12 +284,7 @@ fun WeddingSavingsScreen(
                                         color = Void
                                     )
                                 )
-                                Icon(
-                                    painter = painterResource(id = R.drawable.calendar_default),
-                                    contentDescription = "Calendar",
-                                    modifier = Modifier.size(16.dp),
-                                    tint = Void
-                                )
+
                             }
 
                             Spacer(modifier = Modifier.height(12.dp))
