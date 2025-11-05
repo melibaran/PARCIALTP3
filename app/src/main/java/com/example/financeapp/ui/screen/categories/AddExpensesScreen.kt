@@ -112,7 +112,7 @@ fun AddExpensesScreen(
                 colors = CardDefaults.cardColors(
                     containerColor = Honeydew
                 )
-            ) {
+           ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()

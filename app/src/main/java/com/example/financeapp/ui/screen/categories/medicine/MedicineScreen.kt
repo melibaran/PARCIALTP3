@@ -43,7 +43,8 @@ fun MedicineScreen(
             )
 
             CategoryAddExpensesButton(
-                onClick = { navController.navigate("add_expenses") }
+                onClick = { navController.navigate("add_expenses") },
+                tittle = "Add Expenses"
             )
         },
         navController = navController

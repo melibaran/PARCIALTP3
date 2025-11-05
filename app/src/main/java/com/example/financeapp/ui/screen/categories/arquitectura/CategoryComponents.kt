@@ -46,7 +46,7 @@ fun CategoryDesign(title: String,content:@Composable ColumnScope.() -> Unit,navC
 @Composable
 fun CategoryAddExpensesButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    tittle : String
 ) {
     Box(
         modifier = Modifier
@@ -67,7 +67,7 @@ fun CategoryAddExpensesButton(
             shape = RoundedCornerShape(24.dp)
         ) {
             Text(
-                text = "Add Expenses",
+                text = tittle,
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                     color = Void,
