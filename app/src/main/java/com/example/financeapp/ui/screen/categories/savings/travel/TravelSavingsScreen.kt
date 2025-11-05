@@ -305,7 +305,7 @@ fun TravelSavingsScreen(
                                 style = TextStyle(
                                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                                     fontSize = 16.sp,
-                                    color = Color.White
+                                    color = Void
                                 )
                             )
                         }
