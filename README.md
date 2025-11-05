@@ -16,6 +16,10 @@ Puedes usar estas credenciales para iniciar sesión sin necesidad de registrarte
 ### Primer Uso
 Para utilizar la aplicación por primera vez, debes seguir estos pasos:
 
+## Aclaracion
+Para ir a las transactions de la seccion 9.3.2 , ir a Transaction y hacer click en "Total Balance"
+<img width="227" height="158" alt="Captura de pantalla 2025-11-05 a la(s) 1 10 26 a  m" src="https://github.com/user-attachments/assets/5e896819-5b44-423a-8a29-3b28fdec5ca4" />
+
 1. **Registro de Usuario**
    - Al abrir la aplicación, verás la pantalla de Login
    - Presiona el botón "Sign Up" para crear una cuenta
