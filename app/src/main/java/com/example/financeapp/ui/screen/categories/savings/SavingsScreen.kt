@@ -1,33 +1,30 @@
 package com.example.financeapp.ui.screen.savings
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.BalanceHeader
 import com.example.financeapp.ui.components.CategoryItem
-import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddSavingsButton
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDesign
 import com.example.financeapp.ui.screen.categories.savings.SavingsGoal
 import com.example.financeapp.ui.screen.categories.savings.SavingsViewModel
-import com.example.financeapp.ui.theme.*
+import com.example.financeapp.ui.theme.Honeydew
 
 @Composable
 fun SavingsScreen(

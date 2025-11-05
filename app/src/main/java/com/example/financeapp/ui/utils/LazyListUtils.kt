@@ -1,8 +1,10 @@
 package com.example.financeapp.ui.utils
 
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.runtime.*
-import kotlinx.coroutines.flow.distinctUntilChanged
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 
 /**
  * Extension function para detectar scroll al final de la lista

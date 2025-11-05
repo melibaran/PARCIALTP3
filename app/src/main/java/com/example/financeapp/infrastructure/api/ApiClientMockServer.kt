@@ -3,10 +3,8 @@ package com.example.financeapp.infrastructure.api
 import com.example.financeapp.core.ApiKeyInterceptor
 import com.example.financeapp.core.Config
 import com.example.financeapp.domain.infrastructure.api.ApiClient
-import com.example.financeapp.domain.model.LoginRequest as DomainLoginRequest
-import com.example.financeapp.domain.model.SignUpRequest as DomainSignUpRequest
-import com.example.financeapp.domain.model.UserToken
 import com.example.financeapp.domain.model.UserProfile
+import com.example.financeapp.domain.model.UserToken
 import com.example.financeapp.domain.model.UserTransactions
 import com.example.financeapp.infrastructure.api.request.LoginRequest
 import com.example.financeapp.infrastructure.api.request.SignUpRequest
@@ -14,6 +12,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import com.example.financeapp.domain.model.LoginRequest as DomainLoginRequest
+import com.example.financeapp.domain.model.SignUpRequest as DomainSignUpRequest
 
 class ApiClientMockServer(
     private val baseUrl: String = Config.baseUrl

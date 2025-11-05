@@ -1,39 +1,32 @@
 package com.example.financeapp.ui.screen
 
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.example.financeapp.ui.screen.categories.savings.AddExpensesSaving
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.R
-import androidx.compose.ui.unit.dp
 import com.example.financeapp.ui.components.FinanceBottomBar
+import com.example.financeapp.ui.screen.accountbalance.AccountBalanceScreen
 import com.example.financeapp.ui.screen.categories.AddExpensesScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
-import com.example.financeapp.ui.screen.categories.food.FoodScreen
-import com.example.financeapp.ui.screen.categories.transport.TransportScreen
-import com.example.financeapp.ui.screen.categories.medicine.MedicineScreen
-import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
-import com.example.financeapp.ui.screen.categories.rent.RentScreen
-import com.example.financeapp.ui.screen.categories.gift.GiftScreen
 import com.example.financeapp.ui.screen.categories.entertainment.EntertainmentScreen
-import com.example.financeapp.ui.screen.profile.changepin.ChangePinScreen
-import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.financeapp.ui.screen.profile.fingerprint.AddFingerprintScreen
-import com.example.financeapp.ui.screen.profile.fingerprint.FingerprintDetailScreen
-import com.example.financeapp.ui.screen.profile.fingerprint.FingerprintScreen
-import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
-import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
-import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
-import com.example.financeapp.ui.screen.settings.SettingsScreen
-import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
-import com.example.financeapp.ui.screen.transaction.TransactionScreen
-import com.example.financeapp.ui.screen.accountbalance.AccountBalanceScreen
+import com.example.financeapp.ui.screen.categories.food.FoodScreen
+import com.example.financeapp.ui.screen.categories.gift.GiftScreen
+import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
+import com.example.financeapp.ui.screen.categories.medicine.MedicineScreen
+import com.example.financeapp.ui.screen.categories.rent.RentScreen
+import com.example.financeapp.ui.screen.categories.savings.AddExpensesSaving
+import com.example.financeapp.ui.screen.categories.transport.TransportScreen
 import com.example.financeapp.ui.screen.chatdetail.ChatDetailScreen
 import com.example.financeapp.ui.screen.helpcenter.HelpCenterScreen
 import com.example.financeapp.ui.screen.home.HomeScreen
@@ -43,10 +36,16 @@ import com.example.financeapp.ui.screen.profile.EditProfileScreen
 import com.example.financeapp.ui.screen.profile.ProfileScreen
 import com.example.financeapp.ui.screen.profile.SecurityScreen
 import com.example.financeapp.ui.screen.profile.TermsAndConditionsScreen
-
-
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.example.financeapp.ui.screen.profile.changepin.ChangePinScreen
+import com.example.financeapp.ui.screen.profile.fingerprint.AddFingerprintScreen
+import com.example.financeapp.ui.screen.profile.fingerprint.FingerprintDetailScreen
+import com.example.financeapp.ui.screen.profile.fingerprint.FingerprintScreen
+import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
+import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
+import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
+import com.example.financeapp.ui.screen.settings.SettingsScreen
+import com.example.financeapp.ui.screen.transaction.TransactionDetailScreen
+import com.example.financeapp.ui.screen.transaction.TransactionScreen
 
 @Composable
 fun MainScreen(onLogout: () -> Unit = {}) {

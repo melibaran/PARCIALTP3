@@ -1,6 +1,5 @@
 package com.example.financeapp.infrastructure.api.response
 
-import com.example.financeapp.domain.model.UserAddress
 import com.example.financeapp.domain.model.UserProfile
 
 data class UserResponse(

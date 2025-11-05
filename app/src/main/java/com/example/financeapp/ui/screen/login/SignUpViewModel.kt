@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.financeapp.R
 import com.example.financeapp.core.ResourceProvider
 import com.example.financeapp.domain.infrastructure.api.ApiClient
-import com.example.financeapp.domain.model.SignUpRequest as DomainSignUpRequest
 import com.example.financeapp.domain.model.User
 import com.example.financeapp.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.example.financeapp.domain.model.SignUpRequest as DomainSignUpRequest
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(

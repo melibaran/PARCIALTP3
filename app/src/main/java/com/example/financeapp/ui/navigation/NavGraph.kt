@@ -8,19 +8,13 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.screen.MainScreen
 import com.example.financeapp.ui.screen.SuccessScreen
 import com.example.financeapp.ui.screen.login.ForgotPasswordScreen
-import com.example.financeapp.ui.screen.login.NewPasswordScreen
 import com.example.financeapp.ui.screen.login.LoginScreen
+import com.example.financeapp.ui.screen.login.NewPasswordScreen
 import com.example.financeapp.ui.screen.login.SecurityPinScreen
 import com.example.financeapp.ui.screen.login.SignUpScreen
 import com.example.financeapp.ui.screen.onBoarding.InicioFinWise
 import com.example.financeapp.ui.screen.onBoarding.OnBoardingScreen
 import com.example.financeapp.ui.screen.onBoarding.SuccessScreenInicio
-import com.example.financeapp.ui.screen.accountbalance.AccountBalanceScreen
-import com.example.financeapp.ui.screen.chatdetail.ChatDetailScreen
-import com.example.financeapp.ui.screen.helpcenter.HelpCenterScreen
-import com.example.financeapp.ui.screen.home.HomeScreen
-import com.example.financeapp.ui.screen.notification.NotificationScreen
-import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
 
 
 private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")

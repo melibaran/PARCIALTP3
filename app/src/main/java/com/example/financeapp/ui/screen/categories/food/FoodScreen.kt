@@ -1,26 +1,23 @@
 package com.example.financeapp.ui.screen.categories.food
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.financeapp.R
 import com.example.financeapp.ui.components.BalanceHeader
-import com.example.financeapp.ui.components.PrimaryButton
-import com.example.financeapp.ui.screen.categories.arquitectura.*
-import com.example.financeapp.ui.theme.*
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddExpensesButton
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDatePicker
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDesign
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryTransactionItem
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryTransactionList
+import com.example.financeapp.ui.theme.Light_blue
+import com.example.financeapp.ui.theme.Ocean_blue
+import com.example.financeapp.ui.theme.Vivid_blue
 
 @Composable
 fun FoodScreen(

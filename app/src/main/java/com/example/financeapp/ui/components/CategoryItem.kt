@@ -26,22 +26,7 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Light_blue
 import com.example.financeapp.ui.theme.Vivid_blue
 
-/**
- * Componente reutilizable para mostrar una categoría de gastos
- *
- * Implementa el patrón de diseño State Hoisting y maneja estados interactivos (pressed/default)
- *
- * @param icon Resource ID del icono en estado default
- * @param name Nombre de la categoría a mostrar
- * @param onClick Callback ejecutado al hacer click en el item
- *
- * @sample
- * CategoryItem(
- *     icon = R.drawable.food_default,
- *     name = "Food",
- *     onClick = { navController.navigate("food") }
- * )
- */
+
 @Composable
 fun CategoryItem(
     icon: Int,

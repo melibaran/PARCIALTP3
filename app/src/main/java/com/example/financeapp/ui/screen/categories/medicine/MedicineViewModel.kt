@@ -1,12 +1,12 @@
 package com.example.financeapp.ui.screen.categories.medicine
 
 import androidx.lifecycle.ViewModel
+import com.example.financeapp.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
-import com.example.financeapp.R
 
 @HiltViewModel
 class MedicineViewModel @Inject constructor() : ViewModel() {

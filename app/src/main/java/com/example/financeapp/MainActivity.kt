@@ -7,9 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.financeapp.ui.navigation.NavGraph
-
-import com.example.financeapp.ui.theme.FinanceAppTheme
 import com.example.financeapp.ui.screen.login.LoginScreen
+import com.example.financeapp.ui.theme.FinanceAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

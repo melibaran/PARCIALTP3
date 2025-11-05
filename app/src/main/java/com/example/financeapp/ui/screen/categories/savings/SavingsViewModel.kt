@@ -1,6 +1,5 @@
 package com.example.financeapp.ui.screen.categories.savings
 
-import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

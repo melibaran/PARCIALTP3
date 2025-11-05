@@ -1,7 +1,7 @@
 package com.example.financeapp.infrastructure.api.response
 
-import com.example.financeapp.domain.model.Transaction as DomainTransaction
 import com.example.financeapp.domain.model.UserTransactions
+import com.example.financeapp.domain.model.Transaction as DomainTransaction
 
 data class TransactionsResponse(
     val user_id: Int,
