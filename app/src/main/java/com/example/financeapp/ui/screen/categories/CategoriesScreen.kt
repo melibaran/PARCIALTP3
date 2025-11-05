@@ -96,7 +96,7 @@ fun CategoriesScreen(
                 .padding(paddingValues)
         ) {
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             BalanceHeader( totalBalance = 7783.00, totalExpense = 1187.40, budget = 20000.00, progressPercentage = 30)
             // Categories Grid
             LazyVerticalGrid(
@@ -107,9 +107,9 @@ fun CategoriesScreen(
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
                     .background(Honeydew)
-                    .padding(horizontal = 24.dp, vertical = 20.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(20.dp),
+                    .padding(horizontal = 10.dp, vertical = 28.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
                 userScrollEnabled = false
             ) {
                 items(uiState.categories) { category ->

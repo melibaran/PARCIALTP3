@@ -4,12 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddExpensesButton
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDatePicker
 import com.example.financeapp.ui.theme.*
 
@@ -50,76 +54,47 @@ fun AddExpensesScreen(
         "Saving",
         "Entertainment"
     )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Caribbean_green)
+            .systemBarsPadding()
+    ) {
+        Column(modifier = Modifier.fillMaxSize()) {
 
-    Scaffold(
-        topBar = {
-            TopBar(
-                title = stringResource(id = R.string.add_expenses),
-                showBackButton = true,
-                centerTitle = true,
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
-            )
-        },
-        bottomBar = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Honeydew)
-                    .padding(bottom = 24.dp, top = 16.dp),
-                contentAlignment = Alignment.TopCenter
+                    .height(100.dp)
+                    .background(Caribbean_green),
+                contentAlignment = Alignment.Center
             ) {
-                Button(
-                    onClick = { navController.navigateUp() },
-                    modifier = Modifier
-                        .padding(horizontal = 95.dp)
-                        .fillMaxWidth()
-                        .height(48.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Caribbean_green
-                    ),
-                    shape = RoundedCornerShape(24.dp)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.save_button),
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                            color = Void,
-                            fontSize = 16.sp,
-                        )
-                    )
-                }
+                TopBar(
+                    title = stringResource(id = R.string.add_expenses),
+                    showBackButton = true,
+                    centerTitle = true,
+                    onBackClick = { navController.navigateUp() },
+                    onNotificationClick = { navController.navigate("notifications") },
+                    containerColor = Color.Transparent
+                )
             }
-        },
-        containerColor = Caribbean_green
-    ) { paddingValues ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(16.dp))
 
-            // Card principal con fondo Honeydew
+
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .padding(horizontal = 16.dp, vertical = 4.dp),
-                shape = RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Honeydew
-                )
+                    .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
+                colors = CardDefaults.cardColors(containerColor = Honeydew)
             ) {
                 Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 24.dp, vertical = 24.dp),
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
-                ) {
+                        .padding(24.dp)
+                        .verticalScroll(rememberScrollState())
+                )
+   {
                     // Date Field
                     Column {
                         Text(
@@ -174,7 +149,7 @@ fun AddExpensesScreen(
                             singleLine = true
                         )
                     }
-
+                     Spacer(modifier = Modifier.height(20.dp))
                     // Category Dropdown
                     Column {
                         Text(
@@ -249,7 +224,7 @@ fun AddExpensesScreen(
                             }
                         }
                     }
-
+                            Spacer(modifier = Modifier.height(20.dp))
                     // Amount Field
                     Column {
                         Text(
@@ -283,7 +258,7 @@ fun AddExpensesScreen(
                             singleLine = true
                         )
                     }
-
+                        Spacer(modifier = Modifier.height(20.dp))
                     // Expense Title Field
                     Column {
                         Text(
@@ -316,8 +291,8 @@ fun AddExpensesScreen(
                             singleLine = true
                         )
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                    // Message Field (multiline)
                     Column {
                         OutlinedTextField(
                             value = message,
@@ -356,6 +331,11 @@ fun AddExpensesScreen(
                             maxLines = 6
                         )
                     }
+                    Spacer(modifier = Modifier.height(28.dp))
+                CategoryAddExpensesButton(
+                    onClick = {navController.navigateUp()},
+                    tittle = "Save"
+                )
                 }
             }
         }
