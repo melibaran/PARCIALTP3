@@ -41,7 +41,6 @@ fun NotificationSettingsScreen1(
                 title = stringResource(R.string.notifications_settings),
                 showBackButton = true,
                 centerTitle = true,
-                onBackClick = onBackClick,
                 onNotificationClick = onNotificationClick,
                 containerColor = Caribbean_green
             )

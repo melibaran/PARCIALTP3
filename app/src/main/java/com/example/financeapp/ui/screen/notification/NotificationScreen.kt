@@ -110,8 +110,7 @@ fun NotificationScreen(navController: NavController) {
                 centerTitle = true,
                 onBackClick = { navController.popBackStack() },
                 onNotificationClick = { /* No-op */ },
-                containerColor = Caribbean_green
-            )
+                containerColor = Caribbean_green)
         },
         containerColor = Caribbean_green
     ) { innerPadding ->
@@ -236,4 +235,5 @@ private fun NotificationItemCard(notification: NotificationItem) {
         )
     }
 }
+
 

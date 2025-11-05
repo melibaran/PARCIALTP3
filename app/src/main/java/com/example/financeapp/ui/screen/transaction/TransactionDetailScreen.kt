@@ -78,7 +78,6 @@ fun TransactionDetailScreen(
             title = "Transaction",
             showBackButton = true,
             centerTitle = true,
-            onBackClick = { navController.navigateUp() },
             onNotificationClick = { navController.navigate("notifications") },
             containerColor = Caribbean_green
         )

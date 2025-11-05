@@ -97,7 +97,6 @@ fun PasswordSettingsScreen(
                 showBackButton = true,
                 centerTitle = true,
                 onBackClick = onBackClick,
-                onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
             )
         }

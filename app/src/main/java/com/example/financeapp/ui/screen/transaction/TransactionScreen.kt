@@ -85,7 +85,6 @@ fun TransactionScreen(
                 showBackButton = true,
                 centerTitle = true,
                 onBackClick = { navController.navigate("home") {
-                    popUpTo("home") { inclusive = true }
                 } },
                 onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
