@@ -49,7 +49,7 @@ fun BalanceHeader(
     }
 
     Column(modifier = modifier) {
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         // Total Balance y Total Expense Row
         Row(
@@ -59,7 +59,7 @@ fun BalanceHeader(
         ) {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(2.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -98,7 +98,7 @@ fun BalanceHeader(
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(2.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -128,9 +128,11 @@ fun BalanceHeader(
             }
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
         // Progress Bar
         Column(
-            modifier = Modifier.padding(horizontal = 21.dp)
+            modifier = Modifier.padding(horizontal = 16.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -175,7 +177,7 @@ fun BalanceHeader(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .padding(top = 12.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -194,6 +196,6 @@ fun BalanceHeader(
             }
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
