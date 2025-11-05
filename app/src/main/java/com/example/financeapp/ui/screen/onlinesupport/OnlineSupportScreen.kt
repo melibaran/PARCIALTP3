@@ -92,7 +92,8 @@ fun OnlineSupportScreen(navController: NavController) {
                 centerTitle = true,
                 onBackClick = { navController.popBackStack() },
                 onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green)
+                containerColor = Caribbean_green
+            )
         },
         containerColor = Caribbean_green
     ) { innerPadding ->
@@ -232,5 +233,4 @@ private fun ChatItemCard(
         }
     }
 }
-
 

@@ -47,7 +47,8 @@ fun SettingsScreen(
                     popUpTo("home") { inclusive = true }
                 } },
                 onNotificationClick = onNotificationClick,
-                containerColor = Caribbean_green)
+                containerColor = Caribbean_green
+            )
             // Card principal
             Box(
                 modifier = Modifier
