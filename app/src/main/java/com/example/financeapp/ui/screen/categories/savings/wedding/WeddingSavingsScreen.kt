@@ -57,7 +57,7 @@ fun WeddingSavingsScreen(
             )
 
             CategoryAddSavingsButton(
-                onClick = { /* TODO: Navigate to add deposit screen */ }
+                onClick = { navController.navigate("add_savings") }
             )
         },
         navController = navController

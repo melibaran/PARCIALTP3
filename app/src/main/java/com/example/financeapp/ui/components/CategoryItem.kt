@@ -102,6 +102,10 @@ private fun getCategoryIconPressed(name: String): Int {
         "Gift" -> R.drawable.gift_pressed
         "Entertainment" -> R.drawable.entertaiment_pressed
         "Savings" -> R.drawable.saving_pressed
+        "Car" -> R.drawable.car_pressed
+        "New House" -> R.drawable.newhome_pressed
+        "Travel" -> R.drawable.travel_pressed
+        "Wedding" -> R.drawable.wedding_pressed
         else -> R.drawable.food_pressed
     }
 }

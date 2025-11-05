@@ -12,6 +12,7 @@ import com.example.financeapp.R
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.screen.categories.AddExpensesScreen
+import com.example.financeapp.ui.screen.categories.AddSavingsScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
 import com.example.financeapp.ui.screen.categories.food.FoodScreen
 import com.example.financeapp.ui.screen.categories.transport.TransportScreen
@@ -175,6 +176,10 @@ fun MainScreen(onLogout: () -> Unit = {}) {
 
             composable("add_expenses") {
                 AddExpensesScreen(navController = navController)
+            }
+
+            composable("add_savings") {
+                AddSavingsScreen(navController = navController)
             }
 
             composable(route = "notifications") {

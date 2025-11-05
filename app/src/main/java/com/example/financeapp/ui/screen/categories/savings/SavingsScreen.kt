@@ -23,6 +23,7 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.components.BalanceHeader
 import com.example.financeapp.ui.components.CategoryItem
 import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddMoreButton
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddSavingsButton
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDesign
 import com.example.financeapp.ui.screen.categories.savings.SavingsGoal
@@ -122,7 +123,7 @@ fun SavingsScreen(
                 }
             }
 
-            CategoryAddSavingsButton(
+            CategoryAddMoreButton(
                 onClick = { /* TODO: Navigate to add savings screen */ }
             )
         },
