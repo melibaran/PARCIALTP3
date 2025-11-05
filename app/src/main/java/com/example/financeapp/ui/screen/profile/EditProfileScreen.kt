@@ -104,7 +104,8 @@ fun EditProfileScreen(
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                 ) {
                     Spacer(Modifier.height(60.dp))
 
@@ -135,6 +136,7 @@ fun EditProfileScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 24.dp)
+                            .padding(bottom = 80.dp)
                             .verticalScroll(rememberScrollState())
                     ) {
                         Text(
