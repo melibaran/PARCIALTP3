@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.financeapp.ui.screen.categories.savings.AddExpensesSaving
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -177,6 +178,10 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 AddExpensesScreen(navController = navController)
             }
 
+            composable("add_savings"){
+                AddExpensesSaving(navController = navController)
+            }
+
             composable(route = "notifications") {
                 NotificationScreen(navController = navController)
             }
@@ -213,8 +218,6 @@ fun MainScreen(onLogout: () -> Unit = {}) {
             composable("settings") {
                 SettingsScreen(
                     navController = navController,
-                    onBackClick = { navController.navigateUp() },
-                    onNotificationClick = { navController.navigate("notification_settings") },
                     onPasswordClick = { navController.navigate("password_settings") },
                     onDeleteAccountClick = { navController.navigate("delete_account") }
                 )
@@ -222,9 +225,7 @@ fun MainScreen(onLogout: () -> Unit = {}) {
 
             composable("notification_settings") {
                 NotificationSettingsScreen1(
-                    navController = navController,
-                    onBackClick = { navController.navigateUp() },
-                    onNotificationClick = { }
+                    navController = navController
                 )
             }
 

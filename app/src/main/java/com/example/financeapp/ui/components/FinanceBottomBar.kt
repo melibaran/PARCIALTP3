@@ -53,14 +53,13 @@ fun FinanceBottomBar(
 ) {
     Surface(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        shape = RoundedCornerShape(24.dp),
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
         color = Light_green,
         tonalElevation = 0.dp,
-        contentColor = Color.Transparent
+        contentColor = Color.Transparent)
 
-    ) {
+     {
         Row(
             modifier = Modifier
                 .padding(horizontal = 12.dp, vertical = 8.dp)

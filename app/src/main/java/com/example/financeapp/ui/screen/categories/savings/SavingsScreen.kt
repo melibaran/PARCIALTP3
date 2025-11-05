@@ -61,7 +61,7 @@ fun SavingsScreen(
                 ),
                 SavingsGoal(
                     title = "Car",
-                    iconId = R.drawable.car,
+                    iconId = R.drawable.car3,
                     goalAmount = 14390.0,
                     savedAmount = 596.25,
                     progressPercentage = 15,
@@ -123,7 +123,8 @@ fun SavingsScreen(
             }
 
             CategoryAddSavingsButton(
-                onClick = { /* TODO: Navigate to add savings screen */ }
+                onClick = { /* TODO: Navigate to add savings screen */ },
+                title = "Add More"
             )
         },
         navController = navController
