@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.financeapp.R
+import androidx.compose.ui.unit.dp
 import com.example.financeapp.ui.components.FinanceBottomBar
 import com.example.financeapp.ui.screen.categories.AddExpensesScreen
 import com.example.financeapp.ui.screen.categories.CategoriesScreen
@@ -70,10 +71,10 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 }
             )
         }
-    ) { innerPadding ->
+    ) {
         NavHost(
             navController = navController,
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(0.dp),
             startDestination = "home",
         ) {
             // Rutas para la bottom navigation
