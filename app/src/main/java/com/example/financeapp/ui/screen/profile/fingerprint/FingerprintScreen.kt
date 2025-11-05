@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen.fingerprint
+package com.example.financeapp.ui.screen.profile.fingerprint
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,6 +35,7 @@ fun FingerprintScreen(
     onBackClick: () -> Unit,
     onFingerprintClick: (FingerprintItem) -> Unit,
     onAddFingerprintClick: () -> Unit,
+    onNotificationsClick: () -> Unit = {},
     viewModel: FingerprintViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -43,7 +44,8 @@ fun FingerprintScreen(
         uiState = uiState,
         onBackClick = onBackClick,
         onFingerprintClick = onFingerprintClick,
-        onAddFingerprintClick = onAddFingerprintClick
+        onAddFingerprintClick = onAddFingerprintClick,
+        onNotificationsClick = onNotificationsClick
     )
 }
 
@@ -52,7 +54,8 @@ fun FingerprintScreenContent(
     uiState: FingerprintUiState,
     onBackClick: () -> Unit,
     onFingerprintClick: (FingerprintItem) -> Unit,
-    onAddFingerprintClick: () -> Unit
+    onAddFingerprintClick: () -> Unit,
+    onNotificationsClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -90,7 +93,7 @@ fun FingerprintScreenContent(
                     modifier = Modifier.weight(1f)
                 )
                 
-                IconButton(onClick = { }) {
+                IconButton(onClick = onNotificationsClick) {
                     Box(
                         modifier = Modifier
                             .size(40.dp)
@@ -243,7 +246,8 @@ fun FingerprintScreenPreview() {
         ),
         onBackClick = {},
         onFingerprintClick = {},
-        onAddFingerprintClick = {}
+        onAddFingerprintClick = {},
+        onNotificationsClick = {}
     )
 }
 

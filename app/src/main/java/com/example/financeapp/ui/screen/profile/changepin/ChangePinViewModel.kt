@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen.changepin
+package com.example.financeapp.ui.screen.profile.changepin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen
+package com.example.financeapp.ui.screen.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
 
@@ -30,7 +31,8 @@ fun SecurityScreen(
     onBackClick: () -> Unit = {},
     onChangePinClick: () -> Unit = {},
     onFingerprintClick: () -> Unit = {},
-    onTermsClick: () -> Unit = {}
+    onTermsClick: () -> Unit = {},
+    onNotificationsClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -68,7 +70,7 @@ fun SecurityScreen(
                     modifier = Modifier.weight(1f)
                 )
                 
-                IconButton(onClick = { }) {
+                IconButton(onClick = onNotificationsClick) {
                     Box(
                         modifier = Modifier
                             .size(40.dp)
@@ -79,7 +81,7 @@ fun SecurityScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.bell),
                             contentDescription = "Notifications",
-                            tint = Caribbean_green,
+                            tint = Void,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -92,7 +94,7 @@ fun SecurityScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = com.example.financeapp.ui.theme.Honeydew)
+                colors = CardDefaults.cardColors(containerColor = Honeydew)
             ) {
                 Column(
                     horizontalAlignment = Alignment.Start,

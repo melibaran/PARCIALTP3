@@ -19,12 +19,12 @@ import com.example.financeapp.ui.screen.categories.groceries.GroceriesScreen
 import com.example.financeapp.ui.screen.categories.rent.RentScreen
 import com.example.financeapp.ui.screen.categories.gift.GiftScreen
 import com.example.financeapp.ui.screen.categories.entertainment.EntertainmentScreen
-import com.example.financeapp.ui.screen.changepin.ChangePinScreen
+import com.example.financeapp.ui.screen.profile.changepin.ChangePinScreen
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.financeapp.ui.screen.fingerprint.AddFingerprintScreen
-import com.example.financeapp.ui.screen.fingerprint.FingerprintDetailScreen
-import com.example.financeapp.ui.screen.fingerprint.FingerprintScreen
+import com.example.financeapp.ui.screen.profile.fingerprint.AddFingerprintScreen
+import com.example.financeapp.ui.screen.profile.fingerprint.FingerprintDetailScreen
+import com.example.financeapp.ui.screen.profile.fingerprint.FingerprintScreen
 import com.example.financeapp.ui.screen.settings.DeleteAccountScreen
 import com.example.financeapp.ui.screen.settings.NotificationSettingsScreen1
 import com.example.financeapp.ui.screen.settings.PasswordSettingsScreen
@@ -39,6 +39,8 @@ import com.example.financeapp.ui.screen.notification.NotificationScreen
 import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
 import com.example.financeapp.ui.screen.profile.EditProfileScreen
 import com.example.financeapp.ui.screen.profile.ProfileScreen
+import com.example.financeapp.ui.screen.profile.SecurityScreen
+import com.example.financeapp.ui.screen.profile.TermsAndConditionsScreen
 
 
 @Composable
@@ -272,7 +274,7 @@ fun MainScreen(onLogout: () -> Unit = {}) {
             composable("edit_profile") {
                 EditProfileScreen(
                     onBackClick = { navController.navigateUp() },
-                    onUpdateClick = { },
+                    onUpdateClick = { navController.navigate("profile") },
                     onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
@@ -282,7 +284,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     onBackClick = { navController.navigateUp() },
                     onChangePinClick = { navController.navigate("change_pin") },
                     onFingerprintClick = { navController.navigate("fingerprint") },
-                    onTermsClick = { navController.navigate("terms_and_conditions") }
+                    onTermsClick = { navController.navigate("terms_and_conditions") },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 
@@ -293,7 +296,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                         navController.navigate("profile") {
                             popUpTo("profile") { inclusive = true }
                         }
-                    }
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 
@@ -305,7 +309,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     },
                     onAddFingerprintClick = {
                         navController.navigate("add_fingerprint")
-                    }
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 
@@ -364,7 +369,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                         navController.navigate("pin_success") {
                             popUpTo("change_pin") { inclusive = true }
                         }
-                    }
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 
