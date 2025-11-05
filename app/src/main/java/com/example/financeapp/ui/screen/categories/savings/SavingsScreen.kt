@@ -23,6 +23,7 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.components.BalanceHeader
 import com.example.financeapp.ui.components.CategoryItem
 import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddSavingsButton
 import com.example.financeapp.ui.screen.categories.savings.SavingsGoal
 import com.example.financeapp.ui.screen.categories.savings.SavingsViewModel
 import com.example.financeapp.ui.theme.*
@@ -90,6 +91,11 @@ fun SavingsScreen(
                 containerColor = Caribbean_green
             )
         },
+        bottomBar = {
+            CategoryAddSavingsButton(
+                onClick = { /* TODO: Navigate to add savings screen */ }
+            )
+        },
         containerColor = Caribbean_green
     ) { paddingValues ->
         Column(
@@ -136,28 +142,6 @@ fun SavingsScreen(
                             }
                         )
                     }
-                }
-
-                // Add More Button
-                Button(
-                    onClick = { /* TODO: Add more savings goals */ },
-                    modifier = Modifier
-                        .padding(horizontal = 60.dp, vertical = 24.dp)
-                        .fillMaxWidth()
-                        .height(48.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Caribbean_green
-                    ),
-                    shape = RoundedCornerShape(24.dp)
-                ) {
-                    Text(
-                        text = "Add More",
-                        style = TextStyle(
-                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                            fontSize = 16.sp,
-                            color = Void
-                        )
-                    )
                 }
             }
         }

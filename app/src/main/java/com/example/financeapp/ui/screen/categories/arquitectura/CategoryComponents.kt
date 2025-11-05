@@ -78,4 +78,39 @@ fun CategoryAddExpensesButton(
     }
 }
 
+//AddSavingsBottom
+@Composable
+fun CategoryAddSavingsButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(Honeydew)
+            .padding(vertical = 16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Button(
+            onClick = onClick,
+            modifier = Modifier
+                .width(169.dp)
+                .height(36.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Caribbean_green
+            ),
+            shape = RoundedCornerShape(18.dp)
+        ) {
+            Text(
+                text = "Add Savings",
+                style = TextStyle(
+                    fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                    color = Honeydew,
+                    fontSize = 16.sp,
+                )
+            )
+        }
+    }
+}
+
 
