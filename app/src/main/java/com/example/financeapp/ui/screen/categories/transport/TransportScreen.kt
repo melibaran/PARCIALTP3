@@ -32,7 +32,7 @@ fun TransportScreen(
             title = "Transport",
             showBackButton = true,
             centerTitle = true,
-            onBackClick = { navController.navigateUp() },
+            onBackClick = { navController.navigate("layers") },
             onNotificationClick = { navController.navigate("notifications") },
             containerColor = Caribbean_green
         )

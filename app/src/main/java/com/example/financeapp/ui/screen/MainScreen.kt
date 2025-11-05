@@ -40,9 +40,14 @@ import com.example.financeapp.ui.screen.notification.NotificationScreen
 import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
 
 
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.NavGraph.Companion.findStartDestination
+
 @Composable
 fun MainScreen(onLogout: () -> Unit = {}) {
     val navController = rememberNavController()
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.destination?.route
 
     Scaffold(
         topBar = {
@@ -50,15 +55,22 @@ fun MainScreen(onLogout: () -> Unit = {}) {
         },
         bottomBar = {
             FinanceBottomBar(
+                currentRoute = currentRoute,
                 onNavigate = { route ->
-                    navController.navigate(route)
+                    navController.navigate(route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 }
             )
         }
-    ) {
+    ) { innerPadding ->
         NavHost(
             navController = navController,
-            modifier = Modifier.padding(0.dp),
+            modifier = Modifier.padding(innerPadding),
             startDestination = "home",
         ) {
             // Rutas para la bottom navigation
@@ -357,24 +369,6 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                         }
                     }
                 )
-            }
-            composable("home") {
-                HomeScreen(navController)
-            }
-            composable("account_balance") {
-                AccountBalanceScreen(navController)
-            }
-            composable("notifications") {
-                NotificationScreen(navController)
-            }
-            composable("help_center") {
-                HelpCenterScreen(navController)
-            }
-            composable("online_support") {
-                OnlineSupportScreen(navController)
-            }
-            composable("chat_detail/{chatId}") { backStackEntry ->
-                ChatDetailScreen(navController, backStackEntry.arguments?.getString("chatId") ?: "")
             }
         }
     }

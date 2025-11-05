@@ -43,7 +43,9 @@ fun SettingsScreen(
                 title = stringResource(R.string.settings),
                 showBackButton = true,
                 centerTitle = true,
-                onBackClick = onBackClick,
+                onBackClick = { navController.navigate("home") {
+                    popUpTo("home") { inclusive = true }
+                } },
                 onNotificationClick = onNotificationClick,
                 containerColor = Caribbean_green
             )
