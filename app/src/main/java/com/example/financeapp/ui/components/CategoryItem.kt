@@ -87,7 +87,7 @@ private fun getCategoryIconPressed(name: String): Int {
         "Gift" -> R.drawable.gift_pressed
         "Entertainment" -> R.drawable.entertaiment_pressed
         "Savings" -> R.drawable.saving_pressed
-        else -> R.drawable.food_pressed
+        else -> R.drawable.more_pressed
     }
 }
 
