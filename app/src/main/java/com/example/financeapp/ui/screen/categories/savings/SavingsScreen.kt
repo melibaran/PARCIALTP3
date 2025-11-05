@@ -24,6 +24,7 @@ import com.example.financeapp.ui.components.BalanceHeader
 import com.example.financeapp.ui.components.CategoryItem
 import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddSavingsButton
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDesign
 import com.example.financeapp.ui.screen.categories.savings.SavingsGoal
 import com.example.financeapp.ui.screen.categories.savings.SavingsViewModel
 import com.example.financeapp.ui.theme.*
@@ -81,31 +82,9 @@ fun SavingsScreen(
         }
     }
 
-    Scaffold(
-        topBar = {
-            TopBar(
-                title = "Savings",
-                showBackButton = true,
-                onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
-            )
-        },
-        bottomBar = {
-            CategoryAddSavingsButton(
-                onClick = { /* TODO: Navigate to add savings screen */ }
-            )
-        },
-        containerColor = Caribbean_green
-    ) { paddingValues ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Balance Header
+    CategoryDesign(
+        title = "Savings",
+        content = {
             BalanceHeader(
                 totalBalance = uiState.balance,
                 totalExpense = uiState.totalExpense,
@@ -113,12 +92,10 @@ fun SavingsScreen(
                 progressPercentage = uiState.expensePercentage
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
-
             // Grid de savings goals
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .weight(1f)
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
                     .background(Honeydew)
             ) {
@@ -144,6 +121,11 @@ fun SavingsScreen(
                     }
                 }
             }
-        }
-    }
+
+            CategoryAddSavingsButton(
+                onClick = { /* TODO: Navigate to add savings screen */ }
+            )
+        },
+        navController = navController
+    )
 }
