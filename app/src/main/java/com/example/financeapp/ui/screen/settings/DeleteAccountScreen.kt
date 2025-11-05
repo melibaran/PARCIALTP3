@@ -56,6 +56,7 @@ fun DeleteAccountScreen(
                 centerTitle = true,
                 onBackClick = onBackClick,
                 onNotificationClick = { navController.navigate("notifications") },
+                containerColor = Caribbean_green
             )
 
             Box(

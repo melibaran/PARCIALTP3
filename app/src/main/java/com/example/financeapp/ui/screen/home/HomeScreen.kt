@@ -52,6 +52,7 @@ fun HomeScreen(navController: NavController) {
                 subtitle = stringResource(R.string.good_morning),
                 showBackButton = false,
                 onNotificationClick = { navController.navigate("notifications")},
+                containerColor = Caribbean_green
             )
         },
         containerColor = Caribbean_green
@@ -305,9 +306,8 @@ fun HomeScreen(navController: NavController) {
                             circleBgColor = circleColor,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
+                                .padding(vertical = 6.dp)
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
             }
