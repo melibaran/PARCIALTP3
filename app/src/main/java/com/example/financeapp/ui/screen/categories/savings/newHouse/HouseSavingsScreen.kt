@@ -296,7 +296,9 @@ fun HouseSavingsScreen(
             
             // Add Savings Button
             CategoryAddSavingsButton(
-                onClick = { /* TODO: Navigate to add savings screen */ },
+                onClick = {
+                    navController.navigate("add_savings")
+                },
                 title = "Add Savings"
             )
         }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.financeapp.ui.screen.categories.savings.AddExpensesSaving
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -175,6 +176,10 @@ fun MainScreen(onLogout: () -> Unit = {}) {
 
             composable("add_expenses") {
                 AddExpensesScreen(navController = navController)
+            }
+
+            composable("add_savings"){
+                AddExpensesSaving(navController = navController)
             }
 
             composable(route = "notifications") {
