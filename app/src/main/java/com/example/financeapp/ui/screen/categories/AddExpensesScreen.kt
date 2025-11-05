@@ -34,6 +34,9 @@ fun AddExpensesScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    
     var date by remember { mutableStateOf("April 30 ,2024") }
     var selectedCategory by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("$26,00") }
@@ -61,7 +64,6 @@ fun AddExpensesScreen(
                 centerTitle = true,
                 onBackClick = { navController.navigateUp() },
                 onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
             )
         },
         bottomBar = {
@@ -87,14 +89,14 @@ fun AddExpensesScreen(
                         text = stringResource(id = R.string.save_button),
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                            color = Honeydew,
+                            color = Color.White,
                             fontSize = 16.sp,
                         )
                     )
                 }
             }
         },
-        containerColor = Caribbean_green
+        containerColor = if (isDarkMode) Fence_green else Caribbean_green
     ) { paddingValues ->
         Column(
             modifier = modifier
@@ -105,15 +107,15 @@ fun AddExpensesScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             // Card principal con fondo Honeydew
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 4.dp),
-                shape = RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Honeydew
-                )
-            ) {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 4.dp),
+                        shape = RoundedCornerShape(24.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = if (isDarkMode) Light_green else Honeydew
+                        )
+                    ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -123,15 +125,15 @@ fun AddExpensesScreen(
                 ) {
                     // Date Field
                     Column {
-                        Text(
-                            text = stringResource(id = R.string.date_label),
-                            style = TextStyle(
-                                fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                color = Void,
-                                fontSize = 14.sp,
-                            ),
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
+                            Text(
+                                text = stringResource(id = R.string.date_label),
+                                style = TextStyle(
+                                    fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                                    color = if (isDarkMode) Fence_green else Void,
+                                    fontSize = 14.sp,
+                                ),
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
                         OutlinedTextField(
                             value = date,
                             onValueChange = { date = it },
@@ -140,15 +142,15 @@ fun AddExpensesScreen(
                                 .height(56.dp),
                             textStyle = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Void,
+                                color = if (isDarkMode) Fence_green else Void,
                                 fontSize = 14.sp,
                             ),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = Light_green,
-                                unfocusedContainerColor = Light_green,
-                                focusedBorderColor = Caribbean_green,
-                                unfocusedBorderColor = Color.Transparent
-                            ),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedContainerColor = if (isDarkMode) Light_green else Color.White,
+                                        unfocusedContainerColor = if (isDarkMode) Light_green else Color.White,
+                                        focusedBorderColor = Caribbean_green,
+                                        unfocusedBorderColor = Color.Transparent
+                                    ),
                             shape = RoundedCornerShape(18.dp),
                             trailingIcon = {
                                 val calendarInteractionSource = remember { MutableInteractionSource() }
@@ -182,7 +184,7 @@ fun AddExpensesScreen(
                             text = stringResource(id = R.string.category_label),
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                color = Void,
+                                color = if (isDarkMode) Fence_green else Void,
                                 fontSize = 14.sp,
                             ),
                             modifier = Modifier.padding(bottom = 8.dp)
@@ -204,22 +206,22 @@ fun AddExpensesScreen(
                                         stringResource(id = R.string.select_category),
                                         style = TextStyle(
                                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                            color = Caribbean_green,
+                                            color = if (isDarkMode) Fence_green.copy(alpha = 0.6f) else Void.copy(alpha = 0.6f),
                                             fontSize = 14.sp,
                                         )
                                     )
                                 },
                                 textStyle = TextStyle(
                                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                    color = Void,
+                                    color = if (isDarkMode) Fence_green else Void,
                                     fontSize = 14.sp,
                                 ),
-                                colors = OutlinedTextFieldDefaults.colors(
-                                    focusedContainerColor = Light_green,
-                                    unfocusedContainerColor = Light_green,
-                                    focusedBorderColor = Caribbean_green,
-                                    unfocusedBorderColor = Color.Transparent
-                                ),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedContainerColor = if (isDarkMode) Light_green else Color.White,
+                                        unfocusedContainerColor = if (isDarkMode) Light_green else Color.White,
+                                        focusedBorderColor = Caribbean_green,
+                                        unfocusedBorderColor = Color.Transparent
+                                    ),
                                 shape = RoundedCornerShape(18.dp),
                                 trailingIcon = {
                                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = showCategoryDropdown)
@@ -257,7 +259,7 @@ fun AddExpensesScreen(
                             text = stringResource(id = R.string.amount_label),
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                color = Void,
+                                color = if (isDarkMode) Fence_green else Void,
                                 fontSize = 14.sp,
                             ),
                             modifier = Modifier.padding(bottom = 8.dp)
@@ -270,15 +272,15 @@ fun AddExpensesScreen(
                                 .height(56.dp),
                             textStyle = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Void,
+                                color = if (isDarkMode) Fence_green else Void,
                                 fontSize = 14.sp,
                             ),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = Light_green,
-                                unfocusedContainerColor = Light_green,
-                                focusedBorderColor = Caribbean_green,
-                                unfocusedBorderColor = Color.Transparent
-                            ),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedContainerColor = if (isDarkMode) Light_green else Color.White,
+                                        unfocusedContainerColor = if (isDarkMode) Light_green else Color.White,
+                                        focusedBorderColor = Caribbean_green,
+                                        unfocusedBorderColor = Color.Transparent
+                                    ),
                             shape = RoundedCornerShape(18.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                             singleLine = true
@@ -291,7 +293,7 @@ fun AddExpensesScreen(
                             text = stringResource(id = R.string.expense_title_label),
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                color = Void,
+                                color = if (isDarkMode) Fence_green else Void,
                                 fontSize = 14.sp,
                             ),
                             modifier = Modifier.padding(bottom = 8.dp)
@@ -304,15 +306,15 @@ fun AddExpensesScreen(
                                 .height(56.dp),
                             textStyle = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Void,
+                                color = if (isDarkMode) Fence_green else Void,
                                 fontSize = 14.sp,
                             ),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = Light_green,
-                                unfocusedContainerColor = Light_green,
-                                focusedBorderColor = Caribbean_green,
-                                unfocusedBorderColor = Color.Transparent
-                            ),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedContainerColor = if (isDarkMode) Light_green else Color.White,
+                                        unfocusedContainerColor = if (isDarkMode) Light_green else Color.White,
+                                        focusedBorderColor = Caribbean_green,
+                                        unfocusedBorderColor = Color.Transparent
+                                    ),
                             shape = RoundedCornerShape(18.dp),
                             singleLine = true
                         )
@@ -342,7 +344,7 @@ fun AddExpensesScreen(
                             textStyle = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
                                 fontWeight = FontWeight.Medium,
-                                color = Void,
+                                color = if (isDarkMode) Fence_green else Void,
                                 fontSize = 15.sp,
                                 lineHeight = 15.sp,
                                 letterSpacing = 0.sp

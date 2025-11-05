@@ -31,9 +31,15 @@ import com.example.financeapp.ui.theme.Light_blue
 import com.example.financeapp.ui.theme.Ocean_blue
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.Light_green
+import com.example.financeapp.ui.theme.LocalDarkMode
+import com.example.financeapp.ui.theme.Void
 
 @Composable
 fun AccountBalanceScreen(navController: NavController) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    
     val coloresDeCirculo = remember {
         listOf(Light_blue, Vivid_blue, Ocean_blue, Vivid_blue, Light_blue)
     }
@@ -44,11 +50,10 @@ fun AccountBalanceScreen(navController: NavController) {
                 title = stringResource(R.string.account_balance_title),
                 showBackButton = true,
                 onBackClick = { navController.popBackStack() },
-                onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
+                onNotificationClick = { navController.navigate("notifications") }
             )
         },
-        containerColor = Caribbean_green
+        containerColor = if (isDarkMode) Fence_green else Caribbean_green
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -90,13 +95,13 @@ fun AccountBalanceScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Transactions List (bloque Honeydew arranca aquí)
+            // Transactions List
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew)
+                    .background(if (isDarkMode) Fence_green else Honeydew)
                     .padding(16.dp)
             ) {
                 // Transactions header
@@ -112,12 +117,12 @@ fun AccountBalanceScreen(navController: NavController) {
                             text = stringResource(R.string.transactions),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            color = Fence_green
+                            color = if (isDarkMode) Color.White else Fence_green
                         )
                         TextButton(onClick = { /* TODO */ }) {
                             Text(
                                 text = stringResource(R.string.see_all),
-                                color = Fence_green
+                                color = if (isDarkMode) Color.White else Fence_green
                             )
                         }
                     }
@@ -164,10 +169,13 @@ private fun IncomeExpenseCard(
     modifier: Modifier = Modifier,
     isExpense: Boolean = false
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = if (isDarkMode) Light_green else Color.White)
     ) {
         Column(
             modifier = Modifier
@@ -184,13 +192,13 @@ private fun IncomeExpenseCard(
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onBackground
+                color = if (isDarkMode) Fence_green else Void
             )
             Text(
                 text = amount,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = if (isExpense) Ocean_blue else MaterialTheme.colorScheme.onBackground
+                color = if (isExpense) Ocean_blue else if (isDarkMode) Fence_green else Void
             )
         }
     }

@@ -31,6 +31,9 @@ import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Ocean_blue
+import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.theme.LocalDarkMode
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -43,6 +46,8 @@ fun BalanceHeader(
     modifier: Modifier = Modifier,
     progressText: String = "$progressPercentage%"
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
     val formatter = NumberFormat.getNumberInstance(Locale.US).apply {
         minimumFractionDigits = 2
         maximumFractionDigits = 2
@@ -75,7 +80,7 @@ fun BalanceHeader(
                     Text(
                         text = stringResource(R.string.total_balance),
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = if (isDarkMode) Honeydew else Void
                         )
                     )
                 }
@@ -83,7 +88,7 @@ fun BalanceHeader(
                     text = "$${formatter.format(totalBalance)}",
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = if (isDarkMode) Honeydew else Void
                     )
                 )
             }
@@ -114,7 +119,7 @@ fun BalanceHeader(
                     Text(
                         text = stringResource(R.string.total_expense),
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = if (isDarkMode) Honeydew else Void
                         )
                     )
                 }
@@ -136,40 +141,40 @@ fun BalanceHeader(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(16.dp)
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(Honeydew)
-                ) {
                     Box(
                         modifier = Modifier
-                            .fillMaxHeight()
+                            .weight(1f)
+                            .height(16.dp)
                             .clip(RoundedCornerShape(20.dp))
-                            .fillMaxWidth(progressPercentage / 100f)
-                            .background(Fence_green)
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .background(if (isDarkMode) Light_green else Honeydew)
                     ) {
-                        Text(
-                            text = progressText,
-                            modifier = Modifier.padding(start = 8.dp),
-                            color = Honeydew,
-                            style = MaterialTheme.typography.labelSmall
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .clip(RoundedCornerShape(20.dp))
+                                .fillMaxWidth(progressPercentage / 100f)
+                                .background(Caribbean_green)
                         )
-                        Text(
-                            text = "$${formatter.format(budget)}",
-                            modifier = Modifier.padding(end = 8.dp),
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = Fence_green
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = progressText,
+                                modifier = Modifier.padding(start = 8.dp),
+                                color = if (isDarkMode) Light_green else Fence_green,
+                                style = MaterialTheme.typography.labelSmall
                             )
-                        )
+                            Text(
+                                text = "$${formatter.format(budget)}",
+                                modifier = Modifier.padding(end = 8.dp),
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = Caribbean_green
+                                )
+                            )
+                        }
                     }
-                }
             }
 
             Row(
@@ -185,12 +190,12 @@ fun BalanceHeader(
                     modifier = Modifier.size(13.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = stringResource(R.string.goal_description),
-                    style = MaterialTheme.typography.bodySmall.copy(
-                        color = Fence_green
+                    Text(
+                        text = stringResource(R.string.goal_description),
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            color = if (isDarkMode) Light_green else Fence_green
+                        )
                     )
-                )
             }
         }
 

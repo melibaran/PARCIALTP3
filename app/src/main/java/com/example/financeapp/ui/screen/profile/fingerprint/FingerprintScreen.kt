@@ -28,7 +28,10 @@ import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.poppinsFamily
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 @Composable
 fun FingerprintScreen(
@@ -57,10 +60,13 @@ fun FingerprintScreenContent(
     onAddFingerprintClick: () -> Unit,
     onNotificationsClick: () -> Unit = {}
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(if (isDarkMode) Fence_green else Caribbean_green)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -88,7 +94,7 @@ fun FingerprintScreenContent(
                     fontFamily = poppinsFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 24.sp,
-                    color = Void,
+                    color = if (isDarkMode) Color.White else Void,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
@@ -117,7 +123,7 @@ fun FingerprintScreenContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = Honeydew)
+                colors = CardDefaults.cardColors(containerColor = if (isDarkMode) Light_green else Honeydew)
             ) {
                 Column(
                     modifier = Modifier
@@ -149,6 +155,8 @@ fun FingerprintItem(
     name: String,
     onClick: () -> Unit
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -177,7 +185,7 @@ fun FingerprintItem(
             fontFamily = poppinsFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
-            color = Void,
+            color = if (isDarkMode) Fence_green else Void,
             modifier = Modifier.weight(1f)
         )
 
@@ -185,7 +193,7 @@ fun FingerprintItem(
             painter = painterResource(id = R.drawable.arrow_right),
             contentDescription = null,
             modifier = Modifier.size(24.dp),
-            tint = Void
+            tint = if (isDarkMode) Fence_green else Void
         )
     }
 }
@@ -194,6 +202,8 @@ fun FingerprintItem(
 fun AddFingerprintItem(
     onClick: () -> Unit
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -222,7 +232,7 @@ fun AddFingerprintItem(
             fontFamily = poppinsFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
-            color = Void,
+            color = if (isDarkMode) Fence_green else Void,
             modifier = Modifier.weight(1f)
         )
 
@@ -230,7 +240,7 @@ fun AddFingerprintItem(
             painter = painterResource(id = R.drawable.arrow_right),
             contentDescription = null,
             modifier = Modifier.size(24.dp),
-            tint = Void
+            tint = if (isDarkMode) Fence_green else Void
         )
     }
 }

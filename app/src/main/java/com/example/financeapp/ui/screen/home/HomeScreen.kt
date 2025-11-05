@@ -32,6 +32,8 @@ import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Ocean_blue
 import com.example.financeapp.ui.theme.Honeydew
+import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.LocalDarkMode
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -40,6 +42,9 @@ import androidx.compose.ui.platform.LocalDensity
 @Suppress("UNUSED_PARAMETER")
 @Composable
 fun HomeScreen(navController: NavController) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    
     // Colores para los iconos circulares (match TransactionScreen)
     val coloresDeCirculo = remember {
         listOf(Light_blue, Vivid_blue, Ocean_blue, Vivid_blue, Light_blue)
@@ -50,11 +55,10 @@ fun HomeScreen(navController: NavController) {
                 title = stringResource(R.string.hi_welcome_back),
                 subtitle = stringResource(R.string.good_morning),
                 showBackButton = false,
-                onNotificationClick = { navController.navigate("notifications")},
-                containerColor = Caribbean_green
+                onNotificationClick = { navController.navigate("notifications")}
             )
         },
-        containerColor = Caribbean_green
+        containerColor = if (isDarkMode) Fence_green else Caribbean_green
     ) { innerPadding ->
         val layoutDirection = androidx.compose.ui.platform.LocalLayoutDirection.current
         var headerHeightPx by remember { mutableStateOf(0) }
@@ -77,7 +81,7 @@ fun HomeScreen(navController: NavController) {
                     .padding(top = surfaceTopPadding)
                     .align(Alignment.BottomStart),
                 shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-                color = Honeydew,
+                color = if (isDarkMode) Fence_green else Honeydew,
                 tonalElevation = 0.dp
             ) {
                 val lazyState = rememberLazyListState()
@@ -96,7 +100,7 @@ fun HomeScreen(navController: NavController) {
                             modifier = Modifier
                                 .fillMaxWidth(),
                             shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Caribbean_green)
+                            colors = CardDefaults.cardColors(containerColor = if (isDarkMode) Light_green else Caribbean_green)
                         ) {
                             Row(
                                 modifier = Modifier

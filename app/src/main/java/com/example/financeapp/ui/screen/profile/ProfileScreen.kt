@@ -30,7 +30,10 @@ import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.poppinsFamily
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 @Composable
 fun ProfileScreen(
@@ -41,11 +44,13 @@ fun ProfileScreen(
     onLogoutClick: () -> Unit = {},
     onNotificationsClick: () -> Unit = {}
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
     val showLogoutDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(if (isDarkMode) Fence_green else Caribbean_green)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -65,7 +70,7 @@ fun ProfileScreen(
                     fontFamily = poppinsFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 32.sp,
-                    color = Void,
+                    color = if (isDarkMode) Color.White else Void,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
@@ -94,7 +99,7 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = Honeydew)
+                colors = CardDefaults.cardColors(containerColor = if (isDarkMode) Light_green else Honeydew)
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -107,7 +112,7 @@ fun ProfileScreen(
                         fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
-                        color = Void,
+                        color = if (isDarkMode) Fence_green else Void,
                         textAlign = TextAlign.Center
                     )
 
@@ -118,7 +123,7 @@ fun ProfileScreen(
                         fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
-                        color = Void.copy(alpha = 0.6f),
+                        color = if (isDarkMode) Fence_green.copy(alpha = 0.6f) else Void.copy(alpha = 0.6f),
                         textAlign = TextAlign.Center
                     )
 

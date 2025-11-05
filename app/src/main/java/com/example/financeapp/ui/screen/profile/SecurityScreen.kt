@@ -24,7 +24,10 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.poppinsFamily
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 @Composable
 fun SecurityScreen(
@@ -34,10 +37,13 @@ fun SecurityScreen(
     onTermsClick: () -> Unit = {},
     onNotificationsClick: () -> Unit = {}
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(if (isDarkMode) Fence_green else Caribbean_green)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -65,7 +71,7 @@ fun SecurityScreen(
                     fontFamily = poppinsFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 24.sp,
-                    color = Void,
+                    color = if (isDarkMode) Color.White else Void,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
@@ -94,7 +100,7 @@ fun SecurityScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = Honeydew)
+                colors = CardDefaults.cardColors(containerColor = if (isDarkMode) Light_green else Honeydew)
             ) {
                 Column(
                     horizontalAlignment = Alignment.Start,
@@ -109,7 +115,7 @@ fun SecurityScreen(
             fontFamily = poppinsFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
-            color = Void
+            color = if (isDarkMode) Fence_green else Void
         )
         
         Spacer(modifier = Modifier.height(24.dp))
@@ -145,6 +151,9 @@ fun SecurityMenuItem(
     text: String,
     onClick: () -> Unit
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -158,13 +167,13 @@ fun SecurityMenuItem(
             fontFamily = poppinsFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
-            color = Void
+            color = if (isDarkMode) Fence_green else Void
         )
         
         Icon(
             painter = painterResource(id = R.drawable.arrow_right),
             contentDescription = "Navigate",
-            tint = Void,
+            tint = if (isDarkMode) Fence_green else Void,
             modifier = Modifier.size(20.dp)
         )
     }

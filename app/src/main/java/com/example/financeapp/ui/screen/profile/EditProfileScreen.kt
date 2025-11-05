@@ -26,7 +26,9 @@ import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.poppinsFamily
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 @Composable
 fun EditProfileScreen(
@@ -38,12 +40,15 @@ fun EditProfileScreen(
     var phone by remember { mutableStateOf("+44 555 5555 55") }
     var email by remember { mutableStateOf("example@example.com") }
     var pushNotifications by remember { mutableStateOf(true) }
-    var darkTheme by remember { mutableStateOf(false) }
+    
+    // Usar el estado del dark mode desde CompositionLocal
+    val darkModeState = LocalDarkMode.current
+    val darkTheme = darkModeState.isDarkMode
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(if (darkTheme) Fence_green else Caribbean_green)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -61,7 +66,7 @@ fun EditProfileScreen(
                     Icon(
                         painter = painterResource(id = R.drawable.bring_back),
                         contentDescription = "Back",
-                        tint = Color.White,
+                        tint = if (darkTheme) Color.White else Void,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -71,7 +76,7 @@ fun EditProfileScreen(
                     fontFamily = poppinsFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 24.sp,
-                    color = Void,
+                    color = if (darkTheme) Color.White else Void,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
@@ -100,7 +105,7 @@ fun EditProfileScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = Honeydew)
+                colors = CardDefaults.cardColors(containerColor = if (darkTheme) Light_green else Honeydew)
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -113,7 +118,7 @@ fun EditProfileScreen(
                         fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
-                        color = Void,
+                        color = if (darkTheme) Fence_green else Void,
                         textAlign = TextAlign.Center
                     )
 
@@ -124,7 +129,7 @@ fun EditProfileScreen(
                         fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
-                        color = Void.copy(alpha = 0.6f),
+                        color = if (darkTheme) Fence_green.copy(alpha = 0.6f) else Void.copy(alpha = 0.6f),
                         textAlign = TextAlign.Center
                     )
 
@@ -142,7 +147,7 @@ fun EditProfileScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
-                            color = Void
+                            color = if (darkTheme) Fence_green else Void
                         )
                         
                         Spacer(modifier = Modifier.height(16.dp))
@@ -152,7 +157,7 @@ fun EditProfileScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Void
+                            color = if (darkTheme) Fence_green else Void
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
@@ -161,8 +166,8 @@ fun EditProfileScreen(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedContainerColor = Light_green,
-                                focusedContainerColor = Light_green,
+                                unfocusedContainerColor = if (darkTheme) Light_green else Color.White,
+                                focusedContainerColor = if (darkTheme) Light_green else Color.White,
                                 unfocusedBorderColor = Color.Transparent,
                                 focusedBorderColor = Caribbean_green
                             )
@@ -175,7 +180,7 @@ fun EditProfileScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Void
+                            color = if (darkTheme) Fence_green else Void
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
@@ -184,8 +189,8 @@ fun EditProfileScreen(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedContainerColor = Light_green,
-                                focusedContainerColor = Light_green,
+                                unfocusedContainerColor = if (darkTheme) Light_green else Color.White,
+                                focusedContainerColor = if (darkTheme) Light_green else Color.White,
                                 unfocusedBorderColor = Color.Transparent,
                                 focusedBorderColor = Caribbean_green
                             )
@@ -198,7 +203,7 @@ fun EditProfileScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Void
+                            color = if (darkTheme) Fence_green else Void
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
@@ -207,8 +212,8 @@ fun EditProfileScreen(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedContainerColor = Light_green,
-                                focusedContainerColor = Light_green,
+                                unfocusedContainerColor = if (darkTheme) Light_green else Color.White,
+                                focusedContainerColor = if (darkTheme) Light_green else Color.White,
                                 unfocusedBorderColor = Color.Transparent,
                                 focusedBorderColor = Caribbean_green
                             )
@@ -226,7 +231,7 @@ fun EditProfileScreen(
                                 fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 16.sp,
-                                color = Void
+                                color = if (darkTheme) Fence_green else Void
                             )
                             Switch(
                                 checked = pushNotifications,
@@ -252,11 +257,11 @@ fun EditProfileScreen(
                                 fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 16.sp,
-                                color = Void
+                                color = if (darkTheme) Fence_green else Void
                             )
                             Switch(
                                 checked = darkTheme,
-                                onCheckedChange = { darkTheme = it },
+                                onCheckedChange = { darkModeState.setDarkMode(it) },
                                 colors = SwitchDefaults.colors(
                                     checkedThumbColor = Color.White,
                                     checkedTrackColor = Caribbean_green,
@@ -283,7 +288,7 @@ fun EditProfileScreen(
                                 fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 16.sp,
-                                color = Void
+                                color = Color.White
                             )
                         }
                         

@@ -18,6 +18,8 @@ fun FoodScreen(
     modifier: Modifier = Modifier,
     viewModel: FoodViewModel = hiltViewModel()
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
     val uiState by viewModel.uiState.collectAsState()
     var showDatePicker by remember { mutableStateOf(false) }
 
@@ -31,8 +33,7 @@ fun FoodScreen(
                 title = "Food",
                 showBackButton = true,
                 onBackClick = { navController.navigateUp() },
-                onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
+                onNotificationClick = { navController.navigate("notifications") }
             )
         },
         bottomBar = {
@@ -40,7 +41,7 @@ fun FoodScreen(
                 onClick = { navController.navigate("add_expenses") }
             )
         },
-        containerColor = Caribbean_green
+        containerColor = if (isDarkMode) Fence_green else Caribbean_green
     ) { paddingValues ->
         Column(
             modifier = modifier

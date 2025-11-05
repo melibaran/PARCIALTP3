@@ -25,6 +25,9 @@ import com.example.financeapp.ui.screen.transaction.TransactionItem
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Ocean_blue
 import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.theme.Light_green
+import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 @Composable
 fun TransactionListItem(
@@ -32,11 +35,15 @@ fun TransactionListItem(
     circleBgColor: Color,
     modifier: Modifier = Modifier
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
     val circleColor = Light_blue
     val iconTint = Honeydew
-    val dividerColor = Caribbean_green
+    val dividerColor = if (isDarkMode) Light_green else Caribbean_green
 
-    val amountColor = if (transaction.isIncome) Void else Ocean_blue
+    val amountColor = if (transaction.isIncome) {
+        if (isDarkMode) Color.White else Void
+    } else Ocean_blue
 
     Row(
         modifier = modifier
@@ -69,7 +76,7 @@ fun TransactionListItem(
         ) {
             Text(
                 text = transaction.title,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium.copy(color = if (isDarkMode) Color.White else Void)
             )
             Text(
                 text = transaction.dateTime,
@@ -94,7 +101,7 @@ fun TransactionListItem(
         ) {
             Text(
                 text = transaction.category,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium.copy(color = if (isDarkMode) Color.White else Void)
             )
         }
 

@@ -27,7 +27,9 @@ import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.poppinsFamily
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 @Composable
 fun ChangePinScreen(
@@ -85,10 +87,13 @@ private fun ChangePinContent(
     onChangePinClick: () -> Unit,
     onNotificationsClick: () -> Unit = {}
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(if (isDarkMode) Fence_green else Caribbean_green)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -116,7 +121,7 @@ private fun ChangePinContent(
                     fontFamily = poppinsFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 24.sp,
-                    color = Void,
+                    color = if (isDarkMode) Color.White else Void,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
@@ -145,7 +150,7 @@ private fun ChangePinContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = Honeydew)
+                colors = CardDefaults.cardColors(containerColor = if (isDarkMode) Light_green else Honeydew)
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -202,7 +207,7 @@ private fun ChangePinContent(
                     ) {
                         if (uiState.isLoading) {
                             CircularProgressIndicator(
-                                color = Void,
+                                color = Color.White,
                                 modifier = Modifier.size(24.dp)
                             )
                         } else {
@@ -211,7 +216,7 @@ private fun ChangePinContent(
                                 fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 16.sp,
-                                color = Void
+                                color = Color.White
                             )
                         }
                     }
@@ -232,12 +237,15 @@ private fun PinInputField(
     onVisibilityToggle: () -> Unit,
     enabled: Boolean = true
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    
     Text(
         text = label,
         fontFamily = poppinsFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        color = Void,
+        color = if (isDarkMode) Fence_green else Void,
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(modifier = Modifier.height(8.dp))
@@ -248,11 +256,11 @@ private fun PinInputField(
         shape = RoundedCornerShape(12.dp),
         visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = Light_green,
-            focusedContainerColor = Light_green,
+            unfocusedContainerColor = if (isDarkMode) Light_green else Color.White,
+            focusedContainerColor = if (isDarkMode) Light_green else Color.White,
             unfocusedBorderColor = Color.Transparent,
             focusedBorderColor = Caribbean_green,
-            disabledContainerColor = Light_green.copy(alpha = 0.5f),
+            disabledContainerColor = if (isDarkMode) Light_green.copy(alpha = 0.5f) else Color.White.copy(alpha = 0.5f),
             disabledBorderColor = Color.Transparent
         ),
         enabled = enabled,
@@ -263,7 +271,7 @@ private fun PinInputField(
                         id = if (isVisible) R.drawable.ojoabierto else R.drawable.ojocerrado
                     ),
                     contentDescription = "Toggle visibility",
-                    tint = Void
+                    tint = if (isDarkMode) Fence_green else Void
                 )
             }
         }

@@ -23,7 +23,10 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.poppinsFamily
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 @Composable
 fun TermsAndConditionsScreen(
@@ -31,12 +34,14 @@ fun TermsAndConditionsScreen(
     onAcceptClick: () -> Unit = {},
     onNotificationsClick: () -> Unit = {}
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
     var isAccepted by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(if (isDarkMode) Fence_green else Caribbean_green)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -63,7 +68,7 @@ fun TermsAndConditionsScreen(
                     fontFamily = poppinsFamily,
                     fontWeight = FontWeight.Medium,
                     fontSize = 20.sp,
-                    color = Color.White,
+                    color = if (isDarkMode) Color.White else Void,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
@@ -93,7 +98,7 @@ fun TermsAndConditionsScreen(
                     .fillMaxSize()
                     .padding(horizontal = 16.dp),
                 shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-                colors = CardDefaults.cardColors(containerColor = Honeydew)
+                colors = CardDefaults.cardColors(containerColor = if (isDarkMode) Light_green else Honeydew)
             ) {
                 Column(
                     modifier = Modifier
@@ -110,7 +115,7 @@ fun TermsAndConditionsScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 16.sp,
-                            color = Color.Black,
+                            color = if (isDarkMode) Fence_green else Void,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
 
@@ -119,7 +124,7 @@ fun TermsAndConditionsScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Color.Gray,
+                            color = if (isDarkMode) Fence_green.copy(alpha = 0.7f) else Void.copy(alpha = 0.7f),
                             lineHeight = 20.sp,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
@@ -129,7 +134,7 @@ fun TermsAndConditionsScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Color.Gray,
+                            color = if (isDarkMode) Fence_green.copy(alpha = 0.7f) else Void.copy(alpha = 0.7f),
                             lineHeight = 20.sp,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
@@ -139,7 +144,7 @@ fun TermsAndConditionsScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Color.Gray,
+                            color = if (isDarkMode) Fence_green.copy(alpha = 0.7f) else Void.copy(alpha = 0.7f),
                             lineHeight = 20.sp,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
@@ -149,7 +154,7 @@ fun TermsAndConditionsScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Color.Gray,
+                            color = if (isDarkMode) Fence_green.copy(alpha = 0.7f) else Void.copy(alpha = 0.7f),
                             lineHeight = 20.sp,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
@@ -159,7 +164,7 @@ fun TermsAndConditionsScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Color.Gray,
+                            color = if (isDarkMode) Fence_green.copy(alpha = 0.7f) else Void.copy(alpha = 0.7f),
                             lineHeight = 20.sp,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
@@ -169,7 +174,7 @@ fun TermsAndConditionsScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Color.Gray,
+                            color = if (isDarkMode) Fence_green.copy(alpha = 0.7f) else Void.copy(alpha = 0.7f),
                             lineHeight = 20.sp,
                             modifier = Modifier.padding(bottom = 4.dp)
                         )
@@ -205,7 +210,7 @@ fun TermsAndConditionsScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Color.Black
+                            color = if (isDarkMode) Fence_green else Void
                         )
                     }
 

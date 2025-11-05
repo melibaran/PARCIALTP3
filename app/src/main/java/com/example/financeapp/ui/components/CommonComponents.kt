@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.Icon
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +32,8 @@ import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.Light_green
+import com.example.financeapp.ui.theme.Cyprus
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,8 +44,11 @@ fun TopBar(
     centerTitle: Boolean = false,
     onBackClick: () -> Unit = {},
     onNotificationClick: () -> Unit = {},
-    containerColor: Color = MaterialTheme.colorScheme.background
+    containerColor: Color? = null // Si es null, usa el color basado en el tema
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    val headerColor = containerColor ?: if (isDarkMode) Cyprus else Caribbean_green
     TopAppBar(
         title = {
             Box(
@@ -54,14 +60,14 @@ fun TopBar(
                 ) {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onBackground),
+                        style = MaterialTheme.typography.titleLarge.copy(color = if (isDarkMode) Color.White else Void),
                         fontWeight = FontWeight.Bold
                     )
                     if (subtitle != null) {
                         Text(
                             text = subtitle,
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f)
+                            color = if (isDarkMode) Color.White.copy(alpha = 0.8f) else Void.copy(alpha = 0.8f)
                         )
                     }
                 }
@@ -70,10 +76,11 @@ fun TopBar(
         navigationIcon = {
             if (showBackButton) {
                 IconButton(onClick = onBackClick) {
-                    Image(
+                    Icon(
                         painter = painterResource(id = R.drawable.bring_back),
                         contentDescription = "Back",
-                        modifier = Modifier.size(19.dp)
+                        tint = if (isDarkMode) Color.White else Void,
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
@@ -96,9 +103,9 @@ fun TopBar(
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = containerColor,
-            titleContentColor = MaterialTheme.colorScheme.onBackground,
-            actionIconContentColor = MaterialTheme.colorScheme.onBackground
+            containerColor = headerColor,
+            titleContentColor = if (isDarkMode) Color.White else Void,
+            actionIconContentColor = if (isDarkMode) Color.White else Void
         )
     )
 }

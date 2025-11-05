@@ -31,11 +31,9 @@ import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
-
-
-private val BarBackground = Honeydew
-private val ActiveTurquoise = Caribbean_green
-private val InactiveIcon = Color(0xFFA0A0A0)
+import com.example.financeapp.ui.theme.Fence_green
+import com.example.financeapp.ui.theme.Cyprus
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 private val navItems = listOf(
     BottomNavItem(R.drawable.home, "Home", "home", 25.dp, 31.dp),
@@ -51,6 +49,8 @@ fun FinanceBottomBar(
     viewModel: BottomNavViewModel = viewModel(),
     onNavigate: (String) -> Unit = {}
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
     val selectedRoute by viewModel.selectedRoute.collectAsState()
 
     Surface(
@@ -58,7 +58,7 @@ fun FinanceBottomBar(
             .fillMaxWidth()
             .padding(16.dp),
         shape = RoundedCornerShape(24.dp),
-        color = Light_green,
+        color = if (isDarkMode) Fence_green else Light_green,
         tonalElevation = 0.dp,
         contentColor = Color.Transparent
 
@@ -91,6 +91,12 @@ private fun BottomNavItem(
     isSelected: Boolean,
     onItemClick: () -> Unit
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
+    val activeColor = if (isDarkMode) Light_green else Caribbean_green
+    val inactiveIconColor = if (isDarkMode) Color.White else Void
+    val activeIconColor = if (isDarkMode) Fence_green else Void
+    
     Box(
         modifier = Modifier
             .fillMaxHeight(),
@@ -100,14 +106,14 @@ private fun BottomNavItem(
             modifier = Modifier
                 .size(48.dp)
                 .clip(if (isSelected) CircleShape else RoundedCornerShape(0.dp))
-                .background(if (isSelected) ActiveTurquoise else Color.Transparent)
+                .background(if (isSelected) activeColor else Color.Transparent)
                 .clickable(onClick = onItemClick),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 painter = painterResource(id = item.icon),
                 contentDescription = item.label,
-                tint = if (isSelected) Void else Void,
+                tint = if (isSelected) activeIconColor else inactiveIconColor,
                 modifier = Modifier.size(width = item.width, height = item.height)
             )
         }
@@ -118,7 +124,7 @@ private fun BottomNavItem(
 @Composable
 fun FinanceBottomBarPreview() {
     MaterialTheme {
-        Surface(color = com.example.financeapp.ui.theme.Honeydew) {
+        Surface(color = Light_green) {
             FinanceBottomBar()
         }
     }

@@ -29,6 +29,7 @@ import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.CategoryItem
 import com.example.financeapp.ui.theme.*
+import com.example.financeapp.ui.theme.LocalDarkMode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +38,8 @@ fun CategoriesScreen(
     modifier: Modifier = Modifier,
     viewModel: CategoriesViewModel = hiltViewModel()
 ) {
+    val darkModeState = LocalDarkMode.current
+    val isDarkMode = darkModeState.isDarkMode
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
@@ -48,7 +51,7 @@ fun CategoriesScreen(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge.copy(
-                            color = Void,
+                            color = if (isDarkMode) Color.White else Void,
                             fontWeight = FontWeight.SemiBold
                         )
                     )
@@ -58,7 +61,7 @@ fun CategoriesScreen(
                         Icon(
                             painter = painterResource(R.drawable.bring_back),
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = if (isDarkMode) Color.White else Void,
                             modifier = Modifier.size(19.dp)
                         )
                     }
@@ -81,11 +84,11 @@ fun CategoriesScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Caribbean_green
+                    containerColor = if (isDarkMode) Cyprus else Caribbean_green
                 )
             )
         },
-        containerColor = Caribbean_green
+        containerColor = if (isDarkMode) Fence_green else Caribbean_green
     ) { paddingValues ->
         Column(
             modifier = modifier
@@ -114,14 +117,14 @@ fun CategoriesScreen(
                             painter = painterResource(R.drawable.income),
                             contentDescription = "Balance Icon",
                             modifier = Modifier.size(16.dp),
-                            tint = Honeydew
+                            tint = if (isDarkMode) Color.White else Void
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = stringResource(id = R.string.total_balance),
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Honeydew,
+                                color = if (isDarkMode) Color.White else Void,
                                 fontSize = 12.sp,
                             ),
                         )
@@ -130,7 +133,7 @@ fun CategoriesScreen(
                         text = "$${uiState.balance}",
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                            color = Honeydew,
+                            color = if (isDarkMode) Color.White else Void,
                             fontSize = 26.sp,
                         )
                     )
@@ -157,14 +160,14 @@ fun CategoriesScreen(
                             painter = painterResource(R.drawable.expense),
                             contentDescription = "Expense Icon",
                             modifier = Modifier.size(16.dp),
-                            tint = Honeydew
+                            tint = if (isDarkMode) Color.White else Void
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = stringResource(id = R.string.total_expense),
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Honeydew,
+                                color = if (isDarkMode) Color.White else Void,
                                 fontSize = 12.sp,
                             ),
                         )
@@ -193,14 +196,14 @@ fun CategoriesScreen(
                             .weight(1f)
                             .height(20.dp)
                             .clip(RoundedCornerShape(20.dp))
-                            .background(Honeydew)
+                            .background(if (isDarkMode) Light_green else Honeydew)
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .clip(RoundedCornerShape(20.dp))
                                 .fillMaxWidth(uiState.expensePercentage / 100f)
-                                .background(Fence_green)
+                                .background(Caribbean_green)
                         )
                         Row(
                             modifier = Modifier.fillMaxSize(),
@@ -210,7 +213,7 @@ fun CategoriesScreen(
                             Text(
                                 text = "${uiState.expensePercentage}%",
                                 modifier = Modifier.padding(start = 8.dp),
-                                color = Honeydew,
+                                color = if (isDarkMode) Light_green else Fence_green,
                                 style = TextStyle(
                                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                     fontSize = 12.sp,
@@ -221,7 +224,7 @@ fun CategoriesScreen(
                                 modifier = Modifier.padding(end = 8.dp),
                                 style = TextStyle(
                                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                    color = Fence_green,
+                                    color = Caribbean_green,
                                     fontSize = 12.sp,
                                 )
                             )
@@ -239,7 +242,7 @@ fun CategoriesScreen(
                     Icon(
                         painter = painterResource(R.drawable.check),
                         contentDescription = "Check Icon",
-                        tint = Void,
+                        tint = if (isDarkMode) Color.White else Void,
                         modifier = Modifier.size(13.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -247,7 +250,7 @@ fun CategoriesScreen(
                         text = stringResource(id = R.string.goal_description),
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                            color = Fence_green,
+                            color = if (isDarkMode) Color.White else Void,
                             fontSize = 14.sp,
                         )
                     )
@@ -262,7 +265,7 @@ fun CategoriesScreen(
                     .padding(top = 16.dp)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew)
+                    .background(if (isDarkMode) Fence_green else Honeydew)
                     .padding(horizontal = 24.dp, vertical = 20.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
