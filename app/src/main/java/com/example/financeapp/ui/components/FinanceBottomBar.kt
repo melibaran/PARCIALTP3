@@ -48,11 +48,9 @@ private val navItems = listOf(
 @Composable
 fun FinanceBottomBar(
     modifier: Modifier = Modifier,
-    viewModel: BottomNavViewModel = viewModel(),
+    currentRoute: String?,
     onNavigate: (String) -> Unit = {}
 ) {
-    val selectedRoute by viewModel.selectedRoute.collectAsState()
-
     Surface(
         modifier = modifier
             .fillMaxWidth()
@@ -73,9 +71,8 @@ fun FinanceBottomBar(
             navItems.forEach { item ->
                 BottomNavItem(
                     item = item,
-                    isSelected = selectedRoute == item.route,
+                    isSelected = currentRoute == item.route,
                     onItemClick = {
-                        viewModel.onNavItemSelected(item.route)
                         onNavigate(item.route)
                     }
 
@@ -119,7 +116,7 @@ private fun BottomNavItem(
 fun FinanceBottomBarPreview() {
     MaterialTheme {
         Surface(color = com.example.financeapp.ui.theme.Honeydew) {
-            FinanceBottomBar()
+            FinanceBottomBar(currentRoute = "home")
         }
     }
 }

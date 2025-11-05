@@ -30,7 +30,7 @@ fun FoodScreen(
             TopBar(
                 title = "Food",
                 showBackButton = true,
-                onBackClick = { navController.navigateUp() },
+                onBackClick = { navController.navigate("layers") },
                 onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
             )

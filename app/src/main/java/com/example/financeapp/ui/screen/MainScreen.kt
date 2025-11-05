@@ -43,9 +43,14 @@ import com.example.financeapp.ui.screen.profile.SecurityScreen
 import com.example.financeapp.ui.screen.profile.TermsAndConditionsScreen
 
 
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.NavGraph.Companion.findStartDestination
+
 @Composable
 fun MainScreen(onLogout: () -> Unit = {}) {
     val navController = rememberNavController()
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.destination?.route
 
     Scaffold(
         topBar = {
@@ -53,8 +58,15 @@ fun MainScreen(onLogout: () -> Unit = {}) {
         },
         bottomBar = {
             FinanceBottomBar(
+                currentRoute = currentRoute,
                 onNavigate = { route ->
-                    navController.navigate(route)
+                    navController.navigate(route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 }
             )
         }
@@ -383,24 +395,6 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                         }
                     }
                 )
-            }
-            composable("home") {
-                HomeScreen(navController)
-            }
-            composable("account_balance") {
-                AccountBalanceScreen(navController)
-            }
-            composable("notifications") {
-                NotificationScreen(navController)
-            }
-            composable("help_center") {
-                HelpCenterScreen(navController)
-            }
-            composable("online_support") {
-                OnlineSupportScreen(navController)
-            }
-            composable("chat_detail/{chatId}") { backStackEntry ->
-                ChatDetailScreen(navController, backStackEntry.arguments?.getString("chatId") ?: "")
             }
         }
     }

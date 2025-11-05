@@ -54,7 +54,9 @@ fun CategoriesScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
+                    IconButton(onClick = { navController.navigate("home") {
+                        popUpTo("home") { inclusive = true }
+                    } }) {
                         Icon(
                             painter = painterResource(R.drawable.bring_back),
                             contentDescription = "Back",
