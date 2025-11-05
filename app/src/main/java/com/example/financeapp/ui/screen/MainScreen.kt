@@ -5,7 +5,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -38,6 +37,8 @@ import com.example.financeapp.ui.screen.helpcenter.HelpCenterScreen
 import com.example.financeapp.ui.screen.home.HomeScreen
 import com.example.financeapp.ui.screen.notification.NotificationScreen
 import com.example.financeapp.ui.screen.onlinesupport.OnlineSupportScreen
+import com.example.financeapp.ui.screen.profile.EditProfileScreen
+import com.example.financeapp.ui.screen.profile.ProfileScreen
 
 
 @Composable
@@ -55,10 +56,10 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 }
             )
         }
-    ) {
+    ) { innerPadding ->
         NavHost(
             navController = navController,
-            modifier = Modifier.padding(0.dp),
+            modifier = Modifier.padding(innerPadding),
             startDestination = "home",
         ) {
             // Rutas para la bottom navigation
@@ -175,7 +176,24 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                 ChatDetailScreen(navController = navController, chatId = chatId)
             }
             composable(route = "profile") {
-                HelpCenterScreen(navController = navController)
+                ProfileScreen(
+                    onEditProfileClick = { navController.navigate("edit_profile") },
+                    onSecurityClick = { navController.navigate("security") },
+                    onSettingClick = {
+                        navController.navigate("settings") {
+                            popUpTo("home") { inclusive = true }
+                        }
+                    },
+                    onHelpClick = {
+                        navController.navigate("help_center") {
+                            popUpTo("home") { inclusive = true }
+                        }
+                    },
+                    onLogoutClick = {
+                        onLogout()
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
+                )
             }
             composable("settings") {
                 SettingsScreen(
@@ -245,7 +263,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
                     onLogoutClick = {
                         // Delega al NavController raíz
                         onLogout()
-                    }
+                    },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 

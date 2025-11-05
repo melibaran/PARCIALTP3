@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen
+package com.example.financeapp.ui.screen.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
 import com.example.financeapp.ui.screen.login.LogoutDialog
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
@@ -37,7 +38,8 @@ fun ProfileScreen(
     onSecurityClick: () -> Unit = {},
     onSettingClick: () -> Unit = {},
     onHelpClick: () -> Unit = {},
-    onLogoutClick: () -> Unit = {}
+    onLogoutClick: () -> Unit = {},
+    onNotificationsClick: () -> Unit = {}
 ) {
     val showLogoutDialog = remember { mutableStateOf(false) }
     Box(
@@ -49,21 +51,50 @@ fun ProfileScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Spacer(modifier = Modifier.width(24.dp))
+
+                Text(
+                    text = stringResource(R.string.profile_title),
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 32.sp,
+                    color = Void,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f)
+                )
+
+                // campanita con el mismo estilo que en CommonComponents
+                IconButton(onClick = onNotificationsClick) {
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .background(Color.White),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.bell),
+                            contentDescription = stringResource(R.string.notifications),
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+            }
+
             Spacer(modifier = Modifier.height(50.dp))
-            Text(
-                text = stringResource(R.string.profile_title),
-                fontFamily = poppinsFamily,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 32.sp,
-                color = Void,
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(80.dp))
+
             Card(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = com.example.financeapp.ui.theme.Honeydew)
+                colors = CardDefaults.cardColors(containerColor = Honeydew)
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -149,7 +180,7 @@ fun ProfileScreen(
         Box(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = 130.dp)
+                .offset(y = 80.dp)
                 .size(100.dp)
                 .clip(CircleShape)
                 .background(Color.White),

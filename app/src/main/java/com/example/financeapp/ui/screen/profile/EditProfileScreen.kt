@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen
+package com.example.financeapp.ui.screen.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
@@ -90,7 +91,7 @@ fun EditProfileScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = com.example.financeapp.ui.theme.Honeydew)
+                colors = CardDefaults.cardColors(containerColor = Honeydew)
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
