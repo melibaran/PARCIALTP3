@@ -46,7 +46,6 @@ fun NotificationSettingsScreen1(
                 containerColor = Caribbean_green
             )
 
-            // Card principal: usar Surface con shape redondeado igual que los otros screens
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
