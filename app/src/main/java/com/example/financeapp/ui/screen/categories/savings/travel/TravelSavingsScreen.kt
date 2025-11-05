@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -355,15 +354,11 @@ private fun DepositItem(deposit: Deposit) {
                     .background(Light_blue),
                 contentAlignment = Alignment.Center
             ) {
-                // intentar tintar la imagen a blanco para que se vea el avión sin el fondo
                 Image(
                     painter = painterResource(id = R.drawable.travel),
                     contentDescription = "Transaction",
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Fit,
-                    colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(Color.White, BlendMode.SrcIn)
+                    modifier = Modifier.size(28.dp),
+                    contentScale = ContentScale.Fit
                 )
             }
             Column {
