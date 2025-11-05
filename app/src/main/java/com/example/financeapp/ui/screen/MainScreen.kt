@@ -272,7 +272,8 @@ fun MainScreen(onLogout: () -> Unit = {}) {
             composable("edit_profile") {
                 EditProfileScreen(
                     onBackClick = { navController.navigateUp() },
-                    onUpdateClick = { }
+                    onUpdateClick = { },
+                    onNotificationsClick = { navController.navigate("notifications") }
                 )
             }
 

@@ -31,7 +31,8 @@ import com.example.financeapp.ui.theme.poppinsFamily
 @Composable
 fun EditProfileScreen(
     onBackClick: () -> Unit = {},
-    onUpdateClick: () -> Unit = {}
+    onUpdateClick: () -> Unit = {},
+    onNotificationsClick: () -> Unit = {}
 ) {
     var username by remember { mutableStateOf("John Smith") }
     var phone by remember { mutableStateOf("+44 555 5555 55") }
@@ -75,13 +76,21 @@ fun EditProfileScreen(
                     modifier = Modifier.weight(1f)
                 )
                 
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.bell),
-                        contentDescription = "Notifications",
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp)
-                    )
+                IconButton(onClick = onNotificationsClick) {
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .background(Color.White),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.bell),
+                            contentDescription = "Notifications",
+                            tint = Void,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
                 }
             }
             
