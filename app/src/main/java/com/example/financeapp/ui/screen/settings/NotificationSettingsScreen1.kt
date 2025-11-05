@@ -27,9 +27,7 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificationSettingsScreen1(
-    navController: NavController,
-    onBackClick: () -> Unit = {},
-    onNotificationClick: () -> Unit = {}
+    navController: NavController
 ) {
     Box(
         modifier = Modifier
@@ -41,8 +39,8 @@ fun NotificationSettingsScreen1(
                 title = stringResource(R.string.notifications_settings),
                 showBackButton = true,
                 centerTitle = true,
-                onBackClick = onBackClick,
-                onNotificationClick = onNotificationClick,
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
             )
 

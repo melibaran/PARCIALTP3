@@ -28,8 +28,6 @@ import androidx.navigation.NavController
 @Composable
 fun SettingsScreen(
     navController: NavController,
-    onBackClick: () -> Unit = {},
-    onNotificationClick: () -> Unit = {},
     onPasswordClick: () -> Unit = {},
     onDeleteAccountClick: () -> Unit = {}
 ) {
@@ -43,10 +41,8 @@ fun SettingsScreen(
                 title = stringResource(R.string.settings),
                 showBackButton = true,
                 centerTitle = true,
-                onBackClick = { navController.navigate("home") {
-                    popUpTo("home") { inclusive = true }
-                } },
-                onNotificationClick = onNotificationClick,
+                onBackClick = { navController.navigate("profile") },
+                onNotificationClick = { navController.navigate("notifications") },
                 containerColor = Caribbean_green
             )
             // Card principal
@@ -68,7 +64,6 @@ fun SettingsScreen(
                         text = stringResource(R.string.notifications_settings),
                         onClick = {
                             navController.navigate("notification_settings")
-                            onNotificationClick()
                         }
                     )
                     Spacer(modifier = Modifier.height(16.dp))

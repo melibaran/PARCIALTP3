@@ -213,8 +213,6 @@ fun MainScreen(onLogout: () -> Unit = {}) {
             composable("settings") {
                 SettingsScreen(
                     navController = navController,
-                    onBackClick = { navController.navigateUp() },
-                    onNotificationClick = { navController.navigate("notification_settings") },
                     onPasswordClick = { navController.navigate("password_settings") },
                     onDeleteAccountClick = { navController.navigate("delete_account") }
                 )
@@ -222,9 +220,7 @@ fun MainScreen(onLogout: () -> Unit = {}) {
 
             composable("notification_settings") {
                 NotificationSettingsScreen1(
-                    navController = navController,
-                    onBackClick = { navController.navigateUp() },
-                    onNotificationClick = { }
+                    navController = navController
                 )
             }
 
