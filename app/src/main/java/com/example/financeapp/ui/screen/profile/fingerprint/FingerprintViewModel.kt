@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen.fingerprint
+package com.example.financeapp.ui.screen.profile.fingerprint
 
 import androidx.lifecycle.ViewModel
 import com.example.financeapp.core.ResourceProvider

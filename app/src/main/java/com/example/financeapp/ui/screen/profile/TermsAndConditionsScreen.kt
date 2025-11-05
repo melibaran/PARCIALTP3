@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen
+package com.example.financeapp.ui.screen.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,12 +22,14 @@ import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
+import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
 
 @Composable
 fun TermsAndConditionsScreen(
     onBackClick: () -> Unit = {},
-    onAcceptClick: () -> Unit = {}
+    onAcceptClick: () -> Unit = {},
+    onNotificationsClick: () -> Unit = {}
 ) {
     var isAccepted by remember { mutableStateOf(false) }
 
@@ -66,7 +68,7 @@ fun TermsAndConditionsScreen(
                     modifier = Modifier.weight(1f)
                 )
 
-                IconButton(onClick = { }) {
+                IconButton(onClick = onNotificationsClick) {
                     Box(
                         modifier = Modifier
                             .size(40.dp)
@@ -77,7 +79,7 @@ fun TermsAndConditionsScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.bell),
                             contentDescription = "Notifications",
-                            tint = Caribbean_green,
+                            tint = Void,
                             modifier = Modifier.size(20.dp)
                         )
                     }
