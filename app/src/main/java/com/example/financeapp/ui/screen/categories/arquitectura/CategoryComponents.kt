@@ -46,7 +46,7 @@ fun CategoryDesign(title: String,content:@Composable ColumnScope.() -> Unit,navC
 @Composable
 fun CategoryAddExpensesButton(
     onClick: () -> Unit,
-    tittle : String
+    title : String
 ) {
     Box(
         modifier = Modifier
@@ -67,7 +67,7 @@ fun CategoryAddExpensesButton(
             shape = RoundedCornerShape(24.dp)
         ) {
             Text(
-                text = tittle,
+                text = title,
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                     color = Honeydew,
@@ -80,6 +80,41 @@ fun CategoryAddExpensesButton(
 
 @Composable
 fun CategoryAddSavingsButton(
+    onClick: () -> Unit,
+    title : String
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Honeydew)
+            .padding(bottom = 80.dp),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        Button(
+            onClick = onClick,
+            modifier = Modifier
+                .padding(horizontal = 95.dp)
+                .fillMaxWidth()
+                .height(48.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Caribbean_green
+            ),
+            shape = RoundedCornerShape(24.dp)
+        ) {
+            Text(
+                text = title,
+                style = TextStyle(
+                    fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                    color = Honeydew,
+                    fontSize = 16.sp,
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun CategoryAddMoreButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -102,7 +137,7 @@ fun CategoryAddSavingsButton(
             shape = RoundedCornerShape(24.dp)
         ) {
             Text(
-                text = "Add Savings",
+                text = "Add More",
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                     color = Honeydew,
@@ -112,4 +147,3 @@ fun CategoryAddSavingsButton(
         }
     }
 }
-

@@ -4,18 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -28,77 +24,73 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddExpensesButton
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDatePicker
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddSavingsButton
 import com.example.financeapp.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddExpensesScreen(
+fun AddSavingsScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
     var date by remember { mutableStateOf("April 30 ,2024") }
-    var selectedCategory by remember { mutableStateOf("") }
+    var selectedGoal by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("$26,00") }
-    var expenseTitle by remember { mutableStateOf("Dinner") }
+    var depositTitle by remember { mutableStateOf("Deposit") }
     var message by remember { mutableStateOf("") }
-    var showCategoryDropdown by remember { mutableStateOf(false) }
+    var showGoalDropdown by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
 
-    val categories = listOf(
-        "Food",
-        "Transport",
-        "Medicine",
-        "Shopping",
-        "Rent",
-        "Gifts",
-        "Saving",
-        "Entertainment"
+    val savingsGoals = listOf(
+        "Travel",
+        "New House",
+        "Car",
+        "Wedding"
     )
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Caribbean_green)
-            .systemBarsPadding()
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-                    .background(Caribbean_green),
-                contentAlignment = Alignment.Center
-            ) {
-                TopBar(
-                    title = stringResource(id = R.string.add_expenses),
-                    showBackButton = true,
-                    centerTitle = true,
-                    onBackClick = { navController.navigateUp() },
-                    onNotificationClick = { navController.navigate("notifications") },
-                    containerColor = Color.Transparent
-                )
-            }
+    Scaffold(
+        topBar = {
+            TopBar(
+                title = "Add Savings",
+                showBackButton = true,
+                centerTitle = true,
+                onBackClick = { navController.navigateUp() },
+                onNotificationClick = { navController.navigate("notifications") },
+                containerColor = Caribbean_green
+            )
+        },
+        containerColor = Caribbean_green
+    ) { paddingValues ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(16.dp))
 
-
+            // Card principal con fondo Honeydew
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = Honeydew)
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
+                shape = RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Honeydew
+                )
             ) {
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(24.dp)
-                        .verticalScroll(rememberScrollState())
-                )
-   {
+                        .padding(horizontal = 24.dp, vertical = 24.dp),
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
                     // Date Field
                     Column {
                         Text(
-                            text = stringResource(id = R.string.date_label),
+                            text = "Date",
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
                                 color = Void,
@@ -149,11 +141,11 @@ fun AddExpensesScreen(
                             singleLine = true
                         )
                     }
-                     Spacer(modifier = Modifier.height(20.dp))
-                    // Category Dropdown
+
+                    // Savings Goal Dropdown
                     Column {
                         Text(
-                            text = stringResource(id = R.string.category_label),
+                            text = "Savings Goal",
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
                                 color = Void,
@@ -162,11 +154,11 @@ fun AddExpensesScreen(
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         ExposedDropdownMenuBox(
-                            expanded = showCategoryDropdown,
-                            onExpandedChange = { showCategoryDropdown = it }
+                            expanded = showGoalDropdown,
+                            onExpandedChange = { showGoalDropdown = it }
                         ) {
                             OutlinedTextField(
-                                value = selectedCategory,
+                                value = selectedGoal,
                                 onValueChange = {},
                                 readOnly = true,
                                 modifier = Modifier
@@ -175,7 +167,7 @@ fun AddExpensesScreen(
                                     .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable),
                                 placeholder = {
                                     Text(
-                                        stringResource(id = R.string.select_category),
+                                        "Select a savings goal",
                                         style = TextStyle(
                                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                             color = Caribbean_green,
@@ -196,19 +188,19 @@ fun AddExpensesScreen(
                                 ),
                                 shape = RoundedCornerShape(18.dp),
                                 trailingIcon = {
-                                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = showCategoryDropdown)
+                                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = showGoalDropdown)
                                 },
                                 singleLine = true
                             )
                             ExposedDropdownMenu(
-                                expanded = showCategoryDropdown,
-                                onDismissRequest = { showCategoryDropdown = false }
+                                expanded = showGoalDropdown,
+                                onDismissRequest = { showGoalDropdown = false }
                             ) {
-                                categories.forEach { category ->
+                                savingsGoals.forEach { goal ->
                                     DropdownMenuItem(
                                         text = {
                                             Text(
-                                                category,
+                                                goal,
                                                 style = TextStyle(
                                                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                                     fontSize = 14.sp,
@@ -216,19 +208,19 @@ fun AddExpensesScreen(
                                             )
                                         },
                                         onClick = {
-                                            selectedCategory = category
-                                            showCategoryDropdown = false
+                                            selectedGoal = goal
+                                            showGoalDropdown = false
                                         }
                                     )
                                 }
                             }
                         }
                     }
-                            Spacer(modifier = Modifier.height(20.dp))
+
                     // Amount Field
                     Column {
                         Text(
-                            text = stringResource(id = R.string.amount_label),
+                            text = "Amount",
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
                                 color = Void,
@@ -258,11 +250,11 @@ fun AddExpensesScreen(
                             singleLine = true
                         )
                     }
-                        Spacer(modifier = Modifier.height(20.dp))
-                    // Expense Title Field
+
+                    // Deposit Title Field
                     Column {
                         Text(
-                            text = stringResource(id = R.string.expense_title_label),
+                            text = "Deposit Title",
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
                                 color = Void,
@@ -271,8 +263,8 @@ fun AddExpensesScreen(
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                         OutlinedTextField(
-                            value = expenseTitle,
-                            onValueChange = { expenseTitle = it },
+                            value = depositTitle,
+                            onValueChange = { depositTitle = it },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(56.dp),
@@ -291,8 +283,8 @@ fun AddExpensesScreen(
                             singleLine = true
                         )
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
 
+                    // Message Field (multiline)
                     Column {
                         OutlinedTextField(
                             value = message,
@@ -302,7 +294,7 @@ fun AddExpensesScreen(
                                 .height(166.dp),
                             placeholder = {
                                 Text(
-                                    text = stringResource(id = R.string.enter_message),
+                                    text = "Enter a message (optional)",
                                     style = TextStyle(
                                         fontFamily = FontFamily(Font(R.font.poppins_medium)),
                                         fontWeight = FontWeight.Medium,
@@ -331,11 +323,13 @@ fun AddExpensesScreen(
                             maxLines = 6
                         )
                     }
+
                     Spacer(modifier = Modifier.height(28.dp))
-                CategoryAddExpensesButton(
-                    onClick = {navController.navigateUp()},
-                    title = "Save"
-                )
+
+                    CategoryAddSavingsButton(
+                        onClick = {navController.navigateUp()},
+                        title = "Save"
+                    )
                 }
             }
         }
