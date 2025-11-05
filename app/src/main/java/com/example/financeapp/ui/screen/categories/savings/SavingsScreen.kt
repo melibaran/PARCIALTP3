@@ -42,13 +42,13 @@ fun SavingsScreen(
         if (uiState.savingsGoals.isEmpty()) {
             val defaultGoals = listOf(
                 SavingsGoal(
-                    title = "Car",
-                    iconId = R.drawable.car,
-                    goalAmount = 14390.0,
-                    savedAmount = 596.25,
-                    progressPercentage = 15,
+                    title = "Travel",
+                    iconId = R.drawable.travel,
+                    goalAmount = 1962.93,
+                    savedAmount = 653.31,
+                    progressPercentage = 40,
                     deposits = emptyMap(),
-                    route = "car_savings"
+                    route = "travel_savings"
                 ),
                 SavingsGoal(
                     title = "New House",
@@ -60,13 +60,13 @@ fun SavingsScreen(
                     route = "house_savings"
                 ),
                 SavingsGoal(
-                    title = "Travel",
-                    iconId = R.drawable.travel,
-                    goalAmount = 1962.93,
-                    savedAmount = 653.31,
-                    progressPercentage = 40,
+                    title = "Car",
+                    iconId = R.drawable.car,
+                    goalAmount = 14390.0,
+                    savedAmount = 596.25,
+                    progressPercentage = 15,
                     deposits = emptyMap(),
-                    route = "travel_savings"
+                    route = "car_savings"
                 ),
                 SavingsGoal(
                     title = "Wedding",
