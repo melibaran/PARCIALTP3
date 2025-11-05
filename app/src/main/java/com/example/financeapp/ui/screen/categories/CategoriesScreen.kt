@@ -126,6 +126,7 @@ fun CategoriesScreen(
                                 "Gift" -> navController.navigate("gift")
                                 "Entertainment" -> navController.navigate("entertainment")
                                 "Savings" -> navController.navigate("savings")
+                                "More" -> viewModel.showDialog()
                             }
                         }
                     )
@@ -133,5 +134,16 @@ fun CategoriesScreen(
             }
         }
     }
-}
 
+    // Mostrar el diálogo cuando showDialog sea true
+    if (uiState.showDialog) {
+        NewCategoryDialog(
+            onConfirm = { categoryName ->
+                viewModel.addNewCategory(categoryName)
+            },
+            onDismiss = {
+                viewModel.hideDialog()
+            }
+        )
+    }
+}

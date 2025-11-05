@@ -71,5 +71,18 @@ class CategoriesViewModel @Inject constructor() : ViewModel() {
             categories = mockCategories
         )
     }
-}
 
+    fun showDialog() {
+        _uiState.value = _uiState.value.copy(showDialog = true)
+    }
+
+    fun hideDialog() {
+        _uiState.value = _uiState.value.copy(showDialog = false)
+    }
+
+    fun addNewCategory(name: String) {
+        // Aquí puedes agregar la lógica para crear la categoría
+        // Por ahora solo cerramos el diálogo
+        hideDialog()
+    }
+}

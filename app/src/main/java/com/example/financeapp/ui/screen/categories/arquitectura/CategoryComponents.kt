@@ -70,7 +70,7 @@ fun CategoryAddExpensesButton(
                 text = "Add Expenses",
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                    color = Void,
+                    color = Honeydew,
                     fontSize = 16.sp,
                 )
             )
@@ -78,4 +78,38 @@ fun CategoryAddExpensesButton(
     }
 }
 
+@Composable
+fun CategoryAddSavingsButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Honeydew)
+            .padding(bottom = 80.dp),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        Button(
+            onClick = onClick,
+            modifier = Modifier
+                .padding(horizontal = 95.dp)
+                .fillMaxWidth()
+                .height(48.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Caribbean_green
+            ),
+            shape = RoundedCornerShape(24.dp)
+        ) {
+            Text(
+                text = "Add Savings",
+                style = TextStyle(
+                    fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                    color = Honeydew,
+                    fontSize = 16.sp,
+                )
+            )
+        }
+    }
+}
 
