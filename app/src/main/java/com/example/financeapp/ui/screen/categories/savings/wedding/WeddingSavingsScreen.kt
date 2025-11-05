@@ -211,46 +211,57 @@ fun WeddingSavingsScreen(
 
                         // Horizontal Progress Bar
                         Column {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = "${goal.progressPercentage}%",
-                                    style = TextStyle(
-                                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                        fontSize = 14.sp,
-                                        color = Void
-                                    )
-                                )
-                                Text(
-                                    text = "$${String.format("%.2f", goal.goalAmount)}",
-                                    style = TextStyle(
-                                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                        fontSize = 14.sp,
-                                        color = Void
-                                    )
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(8.dp))
-
-                            // Progress bar
+                            // Progress bar with text inside
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(20.dp)
                                     .clip(RoundedCornerShape(20.dp))
-                                    .background(Honeydew)
+                                    .background(Caribbean_green)
                             ) {
+                                // Filled portion with percentage
                                 Box(
                                     modifier = Modifier
                                         .fillMaxHeight()
                                         .fillMaxWidth(goal.progressPercentage / 100f)
                                         .clip(RoundedCornerShape(20.dp))
-                                        .background(Caribbean_green)
-                                )
+                                        .background(Fence_green)
+                                ) {
+                                    // Percentage text inside filled area
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(horizontal = 8.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            text = "${goal.progressPercentage}%",
+                                            style = TextStyle(
+                                                fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                                                fontSize = 14.sp,
+                                                color = Color.White
+                                            )
+                                        )
+                                    }
+                                }
+                                
+                                // Total amount text always at the end
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(horizontal = 8.dp),
+                                    horizontalArrangement = Arrangement.End,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "$${String.format("%.2f", goal.goalAmount)}",
+                                        style = TextStyle(
+                                            fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
+                                            fontSize = 14.sp,
+                                            color = Color.White
+                                        )
+                                    )
+                                }
                             }
 
                             Spacer(modifier = Modifier.height(8.dp))
@@ -264,13 +275,13 @@ fun WeddingSavingsScreen(
                                     painter = painterResource(id = R.drawable.check_progress),
                                     contentDescription = "Check",
                                     modifier = Modifier.size(16.dp),
-                                    tint = Caribbean_green
+                                    tint = Fence_green
                                 )
                                 Text(
-                                    text = "${goal.progressPercentage}% Of Your Expenses, Looks Good.",
+                                    text = "30% of your expenses, looks good.",
                                     style = TextStyle(
-                                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                        fontSize = 12.sp,
+                                        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+                                        fontSize = 15.sp,
                                         color = Void
                                     )
                                 )
