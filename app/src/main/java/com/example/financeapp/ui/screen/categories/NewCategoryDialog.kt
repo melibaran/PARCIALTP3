@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.financeapp.ui.components.PrimaryButton
 import com.example.financeapp.ui.components.SecondaryButton
+import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
 
@@ -52,25 +54,26 @@ fun NewCategoryDialog(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // Input de texto para el nombre de la categoría
-                TextField(
-                    value = categoryName,
+                TextField(  value = categoryName,
                     onValueChange = { categoryName = it },
                     placeholder = {
                         Text(
-                            text = "Category name",
+                            text = "Write..",
                             fontFamily = poppinsFamily,
-                            fontSize = 14.sp
+                            fontSize = 14.sp,
+                            color = Caribbean_green
                         )
+
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFF5F5F5),
-                        unfocusedContainerColor = Color(0xFFF5F5F5),
-                        disabledContainerColor = Color(0xFFF5F5F5),
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                    ),
+                        focusedContainerColor = Light_green,
+                        unfocusedContainerColor = Light_green,
+                        disabledContainerColor = Light_green,
+                        focusedIndicatorColor = Light_green,
+                        unfocusedIndicatorColor = Light_green,
+                        ),
                     singleLine = true
                 )
 
