@@ -70,7 +70,7 @@ fun CategoryAddExpensesButton(
                 text = tittle,
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                    color = Honeydew,
+                    color = Void,
                     fontSize = 16.sp,
                 )
             )
@@ -81,7 +81,7 @@ fun CategoryAddExpensesButton(
 @Composable
 fun CategoryAddSavingsButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    title:  String
 ) {
     Box(
         modifier = Modifier
@@ -102,10 +102,10 @@ fun CategoryAddSavingsButton(
             shape = RoundedCornerShape(24.dp)
         ) {
             Text(
-                text = "Add Savings",
+                text = title,
                 style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                    color = Honeydew,
+                    color = Void,
                     fontSize = 16.sp,
                 )
             )

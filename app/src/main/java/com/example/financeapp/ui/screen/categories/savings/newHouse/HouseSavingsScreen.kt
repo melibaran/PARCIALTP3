@@ -156,28 +156,21 @@ fun HouseSavingsScreen(
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            verticalArrangement = Arrangement.Center
                                         ) {
-                                            CircularProgressIndicator(
-                                                progress = goal.progressPercentage / 100f,
-                                                modifier = Modifier.size(100.dp),
-                                                color = Color(0xFF1E88E5),
-                                                strokeWidth = 8.dp,
-                                                trackColor = Color.White.copy(alpha = 0.3f)
+                                            Image(
+                                                painter = painterResource(id = R.drawable.newhome),
+                                                contentDescription = goal.title,
+                                                modifier = Modifier.size(80.dp),
+                                                contentScale = ContentScale.Fit
                                             )
                                             Spacer(modifier = Modifier.height(8.dp))
-                                            Icon(
-                                                painter = painterResource(id = goal.iconId),
-                                                contentDescription = goal.title,
-                                                modifier = Modifier.size(32.dp),
-                                                tint = Color.White
-                                            )
-                                            Spacer(modifier = Modifier.height(4.dp))
                                             Text(
-                                                text = goal.title,
+                                                text = "House",
                                                 style = TextStyle(
                                                     fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                                    fontSize = 12.sp,
+                                                    fontSize = 18.sp,
                                                     color = Color.White
                                                 )
                                             )

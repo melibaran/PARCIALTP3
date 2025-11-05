@@ -123,7 +123,8 @@ fun SavingsScreen(
             }
 
             CategoryAddSavingsButton(
-                onClick = { /* TODO: Navigate to add savings screen */ }
+                onClick = { /* TODO: Navigate to add savings screen */ },
+                title = "Add More"
             )
         },
         navController = navController
