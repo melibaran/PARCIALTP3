@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen.changepin
+package com.example.financeapp.ui.screen.profile.changepin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Caribbean_green
+import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
 import com.example.financeapp.ui.theme.poppinsFamily
@@ -32,6 +33,7 @@ import com.example.financeapp.ui.theme.poppinsFamily
 fun ChangePinScreen(
     onBackClick: () -> Unit = {},
     onPinChanged: () -> Unit = {},
+    onNotificationsClick: () -> Unit = {},
     viewModel: ChangePinViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -65,7 +67,8 @@ fun ChangePinScreen(
         onCurrentPinVisibilityToggle = viewModel::toggleCurrentPinVisibility,
         onNewPinVisibilityToggle = viewModel::toggleNewPinVisibility,
         onConfirmPinVisibilityToggle = viewModel::toggleConfirmPinVisibility,
-        onChangePinClick = viewModel::changePin
+        onChangePinClick = viewModel::changePin,
+        onNotificationsClick = onNotificationsClick
     )
 }
 
@@ -79,7 +82,8 @@ private fun ChangePinContent(
     onCurrentPinVisibilityToggle: () -> Unit,
     onNewPinVisibilityToggle: () -> Unit,
     onConfirmPinVisibilityToggle: () -> Unit,
-    onChangePinClick: () -> Unit
+    onChangePinClick: () -> Unit,
+    onNotificationsClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -117,7 +121,7 @@ private fun ChangePinContent(
                     modifier = Modifier.weight(1f)
                 )
                 
-                IconButton(onClick = { }) {
+                IconButton(onClick = onNotificationsClick) {
                     Box(
                         modifier = Modifier
                             .size(40.dp)
@@ -128,7 +132,7 @@ private fun ChangePinContent(
                         Icon(
                             painter = painterResource(id = R.drawable.bell),
                             contentDescription = "Notifications",
-                            tint = Caribbean_green,
+                            tint = Void,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -141,7 +145,7 @@ private fun ChangePinContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = com.example.financeapp.ui.theme.Honeydew)
+                colors = CardDefaults.cardColors(containerColor = Honeydew)
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -283,7 +287,8 @@ fun ChangePinScreenPreview() {
             onCurrentPinVisibilityToggle = {},
             onNewPinVisibilityToggle = {},
             onConfirmPinVisibilityToggle = {},
-            onChangePinClick = {}
+            onChangePinClick = {},
+            onNotificationsClick = {}
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.financeapp.ui.screen.fingerprint
+package com.example.financeapp.ui.screen.profile.fingerprint
 
 data class FingerprintUiState(
     val fingerprints: List<FingerprintItem> = emptyList(),
