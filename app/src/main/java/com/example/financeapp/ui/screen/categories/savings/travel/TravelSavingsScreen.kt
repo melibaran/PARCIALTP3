@@ -1,5 +1,6 @@
 package com.example.financeapp.ui.screen.categories.savings.travel
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -298,7 +301,7 @@ fun TravelSavingsScreen(
 
                     goal.deposits.forEach { (month, deposits) ->
                         items(deposits) { deposit ->
-                            DepositItem(deposit = deposit, iconId = goal.iconId)
+                            DepositItem(deposit = deposit)
                             Spacer(modifier = Modifier.height(8.dp))
                         }
                     }
@@ -333,7 +336,7 @@ fun TravelSavingsScreen(
 }
 
 @Composable
-private fun DepositItem(deposit: Deposit, iconId: Int) {
+private fun DepositItem(deposit: Deposit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -347,16 +350,20 @@ private fun DepositItem(deposit: Deposit, iconId: Int) {
         ) {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(52.dp)
                     .clip(CircleShape)
                     .background(Light_blue),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = iconId),
+                // intentar tintar la imagen a blanco para que se vea el avión sin el fondo
+                Image(
+                    painter = painterResource(id = R.drawable.travel),
                     contentDescription = "Transaction",
-                    modifier = Modifier.size(20.dp),
-                    tint = Color.White
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Fit,
+                    colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(Color.White, BlendMode.SrcIn)
                 )
             }
             Column {
