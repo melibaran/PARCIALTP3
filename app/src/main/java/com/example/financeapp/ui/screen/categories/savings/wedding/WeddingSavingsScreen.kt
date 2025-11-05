@@ -1,5 +1,6 @@
 package com.example.financeapp.ui.screen.categories.savings.wedding
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -25,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddSavingsButton
 import com.example.financeapp.ui.screen.categories.savings.Deposit
 import com.example.financeapp.ui.screen.categories.savings.SavingsViewModel
 import com.example.financeapp.ui.theme.*
@@ -154,28 +157,21 @@ fun WeddingSavingsScreen(
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            verticalArrangement = Arrangement.Center
                                         ) {
-                                            CircularProgressIndicator(
-                                                progress = goal.progressPercentage / 100f,
-                                                modifier = Modifier.size(100.dp),
-                                                color = Color(0xFF1E88E5),
-                                                strokeWidth = 8.dp,
-                                                trackColor = Color.White.copy(alpha = 0.3f)
+                                            Image(
+                                                painter = painterResource(id = R.drawable.wedding),
+                                                contentDescription = goal.title,
+                                                modifier = Modifier.size(80.dp),
+                                                contentScale = ContentScale.Fit
                                             )
                                             Spacer(modifier = Modifier.height(8.dp))
-                                            Icon(
-                                                painter = painterResource(id = goal.iconId),
-                                                contentDescription = goal.title,
-                                                modifier = Modifier.size(32.dp),
-                                                tint = Color.White
-                                            )
-                                            Spacer(modifier = Modifier.height(4.dp))
                                             Text(
-                                                text = goal.title,
+                                                text = "Wedding",
                                                 style = TextStyle(
                                                     fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                                                    fontSize = 12.sp,
+                                                    fontSize = 18.sp,
                                                     color = Color.White
                                                 )
                                             )
@@ -291,42 +287,25 @@ fun WeddingSavingsScreen(
                         }
 
                         items(deposits) { deposit ->
-                            DepositItem(deposit = deposit, iconId = goal.iconId)
+                            DepositItem(deposit = deposit, iconRes = R.drawable.wedding)
                             Spacer(modifier = Modifier.height(8.dp))
                         }
                     }
 
-                    // Add Savings Button
-                    item {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = { /* TODO: Add savings */ },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(50.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Caribbean_green
-                            ),
-                            shape = RoundedCornerShape(25.dp)
-                        ) {
-                            Text(
-                                text = "Add Savings",
-                                style = TextStyle(
-                                    fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                    fontSize = 16.sp,
-                                    color = Color.White
-                                )
-                            )
-                        }
-                    }
                 }
             }
+            
+            // Add Savings Button
+            CategoryAddSavingsButton(
+                onClick = { /* TODO: Navigate to add savings screen */ },
+                title = "Add Savings"
+            )
         }
     }
 }
 
 @Composable
-private fun DepositItem(deposit: Deposit, iconId: Int) {
+private fun DepositItem(deposit: Deposit, iconRes: Int = R.drawable.wedding) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -340,16 +319,16 @@ private fun DepositItem(deposit: Deposit, iconId: Int) {
         ) {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(52.dp)
                     .clip(CircleShape)
                     .background(Light_blue),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = iconId),
+                Image(
+                    painter = painterResource(id = iconRes),
                     contentDescription = "Transaction",
-                    modifier = Modifier.size(20.dp),
-                    tint = Color.White
+                    modifier = Modifier.size(28.dp),
+                    contentScale = ContentScale.Fit
                 )
             }
             Column {

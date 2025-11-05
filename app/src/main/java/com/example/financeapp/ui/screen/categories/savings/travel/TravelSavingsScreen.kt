@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
+import com.example.financeapp.ui.screen.categories.arquitectura.CategoryAddSavingsButton
 import com.example.financeapp.ui.screen.categories.savings.Deposit
 import com.example.financeapp.ui.screen.categories.savings.SavingsViewModel
 import com.example.financeapp.ui.theme.*
@@ -287,31 +288,14 @@ fun TravelSavingsScreen(
                         }
                     }
 
-                    // Add Savings Button
-                    item {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = { /* TODO: Add savings */ },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(50.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Caribbean_green
-                            ),
-                            shape = RoundedCornerShape(25.dp)
-                        ) {
-                            Text(
-                                text = "Add Savings",
-                                style = TextStyle(
-                                    fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                    fontSize = 16.sp,
-                                    color = Void
-                                )
-                            )
-                        }
-                    }
                 }
             }
+            
+            // Add Savings Button
+            CategoryAddSavingsButton(
+                onClick = { /* TODO: Navigate to add savings screen */ },
+                title = "Add Savings"
+            )
         }
     }
 }
