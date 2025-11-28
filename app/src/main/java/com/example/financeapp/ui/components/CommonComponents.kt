@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.R
+import com.example.financeapp.ui.theme.AdaptiveDimens
 import com.example.financeapp.ui.theme.Light_blue
 import com.example.financeapp.ui.theme.Ocean_blue
 import com.example.financeapp.ui.theme.Vivid_blue
@@ -48,6 +49,8 @@ fun TopBar(
     onNotificationClick: () -> Unit = {},
     containerColor: Color = MaterialTheme.colorScheme.background
 ) {
+    val iconSize = AdaptiveDimens.adaptiveIconSize()
+    val buttonSize = iconSize * 1.5f // Para el botón de notificación
     TopAppBar(
         title = {
             Box(
@@ -78,7 +81,7 @@ fun TopBar(
                     Image(
                         painter = painterResource(id = R.drawable.bring_back),
                         contentDescription = "Back",
-                        modifier = Modifier.size(19.dp)
+                        modifier = Modifier.size(iconSize)
                     )
                 }
             }
@@ -87,7 +90,7 @@ fun TopBar(
             IconButton(onClick = onNotificationClick) {
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(buttonSize)
                         .clip(CircleShape)
                         .background(Color.White),
                     contentAlignment = Alignment.Center
@@ -95,7 +98,7 @@ fun TopBar(
                     Image(
                         painter = painterResource(id = R.drawable.bell),
                         contentDescription = "Notifications",
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(iconSize * 0.8f)
                     )
                 }
             }
@@ -132,6 +135,9 @@ fun TransactionItem(
         else -> MaterialTheme.colorScheme.secondaryContainer
     }
 
+    val iconSize = AdaptiveDimens.adaptiveIconSize()
+    val boxSize = iconSize * 2f // Para el contenedor
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -149,12 +155,12 @@ fun TransactionItem(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(boxSize)
                         .clip(RoundedCornerShape(12.dp))
                         .background(iconBgColor),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(painter = painterResource(id = iconResId), contentDescription = title, modifier = Modifier.size(24.dp))
+                    Image(painter = painterResource(id = iconResId), contentDescription = title, modifier = Modifier.size(iconSize))
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {

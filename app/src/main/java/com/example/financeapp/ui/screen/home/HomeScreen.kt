@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -116,6 +117,14 @@ fun HomeScreen(navController: NavController) {
 
                     // Card de Savings y Revenue/Food
                     item {
+                        val config = LocalConfiguration.current
+                        val circleSize = when {
+                            config.screenWidthDp < 600 -> 60.dp
+                            config.screenWidthDp < 840 -> 70.dp
+                            else -> 80.dp
+                        }
+                        val innerCircleSize = circleSize * 0.8f
+                        val iconSize = circleSize * 0.4f
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -134,13 +143,13 @@ fun HomeScreen(navController: NavController) {
                                     modifier = Modifier.padding(end = 8.dp)
                                 ) {
                                     Box(
-                                        modifier = Modifier.size(70.dp),
+                                        modifier = Modifier.size(circleSize),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         // Círculo exterior mitad blanco/azul
                                         Box(
                                             modifier = Modifier
-                                                .size(70.dp)
+                                                .size(circleSize)
                                                 .clip(CircleShape)
                                         ) {
                                             Row(modifier = Modifier.fillMaxSize()) {
@@ -161,7 +170,7 @@ fun HomeScreen(navController: NavController) {
                                         // Círculo interior verde
                                         Box(
                                             modifier = Modifier
-                                                .size(58.dp)
+                                                .size(innerCircleSize)
                                                 .clip(CircleShape)
                                                 .background(Caribbean_green),
                                             contentAlignment = Alignment.Center
@@ -169,7 +178,7 @@ fun HomeScreen(navController: NavController) {
                                             Image(
                                                 painter = painterResource(id = R.drawable.car),
                                                 contentDescription = null,
-                                                modifier = Modifier.size(32.dp)
+                                                modifier = Modifier.size(iconSize)
                                             )
                                         }
                                     }

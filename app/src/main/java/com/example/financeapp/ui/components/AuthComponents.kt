@@ -49,6 +49,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
+import com.example.financeapp.ui.theme.AdaptiveDimens
 import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Cyprus
 import com.example.financeapp.ui.theme.Honeydew
@@ -62,6 +63,8 @@ fun AuthScreenLayout(
     title: String,
     content: @Composable ColumnScope.() -> Unit
 ) {
+    val adaptiveSpacing = AdaptiveDimens.adaptiveSpacing()
+    val adaptiveCardPadding = AdaptiveDimens.adaptiveCardPadding()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -72,7 +75,7 @@ fun AuthScreenLayout(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(adaptiveSpacing * 6)) // Aproximadamente 50.dp en grande
             Text(
                 text = title,
                 fontFamily = poppinsFamily,
@@ -82,7 +85,7 @@ fun AuthScreenLayout(
                 color = Void,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(adaptiveSpacing * 4))
             Card(
                 modifier = Modifier
                     .fillMaxSize()
@@ -93,10 +96,10 @@ fun AuthScreenLayout(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(24.dp)
+                        .padding(adaptiveCardPadding)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    Spacer(Modifier.height(20.dp))
+                    Spacer(Modifier.height(adaptiveSpacing * 2.5f))
                     content()
                 }
             }
@@ -191,6 +194,7 @@ fun PasswordTextField(
     onClick: () -> Unit,
     enabled: Boolean
 ) {
+        val buttonHeight = AdaptiveDimens.adaptiveButtonHeight()
         Button(
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Caribbean_green),
@@ -200,7 +204,7 @@ fun PasswordTextField(
             enabled = enabled,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(55.dp)
+                .height(buttonHeight)
                 .padding(horizontal = 20.dp, vertical = 5.dp)
         ) {
             Box (modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -227,6 +231,7 @@ fun SecondaryButton(
     text: String,
     onClick: () -> Unit
 ) {
+    val buttonHeight = AdaptiveDimens.adaptiveButtonHeight()
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Caribbean_green),
@@ -235,7 +240,7 @@ fun SecondaryButton(
         elevation = null,
         modifier = Modifier
             .fillMaxWidth()
-            .height(55.dp)
+            .height(buttonHeight)
             .padding(horizontal = 20.dp, vertical = 5.dp)
     ) {
         Box (modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
