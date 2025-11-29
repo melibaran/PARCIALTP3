@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,7 +33,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
-import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Void
 
@@ -46,7 +46,7 @@ fun SettingsScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column {
             TopBar(
@@ -55,7 +55,7 @@ fun SettingsScreen(
                 centerTitle = true,
                 onBackClick = { navController.navigate("profile") },
                 onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
+                containerColor = MaterialTheme.colorScheme.background
             )
             // Card principal
             Box(
@@ -112,7 +112,7 @@ fun SettingsItem(
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .background(Caribbean_green),
+                .background(MaterialTheme.colorScheme.primary),
             contentAlignment = Alignment.Center
         ) {
             Icon(

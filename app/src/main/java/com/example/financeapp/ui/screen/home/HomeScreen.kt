@@ -53,10 +53,7 @@ import com.example.financeapp.data.sampleTransactions
 import com.example.financeapp.ui.components.BalanceHeader
 import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.components.TransactionListItem
-import com.example.financeapp.ui.theme.Caribbean_green
-import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_blue
-import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Ocean_blue
 import com.example.financeapp.ui.theme.Vivid_blue
 import com.example.financeapp.ui.screen.transaction.TransactionItem as TxItem
@@ -68,6 +65,7 @@ fun HomeScreen(navController: NavController) {
     val coloresDeCirculo = remember {
         listOf(Light_blue, Vivid_blue, Ocean_blue, Vivid_blue, Light_blue)
     }
+    val colorScheme = MaterialTheme.colorScheme
     Scaffold(
         topBar = {
             TopBar(
@@ -75,10 +73,10 @@ fun HomeScreen(navController: NavController) {
                 subtitle = stringResource(R.string.good_morning),
                 showBackButton = false,
                 onNotificationClick = { navController.navigate("notifications")},
-                containerColor = Caribbean_green
+                containerColor = colorScheme.background
             )
         },
-        containerColor = Caribbean_green
+        containerColor = colorScheme.background
     ) { innerPadding ->
         val layoutDirection = androidx.compose.ui.platform.LocalLayoutDirection.current
         var headerHeightPx by remember { mutableStateOf(0) }
@@ -101,7 +99,7 @@ fun HomeScreen(navController: NavController) {
                     .padding(top = surfaceTopPadding)
                     .align(Alignment.BottomStart),
                 shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-                color = Honeydew,
+                color = colorScheme.surface,
                 tonalElevation = 0.dp
             ) {
                 val lazyState = rememberLazyListState()
@@ -129,7 +127,7 @@ fun HomeScreen(navController: NavController) {
                             modifier = Modifier
                                 .fillMaxWidth(),
                             shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Caribbean_green)
+                            colors = CardDefaults.cardColors(containerColor = colorScheme.primary)
                         ) {
                             Row(
                                 modifier = Modifier
@@ -157,7 +155,7 @@ fun HomeScreen(navController: NavController) {
                                                     modifier = Modifier
                                                         .weight(1f)
                                                         .fillMaxHeight()
-                                                        .background(Color.White)
+                                                        .background(colorScheme.onPrimary)
                                                 )
                                                 Box(
                                                     modifier = Modifier
@@ -172,7 +170,7 @@ fun HomeScreen(navController: NavController) {
                                             modifier = Modifier
                                                 .size(innerCircleSize)
                                                 .clip(CircleShape)
-                                                .background(Caribbean_green),
+                                                .background(colorScheme.primary),
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Image(
@@ -198,7 +196,7 @@ fun HomeScreen(navController: NavController) {
                                     modifier = Modifier
                                         .width(2.dp)
                                         .fillMaxHeight()
-                                        .background(Color.White)
+                                        .background(colorScheme.onPrimary)
                                 )
 
                                 Spacer(modifier = Modifier.width(16.dp))
@@ -235,7 +233,7 @@ fun HomeScreen(navController: NavController) {
                                     Spacer(modifier = Modifier.height(8.dp))
 
                                     HorizontalDivider(
-                                        color = Color.White.copy(alpha = 0.9f),
+                                        color = colorScheme.onPrimary.copy(alpha = 0.9f),
                                         thickness = 1.dp
                                     )
 
@@ -276,7 +274,7 @@ fun HomeScreen(navController: NavController) {
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp, vertical = 16.dp),
                             shape = RoundedCornerShape(50),
-                            color = Light_green,
+                            color = colorScheme.surfaceVariant,
                             shadowElevation = 4.dp
                         ) {
                             Row(
@@ -298,14 +296,14 @@ fun HomeScreen(navController: NavController) {
                                         modifier = Modifier
                                             .weight(1f)
                                             .clip(RoundedCornerShape(50))
-                                            .background(if (selected) Caribbean_green else Color.Transparent)
+                                            .background(if (selected) colorScheme.primary else Color.Transparent)
                                             .clickable { selectedIndex = i }
                                             .padding(vertical = 10.dp),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
                                             text = t,
-                                            color = if (selected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
+                                            color = if (selected) colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                                             style = MaterialTheme.typography.bodyMedium,
                                             fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal
                                         )

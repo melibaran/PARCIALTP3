@@ -46,10 +46,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.financeapp.R
-import com.example.financeapp.ui.theme.Caribbean_green
-import com.example.financeapp.ui.theme.Honeydew
-import com.example.financeapp.ui.theme.Light_green
-import com.example.financeapp.ui.theme.Void
+import com.example.financeapp.ui.theme.LocalThemeController
 import com.example.financeapp.ui.theme.poppinsFamily
 
 @Composable
@@ -62,12 +59,13 @@ fun EditProfileScreen(
     var phone by remember { mutableStateOf("+44 555 5555 55") }
     var email by remember { mutableStateOf("example@example.com") }
     var pushNotifications by remember { mutableStateOf(true) }
-    var darkTheme by remember { mutableStateOf(false) }
+    val themeController = LocalThemeController.current
+    val colorScheme = MaterialTheme.colorScheme
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(colorScheme.background)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -85,7 +83,7 @@ fun EditProfileScreen(
                     Icon(
                         painter = painterResource(id = R.drawable.bring_back),
                         contentDescription = "Back",
-                        tint = Color.White,
+                        tint = colorScheme.onBackground,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -95,7 +93,7 @@ fun EditProfileScreen(
                     fontFamily = poppinsFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 24.sp,
-                    color = Void,
+                    color = colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
@@ -105,13 +103,13 @@ fun EditProfileScreen(
                         modifier = Modifier
                             .size(40.dp)
                             .clip(CircleShape)
-                            .background(Color.White),
+                            .background(colorScheme.surface),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.bell),
                             contentDescription = "Notifications",
-                            tint = Void,
+                            tint = colorScheme.onBackground,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -124,7 +122,7 @@ fun EditProfileScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = Honeydew)
+                colors = CardDefaults.cardColors(containerColor = colorScheme.surface)
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -138,7 +136,7 @@ fun EditProfileScreen(
                         fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
-                        color = Void,
+                        color = colorScheme.onBackground,
                         textAlign = TextAlign.Center
                     )
 
@@ -149,7 +147,7 @@ fun EditProfileScreen(
                         fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
-                        color = Void.copy(alpha = 0.6f),
+                        color = colorScheme.onBackground.copy(alpha = 0.6f),
                         textAlign = TextAlign.Center
                     )
 
@@ -168,7 +166,7 @@ fun EditProfileScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
-                            color = Void
+                            color = colorScheme.onBackground
                         )
                         
                         Spacer(modifier = Modifier.height(16.dp))
@@ -178,7 +176,7 @@ fun EditProfileScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Void
+                            color = colorScheme.onBackground
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
@@ -187,11 +185,16 @@ fun EditProfileScreen(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedContainerColor = Light_green,
-                                focusedContainerColor = Light_green,
+                                unfocusedContainerColor = colorScheme.surfaceVariant,
+                                focusedContainerColor = colorScheme.surfaceVariant,
                                 unfocusedBorderColor = Color.Transparent,
-                                focusedBorderColor = Caribbean_green
-                            )
+                                focusedBorderColor = colorScheme.primary,
+                                cursorColor = colorScheme.onBackground,
+                                disabledBorderColor = Color.Transparent,
+                                disabledContainerColor = colorScheme.surfaceVariant,
+                                disabledTextColor = colorScheme.onSurfaceVariant
+                            ),
+                            textStyle = MaterialTheme.typography.bodyMedium.copy(color = colorScheme.onSurface)
                         )
                         
                         Spacer(modifier = Modifier.height(16.dp))
@@ -201,7 +204,7 @@ fun EditProfileScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Void
+                            color = colorScheme.onBackground
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
@@ -210,11 +213,16 @@ fun EditProfileScreen(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedContainerColor = Light_green,
-                                focusedContainerColor = Light_green,
+                                unfocusedContainerColor = colorScheme.surfaceVariant,
+                                focusedContainerColor = colorScheme.surfaceVariant,
                                 unfocusedBorderColor = Color.Transparent,
-                                focusedBorderColor = Caribbean_green
-                            )
+                                focusedBorderColor = colorScheme.primary,
+                                cursorColor = colorScheme.onBackground,
+                                disabledBorderColor = Color.Transparent,
+                                disabledContainerColor = colorScheme.surfaceVariant,
+                                disabledTextColor = colorScheme.onSurfaceVariant
+                            ),
+                            textStyle = MaterialTheme.typography.bodyMedium.copy(color = colorScheme.onSurface)
                         )
                         
                         Spacer(modifier = Modifier.height(16.dp))
@@ -224,7 +232,7 @@ fun EditProfileScreen(
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Medium,
                             fontSize = 14.sp,
-                            color = Void
+                            color = colorScheme.onBackground
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
@@ -233,11 +241,16 @@ fun EditProfileScreen(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedContainerColor = Light_green,
-                                focusedContainerColor = Light_green,
+                                unfocusedContainerColor = colorScheme.surfaceVariant,
+                                focusedContainerColor = colorScheme.surfaceVariant,
                                 unfocusedBorderColor = Color.Transparent,
-                                focusedBorderColor = Caribbean_green
-                            )
+                                focusedBorderColor = colorScheme.primary,
+                                cursorColor = colorScheme.onBackground,
+                                disabledBorderColor = Color.Transparent,
+                                disabledContainerColor = colorScheme.surfaceVariant,
+                                disabledTextColor = colorScheme.onSurfaceVariant
+                            ),
+                            textStyle = MaterialTheme.typography.bodyMedium.copy(color = colorScheme.onSurface)
                         )
                         
                         Spacer(modifier = Modifier.height(24.dp))
@@ -252,16 +265,16 @@ fun EditProfileScreen(
                                 fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 16.sp,
-                                color = Void
+                                color = colorScheme.onBackground
                             )
                             Switch(
                                 checked = pushNotifications,
                                 onCheckedChange = { pushNotifications = it },
                                 colors = SwitchDefaults.colors(
-                                    checkedThumbColor = Color.White,
-                                    checkedTrackColor = Caribbean_green,
-                                    uncheckedThumbColor = Color.White,
-                                    uncheckedTrackColor = Color.Gray
+                                    checkedThumbColor = colorScheme.onPrimary,
+                                    checkedTrackColor = colorScheme.primary,
+                                    uncheckedThumbColor = colorScheme.onSurface,
+                                    uncheckedTrackColor = colorScheme.surfaceVariant
                                 )
                             )
                         }
@@ -278,16 +291,18 @@ fun EditProfileScreen(
                                 fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 16.sp,
-                                color = Void
+                                color = colorScheme.onBackground
                             )
                             Switch(
-                                checked = darkTheme,
-                                onCheckedChange = { darkTheme = it },
+                                checked = themeController.isDarkMode,
+                                onCheckedChange = { isDark ->
+                                    themeController.toggleDarkMode(isDark)
+                                },
                                 colors = SwitchDefaults.colors(
-                                    checkedThumbColor = Color.White,
-                                    checkedTrackColor = Caribbean_green,
-                                    uncheckedThumbColor = Color.White,
-                                    uncheckedTrackColor = Color.Gray
+                                    checkedThumbColor = colorScheme.onPrimary,
+                                    checkedTrackColor = colorScheme.primary,
+                                    uncheckedThumbColor = colorScheme.onSurface,
+                                    uncheckedTrackColor = colorScheme.surfaceVariant
                                 )
                             )
                         }
@@ -301,7 +316,7 @@ fun EditProfileScreen(
                                 .height(50.dp),
                             shape = RoundedCornerShape(25.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Caribbean_green
+                                containerColor = colorScheme.primary
                             )
                         ) {
                             Text(
@@ -309,7 +324,7 @@ fun EditProfileScreen(
                                 fontFamily = poppinsFamily,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 16.sp,
-                                color = Void
+                                color = colorScheme.onPrimary
                             )
                         }
                         
@@ -325,7 +340,7 @@ fun EditProfileScreen(
                 .padding(top = 100.dp)
                 .size(100.dp)
                 .clip(CircleShape)
-                .background(Color.White),
+                .background(colorScheme.surface),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -342,13 +357,13 @@ fun EditProfileScreen(
                     .align(Alignment.BottomEnd)
                     .size(28.dp)
                     .clip(CircleShape)
-                    .background(Caribbean_green),
+                    .background(colorScheme.primary),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.camera),
                     contentDescription = "Edit Photo",
-                    tint = Color.White,
+                    tint = colorScheme.onPrimary,
                     modifier = Modifier.size(16.dp)
                 )
             }

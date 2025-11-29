@@ -23,6 +23,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -46,14 +47,9 @@ import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.components.TransactionListItem
-import com.example.financeapp.ui.theme.Caribbean_green
-import com.example.financeapp.ui.theme.Fence_green
-import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_blue
-import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Ocean_blue
 import com.example.financeapp.ui.theme.Vivid_blue
-import com.example.financeapp.ui.theme.Void
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,6 +69,7 @@ fun TransactionScreen(
             Light_blue,
         )
     }
+    val colorScheme = MaterialTheme.colorScheme
 
     Scaffold(
         topBar = {
@@ -84,10 +81,10 @@ fun TransactionScreen(
                     popUpTo("home") { inclusive = true }
                 } },
                 onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
+                containerColor = colorScheme.background
             )
         },
-        containerColor = Caribbean_green
+        containerColor = colorScheme.background
     ) { paddingValues ->
         Column(
             modifier = modifier
@@ -103,7 +100,7 @@ fun TransactionScreen(
                     .padding(horizontal = 16.dp, vertical = 4.dp),
                 shape = RoundedCornerShape(13.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = Honeydew
+                    containerColor = colorScheme.surface
                 )) {
                 Column(
                     modifier = Modifier
@@ -116,7 +113,7 @@ fun TransactionScreen(
                         text = "Total Balance",
                         style = TextStyle(
                         fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                            color = Void,
+                            color = colorScheme.onSurface,
                             fontSize = 15.sp,
                             textAlign = TextAlign.Center
                         ))
@@ -124,7 +121,7 @@ fun TransactionScreen(
                         text = "$${uiState.balance}",
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                            color = Void,
+                            color = colorScheme.onSurface,
                             fontSize = 24.sp,
                             textAlign = TextAlign.Center
                         )
@@ -153,14 +150,14 @@ fun TransactionScreen(
                             painter = painterResource(R.drawable.income),
                             contentDescription = "Income Icon",
                             modifier = Modifier.size(16.dp),
-                            tint = Color.Black
+                            tint = colorScheme.onSurface
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = "Total Balance",
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Void,
+                                color = colorScheme.onSurface,
                                 fontSize = 12.sp,
                             ),
                         )
@@ -169,10 +166,10 @@ fun TransactionScreen(
                         text = "$${uiState.balance}",
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                            color = Void,
+                            color = colorScheme.onSurface,
                             fontSize = 26.sp,
                         ),
-                        color = Honeydew
+                        color = colorScheme.onSurface
                     )
                 }
 
@@ -181,7 +178,7 @@ fun TransactionScreen(
                         .height(48.dp)
                         .padding(horizontal = 14.dp),
                     thickness = 1.dp,
-                    color = Light_green
+                    color = colorScheme.surfaceVariant
                 )
 
                 Column(
@@ -197,14 +194,14 @@ fun TransactionScreen(
                             painter = painterResource(R.drawable.expense),
                             contentDescription = "Expense Icon",
                             modifier = Modifier.size(16.dp),
-                            tint = Color.Black
+                            tint = colorScheme.onSurface
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = "Total Expense",
                             style = TextStyle(
                                 fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                color = Void,
+                                color = colorScheme.onSurface,
                                 fontSize = 12.sp,
                             ),
                         )
@@ -215,7 +212,7 @@ fun TransactionScreen(
                             fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                             fontSize = 26.sp,
                         ),
-                        color = Ocean_blue
+                        color = colorScheme.tertiary
                     )
                 }
             }
@@ -232,14 +229,14 @@ fun TransactionScreen(
                             .weight(1f)
                             .height(20.dp)
                             .clip(RoundedCornerShape(20.dp))
-                            .background(Honeydew)
+                            .background(colorScheme.surface)
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .clip(RoundedCornerShape(20.dp))
                                 .fillMaxWidth(uiState.expensePercentage / 100f)
-                                .background(Fence_green)
+                                .background(colorScheme.primary)
                         )
                         Row(
                             modifier = Modifier.fillMaxSize(),
@@ -249,7 +246,7 @@ fun TransactionScreen(
                             Text(
                                 text = "${uiState.expensePercentage}%",
                                 modifier = Modifier.padding(start = 8.dp),
-                                color = Honeydew,
+                                color = colorScheme.onPrimary,
                                 style = TextStyle(
                                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
                                     fontSize = 12.sp,
@@ -260,7 +257,7 @@ fun TransactionScreen(
                                 modifier = Modifier.padding(end = 8.dp),
                                 style = TextStyle(
                                     fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                    color = Fence_green,
+                                    color = colorScheme.onSurface,
                                     fontSize = 12.sp,
                                 )
                             )
@@ -280,7 +277,7 @@ fun TransactionScreen(
                     Icon(
                         painter = painterResource(R.drawable.check),
                         contentDescription = "Check Icon",
-                        tint = Void,
+                        tint = colorScheme.onSurface,
                         modifier = Modifier.size(13.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -288,7 +285,7 @@ fun TransactionScreen(
                         text = "${uiState.expensePercentage}% Of Your Expenses, Looks Good.",
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                            color = Fence_green,
+                                color = colorScheme.onSurface,
                             fontSize = 14.sp,
                         )
                     )
@@ -302,7 +299,7 @@ fun TransactionScreen(
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator(color = Fence_green)
+                    CircularProgressIndicator(color = colorScheme.primary)
                 }
             } else if (uiState.error != null) {
                 Box(
@@ -335,7 +332,7 @@ fun TransactionScreen(
                         .padding(top = 16.dp)
                         .fillMaxHeight()
                         .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                        .background(Honeydew)
+                        .background(colorScheme.surface)
                         .padding(16.dp)
                 ) {
                     val availableMonths = viewModel.getAvailableMonths()
@@ -351,7 +348,7 @@ fun TransactionScreen(
                                     month,
                                     style = TextStyle(
                                         fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                        color = Fence_green,
+                                        color = colorScheme.onSurface,
                                         fontSize = 20.sp,
                                     ),
                                     modifier = Modifier.padding(bottom = 8.dp, top = if (globalIndex > 0) 8.dp else 0.dp)
@@ -386,7 +383,7 @@ fun TransactionScreen(
                                     text = "No hay transacciones disponibles",
                                     style = TextStyle(
                                         fontFamily = FontFamily(Font(R.font.poppins_regular)),
-                                        color = Fence_green,
+                                        color = colorScheme.onSurface,
                                         fontSize = 16.sp,
                                     ),
                                     textAlign = TextAlign.Center

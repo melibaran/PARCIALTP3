@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.androidx.ui.text)
     implementation(libs.androidx.compose.ui)
+    implementation("androidx.compose.material:material-icons-extended")
     //Para ROOM:
     val room_version = "2.8.2"
 

@@ -15,9 +15,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -35,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.example.financeapp.R
 import com.example.financeapp.ui.theme.AdaptiveDimens
 import com.example.financeapp.ui.theme.Light_blue
+import com.example.financeapp.ui.theme.LocalThemeController
 import com.example.financeapp.ui.theme.Ocean_blue
 import com.example.financeapp.ui.theme.Vivid_blue
 
@@ -47,10 +52,13 @@ fun TopBar(
     centerTitle: Boolean = false,
     onBackClick: () -> Unit = {},
     onNotificationClick: () -> Unit = {},
-    containerColor: Color = MaterialTheme.colorScheme.background
+    containerColor: Color = MaterialTheme.colorScheme.background,
+    showThemeToggle: Boolean = true
 ) {
     val iconSize = AdaptiveDimens.adaptiveIconSize()
     val buttonSize = iconSize * 1.5f // Para el botón de notificación
+    val themeController = LocalThemeController.current
+
     TopAppBar(
         title = {
             Box(
@@ -76,13 +84,29 @@ fun TopBar(
             }
         },
         navigationIcon = {
-            if (showBackButton) {
-                IconButton(onClick = onBackClick) {
-                    Image(
-                        painter = painterResource(id = R.drawable.bring_back),
-                        contentDescription = "Back",
-                        modifier = Modifier.size(iconSize)
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (showThemeToggle) {
+                    ThemeToggleButton(
+                        isDarkTheme = themeController.isDarkMode,
+                        buttonSize = buttonSize,
+                        iconSize = iconSize,
+                        onToggle = { themeController.toggleDarkMode(!themeController.isDarkMode) }
                     )
+                    if (showBackButton) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
+                }
+
+                if (showBackButton) {
+                    IconButton(onClick = onBackClick) {
+                        Image(
+                            painter = painterResource(id = R.drawable.bring_back),
+                            contentDescription = "Back",
+                            modifier = Modifier.size(iconSize)
+                        )
+                    }
                 }
             }
         },
@@ -109,6 +133,31 @@ fun TopBar(
             actionIconContentColor = MaterialTheme.colorScheme.onBackground
         )
     )
+}
+
+@Composable
+private fun ThemeToggleButton(
+    isDarkTheme: Boolean,
+    buttonSize: Dp,
+    iconSize: Dp,
+    onToggle: () -> Unit
+) {
+    IconButton(onClick = onToggle) {
+        Box(
+            modifier = Modifier
+                .size(buttonSize)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.surface),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = if (isDarkTheme) Icons.Outlined.LightMode else Icons.Outlined.DarkMode,
+                contentDescription = if (isDarkTheme) "Switch to light mode" else "Switch to dark mode",
+                tint = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.size(iconSize * 0.8f)
+            )
+        }
+    }
 }
 
 @Composable
