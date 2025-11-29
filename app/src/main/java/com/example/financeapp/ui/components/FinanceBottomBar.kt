@@ -25,14 +25,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.R
 import com.example.financeapp.ui.navigation.BottomNavItem
-import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
 
 
-private val BarBackground = Honeydew
-private val ActiveTurquoise = Caribbean_green
+private val ActiveTurquoise = com.example.financeapp.ui.theme.CaribbeanGreenBase
 private val InactiveIcon = Color(0xFFA0A0A0)
 
 private val navItems = listOf(
@@ -55,9 +53,8 @@ fun FinanceBottomBar(
         shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
         color = Light_green,
         tonalElevation = 0.dp,
-        contentColor = Color.Transparent)
-
-     {
+        contentColor = Color.Transparent
+    ) {
         Row(
             modifier = Modifier
                 .padding(horizontal = 12.dp, vertical = 8.dp)
@@ -66,7 +63,7 @@ fun FinanceBottomBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             navItems.forEach { item ->
-                BottomNavItem(
+                BottomNavItemButton(
                     item = item,
                     isSelected = currentRoute == item.route,
                     onItemClick = {
@@ -80,7 +77,7 @@ fun FinanceBottomBar(
 }
 
 @Composable
-private fun BottomNavItem(
+private fun BottomNavItemButton(
     item: BottomNavItem,
     isSelected: Boolean,
     onItemClick: () -> Unit
@@ -101,7 +98,7 @@ private fun BottomNavItem(
             Icon(
                 painter = painterResource(id = item.icon),
                 contentDescription = item.label,
-                tint = if (isSelected) Void else Void,
+                tint = if (isSelected) Void else InactiveIcon,
                 modifier = Modifier.size(width = item.width, height = item.height)
             )
         }
@@ -112,7 +109,7 @@ private fun BottomNavItem(
 @Composable
 fun FinanceBottomBarPreview() {
     MaterialTheme {
-        Surface(color = com.example.financeapp.ui.theme.Honeydew) {
+        Surface(color = Honeydew) {
             FinanceBottomBar(currentRoute = "home")
         }
     }
