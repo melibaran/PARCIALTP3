@@ -11,6 +11,7 @@ import com.example.financeapp.ui.screen.login.LoginScreen
 import com.example.financeapp.ui.theme.FinanceAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 

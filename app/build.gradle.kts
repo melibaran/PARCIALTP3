@@ -5,6 +5,7 @@ plugins {
 
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.hilt.android)
+    id("com.google.gms.google-services")
 
 }
 
@@ -40,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -67,6 +69,11 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.coil.compose)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)

@@ -130,4 +130,62 @@ abstract class AppDatabase : RoomDatabase() {
 Otro detalle, es que se indica si el usuario no existe al hacer login o si la password es invalida. Entendemos que es un error grave en cuanto a la seguridad, esto lo hicimos asi solo a fines de demostrar
 que se persiste un usuario y que se va a un local storage a buscar a dicho usuario y evidenciar que se valida la password si existe.
 
+## ☁️ Integración Firebase (Auth + Firestore)
+La app utiliza Firebase como backend centralizado para registro/login apoyándose **exclusivamente** en los **Firebase Emulators** durante esta etapa del proyecto.
 
+### ¿Qué aporta esta capa?
+- **Firebase Authentication** con email/contraseña: validaciones de credenciales desde cualquier dispositivo.
+- **Firestore** para guardar el perfil básico del usuario al crear la cuenta y dejar lista la colección para más entidades (transacciones, metas, etc.).
+- **Jetpack Compose** reacciona al estado de Firebase (`Loading/Success/Error`) mostrando errores legibles (email inválido, password débil, usuario existente).
+- **Sesión persistente**: si `FirebaseAuth` detecta un usuario activo, la app lo mantiene logueado hasta que cierre sesión.
+
+### Prerrequisitos del entorno
+1. **JDK 21 obligatorio para Firebase CLI**
+   ```bash
+   brew install openjdk@21
+   sudo ln -sfn /opt/homebrew/opt/openjdk@21 /Library/Java/JavaVirtualMachines/openjdk-21.jdk
+   ```
+2. **Variable de entorno al iniciar una terminal**
+   ```bash
+   export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
+   export PATH="$JAVA_HOME/bin:$PATH"
+   ```
+3. **Firebase CLI** actualizado (`npm install -g firebase-tools`). Inicia sesión con `firebase login` y selecciona tu proyecto (`firebase use <project-id>`).
+
+### Arrancar emuladores (Auth + Firestore)
+```bash
+cd /Users/solangeguerrero/StudioProjects/PARCIALTP3
+firebase emulators:start --only auth,firestore --project <project-id>
+```
+- Si ya hay procesos usando los puertos por defecto (9099 para Auth, 8080 para Firestore, 4000 para la UI), puedes liberar el puerto (`sudo lsof -i :9099` + `kill -9 <PID>`) o definir puertos alternativos en `firebase.json`:
+  ```json
+  {
+    "emulators": {
+      "auth": { "host": "127.0.0.1", "port": 9098 },
+      "firestore": { "host": "127.0.0.1", "port": 8079 },
+      "ui": { "host": "127.0.0.1", "port": 4001 }
+    }
+  }
+  ```
+- La app está configurada para conectarse a `10.0.2.2` (loopback del emulador Android). Asegúrate de que los puertos definidos arriba coincidan con los que usas aquí:
+  ```kotlin
+  if (BuildConfig.DEBUG) {
+      Firebase.auth.useEmulator("10.0.2.2", 9099)
+      Firebase.firestore.useEmulator("10.0.2.2", 8080)
+  }
+  ```
+
+### Verificar usuarios creados
+- **Emulator UI**: abre `http://localhost:4000` (o el puerto configurado) y navega a las pestañas **Authentication** o **Firestore** para ver los registros locales.
+
+> Nota: trabajamos únicamente con emuladores, por lo que los usuarios **no** aparecerán en la consola en la nube; sólo viven en la instancia local mostrada en la UI del emulador.
+
+### Flujo resumido
+1. Ejecuta los emuladores (`firebase emulators:start ...`).
+2. Inicia la app en modo `debug`. Verás en Logcat mensajes como `✅ Firebase Auth Emulator conectado`.
+3. Registra un usuario desde la pantalla Sign Up:
+   - Auth crea el usuario (`FirebaseAuthService` lo loguea automáticamente).
+   - Firestore guarda el documento básico con nombre, email y timestamps.
+4. Verifica el resultado directamente en el Emulator UI (`localhost:4000`).
+
+---
