@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import android.util.Log
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -23,6 +24,8 @@ class LoginViewModel @Inject constructor(
     init {
         // Verificar si el usuario ya está autenticado al inicializar
         checkAuthenticationStatus()
+        // Crear usuario de prueba si no existe, tanto en debug como en release
+        seedTestUser()
     }
 
     private fun checkAuthenticationStatus() {
@@ -86,6 +89,28 @@ class LoginViewModel @Inject constructor(
     fun resetState() {
         _loginState.value = LoginState.Idle
     }
+
+    private fun seedTestUser() {
+        viewModelScope.launch {
+            try {
+                Log.d("LoginViewModel", "🌱 Intentando crear usuario de prueba...")
+                val uid = firebaseAuthService.signUp(
+                    email = "test@email.com",
+                    password = "123456",
+                    displayName = "Test User"
+                )
+                firestoreService.saveUser(
+                    uid = uid,
+                    email = "test@email.com",
+                    displayName = "Test User"
+                )
+                Log.d("LoginViewModel", "✅ Usuario de prueba creado/verificado exitosamente.")
+            } catch (e: Exception) {
+                Log.d("LoginViewModel", "ℹ️ Usuario de prueba ya existe o error: ${e.message}")
+                // Ignorar si ya existe o hay otro error, el login normal sigue disponible.
+            }
+        }
+    }
 }
 
 sealed class LoginState {
@@ -98,4 +123,3 @@ sealed class LoginState {
     ) : LoginState()
     data class Error(val message: String) : LoginState()
 }
-
