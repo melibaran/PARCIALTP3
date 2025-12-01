@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -56,10 +57,11 @@ fun ProfileScreen(
     onNotificationsClick: () -> Unit = {}
 ) {
     val showLogoutDialog = remember { mutableStateOf(false) }
+    val colorScheme = MaterialTheme.colorScheme
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(colorScheme.background)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -79,7 +81,7 @@ fun ProfileScreen(
                     fontFamily = poppinsFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 32.sp,
-                    color = Void,
+                    color = colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
                 )
@@ -90,12 +92,13 @@ fun ProfileScreen(
                         modifier = Modifier
                             .size(40.dp)
                             .clip(CircleShape)
-                            .background(Color.White),
+                            .background(colorScheme.surface),
                         contentAlignment = Alignment.Center
                     ) {
-                        Image(
+                        Icon(
                             painter = painterResource(id = R.drawable.bell),
                             contentDescription = stringResource(R.string.notifications),
+                            tint = colorScheme.onBackground,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -108,7 +111,7 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)),
-                colors = CardDefaults.cardColors(containerColor = Honeydew)
+                colors = CardDefaults.cardColors(containerColor = colorScheme.surface)
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -121,7 +124,7 @@ fun ProfileScreen(
                         fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
-                        color = Void,
+                        color = colorScheme.onBackground,
                         textAlign = TextAlign.Center
                     )
 
@@ -132,7 +135,7 @@ fun ProfileScreen(
                         fontFamily = poppinsFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
-                        color = Void.copy(alpha = 0.6f),
+                        color = colorScheme.onBackground.copy(alpha = 0.6f),
                         textAlign = TextAlign.Center
                     )
 
@@ -197,7 +200,7 @@ fun ProfileScreen(
                 .offset(y = 80.dp)
                 .size(100.dp)
                 .clip(CircleShape)
-                .background(Color.White),
+                .background(colorScheme.surface),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -251,12 +254,13 @@ fun ProfileMenuItem(
 
         Spacer(modifier = Modifier.width(16.dp))
 
+        val colorScheme = MaterialTheme.colorScheme
         Text(
             text = text,
             fontFamily = poppinsFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
-            color = Void,
+            color = colorScheme.onBackground,
             modifier = Modifier.weight(1f)
         )
     }
