@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.R
+import com.example.financeapp.ui.theme.AdaptiveDimens
 import com.example.financeapp.ui.theme.Light_blue
 import com.example.financeapp.ui.theme.Vivid_blue
 
@@ -43,6 +44,9 @@ fun CategoryItem(
 
     val backgroundColor = if (isPressed) Vivid_blue else Light_blue
 
+    val iconSize = AdaptiveDimens.adaptiveIconSize()
+    val boxSize = iconSize * 1.5f // Proporcional al icono
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -55,7 +59,7 @@ fun CategoryItem(
 
         Box(
             modifier = Modifier
-                .size(75.dp)
+                .size(boxSize)
                 .clip(RoundedCornerShape(16.dp))
                 .background(backgroundColor),
             contentAlignment = Alignment.Center
@@ -63,7 +67,7 @@ fun CategoryItem(
             Icon(
                 painter = painterResource(id = iconResId),
                 contentDescription = name,
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(iconSize),
                 tint = Color.Unspecified
             )
         }
@@ -90,4 +94,3 @@ private fun getCategoryIconPressed(name: String): Int {
         else -> R.drawable.more_pressed
     }
 }
-

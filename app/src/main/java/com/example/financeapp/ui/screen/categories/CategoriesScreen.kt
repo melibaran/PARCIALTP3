@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -52,6 +53,10 @@ fun CategoriesScreen(
     viewModel: CategoriesViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val colorScheme = MaterialTheme.colorScheme
+    val configuration = LocalConfiguration.current
+    val isExpanded = configuration.screenWidthDp > 600
+    val columns = if (isExpanded) 4 else 3
 
     Scaffold(
         topBar = {
@@ -62,7 +67,7 @@ fun CategoriesScreen(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge.copy(
-                            color = Void,
+                            color = colorScheme.onBackground,
                             fontWeight = FontWeight.SemiBold
                         )
                     )
@@ -74,7 +79,7 @@ fun CategoriesScreen(
                         Icon(
                             painter = painterResource(R.drawable.bring_back),
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = colorScheme.onBackground,
                             modifier = Modifier.size(19.dp)
                         )
                     }
@@ -84,24 +89,24 @@ fun CategoriesScreen(
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
-                                .background(Color.White, shape = CircleShape),
+                                .background(colorScheme.surface, shape = CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.bell),
                                 contentDescription = "Notifications",
                                 modifier = Modifier.size(20.dp),
-                                tint = Void
+                                tint = colorScheme.onBackground
                             )
                         }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Caribbean_green
+                    containerColor = colorScheme.background
                 )
             )
         },
-        containerColor = Caribbean_green
+        containerColor = colorScheme.background
     ) { paddingValues ->
         Column(
             modifier = modifier
@@ -113,13 +118,13 @@ fun CategoriesScreen(
             BalanceHeader( totalBalance = 7783.00, totalExpense = 1187.40, budget = 20000.00, progressPercentage = 30)
             // Categories Grid
             LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
+                columns = GridCells.Fixed(columns),
                 modifier = Modifier
                     .weight(1f)
                     .padding(top = 16.dp)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew)
+                    .background(colorScheme.surface)
                     .padding(horizontal = 10.dp, vertical = 28.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),

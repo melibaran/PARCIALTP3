@@ -1,5 +1,8 @@
 package com.example.financeapp.ui.theme
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -42,6 +45,51 @@ object Dimens {
 }
 
 /**
+ * Dimensiones adaptativas basadas en el tamaño de pantalla
+ */
+object AdaptiveDimens {
+    @Composable
+    fun adaptiveIconSize(): Dp {
+        val config = LocalConfiguration.current
+        return when {
+            config.screenWidthDp < 600 -> 24.dp // Pantallas pequeñas
+            config.screenWidthDp < 840 -> 32.dp // Pantallas medianas
+            else -> 40.dp // Pantallas grandes/tabletas
+        }
+    }
+
+    @Composable
+    fun adaptiveSpacing(): Dp {
+        val config = LocalConfiguration.current
+        return when {
+            config.screenWidthDp < 600 -> 8.dp
+            config.screenWidthDp < 840 -> 12.dp
+            else -> 16.dp
+        }
+    }
+
+    @Composable
+    fun adaptiveCardPadding(): Dp {
+        val config = LocalConfiguration.current
+        return when {
+            config.screenWidthDp < 600 -> 12.dp
+            config.screenWidthDp < 840 -> 16.dp
+            else -> 24.dp
+        }
+    }
+
+    @Composable
+    fun adaptiveButtonHeight(): Dp {
+        val config = LocalConfiguration.current
+        return when {
+            config.screenWidthDp < 600 -> 48.dp
+            config.screenWidthDp < 840 -> 52.dp
+            else -> 55.dp
+        }
+    }
+}
+
+/**
  * Tamaños de fuente estandarizados
  */
 object FontSizes {
@@ -55,4 +103,3 @@ object FontSizes {
     val Title = 24.sp
     val Display = 26.sp
 }
-

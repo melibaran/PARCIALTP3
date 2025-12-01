@@ -33,8 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
-import com.example.financeapp.ui.theme.Caribbean_green
-import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Ocean_blue
 
 data class NotificationItem(
@@ -115,6 +113,7 @@ fun NotificationScreen(navController: NavController) {
         )
     )
 
+    val colorScheme = MaterialTheme.colorScheme
     Scaffold(
         topBar = {
             TopBar(
@@ -123,10 +122,10 @@ fun NotificationScreen(navController: NavController) {
                 centerTitle = true,
                 onBackClick = { navController.popBackStack() },
                 onNotificationClick = { /* No-op */ },
-                containerColor = Caribbean_green
+                containerColor = colorScheme.background
             )
         },
-        containerColor = Caribbean_green
+        containerColor = colorScheme.background
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -140,7 +139,7 @@ fun NotificationScreen(navController: NavController) {
                     .weight(1f)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew)
+                    .background(colorScheme.surface)
                     .padding(16.dp)
             ) {
                 notificationGroups.forEach { group ->
@@ -181,12 +180,13 @@ private fun NotificationItemCard(notification: NotificationItem) {
                 .padding(vertical = 8.dp),
             verticalAlignment = Alignment.Top
         ) {
+            val colorScheme = MaterialTheme.colorScheme
             // Icon circular con fondo Caribbean_green
             Box(
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
-                    .background(Caribbean_green),
+                    .background(colorScheme.primary),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
@@ -244,9 +244,8 @@ private fun NotificationItemCard(notification: NotificationItem) {
         Spacer(modifier = Modifier.height(12.dp))
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth(),
-            color = Caribbean_green.copy(alpha = 0.3f),
+            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
             thickness = 1.dp
         )
     }
 }
-

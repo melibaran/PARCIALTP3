@@ -19,6 +19,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -45,7 +46,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
-import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
 import com.example.financeapp.ui.theme.Void
@@ -98,7 +98,7 @@ fun PasswordSettingsScreen(
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_medium)),
                             fontSize = 16.sp,
-                            color = Caribbean_green
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 }
@@ -116,7 +116,7 @@ fun PasswordSettingsScreen(
                 centerTitle = true,
                 onBackClick = onBackClick,
                 onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
+                containerColor = MaterialTheme.colorScheme.background
             )
         }
     ) { paddingValues ->
@@ -124,7 +124,7 @@ fun PasswordSettingsScreen(
              modifier = Modifier
                  .fillMaxWidth()
                  .padding(paddingValues)
-                 .background(Caribbean_green)
+                 .background(MaterialTheme.colorScheme.background)
          ) {
             Box(
                 modifier = Modifier
@@ -175,10 +175,10 @@ fun PasswordSettingsScreen(
                             .fillMaxWidth(0.7f)
                             .height(56.dp)
                             .clip(RoundedCornerShape(28.dp)),
-                        colors = ButtonDefaults.buttonColors(containerColor = Caribbean_green)
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                     ) {
                         if (uiState.isLoading) {
-                            CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp, modifier = Modifier.size(20.dp))
+                            CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary, strokeWidth = 2.dp, modifier = Modifier.size(20.dp))
                         } else {
                             Text(
                                 text = stringResource(R.string.change_password),
@@ -248,7 +248,7 @@ fun PasswordField(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent,
-                        cursorColor = Caribbean_green,
+                        cursorColor = MaterialTheme.colorScheme.primary,
                         unfocusedTextColor = Void,
                         focusedTextColor = Void
                     )
