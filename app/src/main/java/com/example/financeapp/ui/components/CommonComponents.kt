@@ -116,7 +116,7 @@ fun TopBar(
                     modifier = Modifier
                         .size(buttonSize)
                         .clip(CircleShape)
-                        .background(Color.White),
+                        .background(MaterialTheme.colorScheme.surface),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(

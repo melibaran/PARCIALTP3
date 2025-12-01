@@ -184,7 +184,7 @@ fun HomeScreen(navController: NavController) {
                                     Text(
                                         text = "Savings\nOn Goals",
                                         style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.onBackground,
+                                        color = Color.Black,
                                         textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                                         lineHeight = 14.sp
                                     )

@@ -26,12 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.example.financeapp.R
 import com.example.financeapp.ui.navigation.BottomNavItem
 import com.example.financeapp.ui.theme.Honeydew
-import com.example.financeapp.ui.theme.Light_green
-import com.example.financeapp.ui.theme.Void
-
-
-private val ActiveTurquoise = com.example.financeapp.ui.theme.CaribbeanGreenBase
-private val InactiveIcon = Color(0xFFA0A0A0)
 
 private val navItems = listOf(
     BottomNavItem(R.drawable.home, "Home", "home", 25.dp, 31.dp),
@@ -47,11 +41,12 @@ fun FinanceBottomBar(
     currentRoute: String?,
     onNavigate: (String) -> Unit = {}
 ) {
+    val colorScheme = MaterialTheme.colorScheme
     Surface(
         modifier = modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-        color = Light_green,
+        color = colorScheme.surfaceVariant,
         tonalElevation = 0.dp,
         contentColor = Color.Transparent
     ) {
@@ -87,18 +82,19 @@ private fun BottomNavItemButton(
             .fillMaxHeight(),
         contentAlignment = Alignment.Center
     ) {
+        val colorScheme = MaterialTheme.colorScheme
         Box(
             modifier = Modifier
                 .size(48.dp)
                 .clip(if (isSelected) CircleShape else RoundedCornerShape(0.dp))
-                .background(if (isSelected) ActiveTurquoise else Color.Transparent)
+                .background(if (isSelected) colorScheme.primary else Color.Transparent)
                 .clickable(onClick = onItemClick),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 painter = painterResource(id = item.icon),
                 contentDescription = item.label,
-                tint = if (isSelected) Void else InactiveIcon,
+                tint = if (isSelected) colorScheme.onPrimary else colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(width = item.width, height = item.height)
             )
         }

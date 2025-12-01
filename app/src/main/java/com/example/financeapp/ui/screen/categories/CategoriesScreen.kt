@@ -52,6 +52,7 @@ fun CategoriesScreen(
     viewModel: CategoriesViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val colorScheme = MaterialTheme.colorScheme
 
     Scaffold(
         topBar = {
@@ -62,7 +63,7 @@ fun CategoriesScreen(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge.copy(
-                            color = Void,
+                            color = colorScheme.onBackground,
                             fontWeight = FontWeight.SemiBold
                         )
                     )
@@ -74,7 +75,7 @@ fun CategoriesScreen(
                         Icon(
                             painter = painterResource(R.drawable.bring_back),
                             contentDescription = "Back",
-                            tint = Color.White,
+                            tint = colorScheme.onBackground,
                             modifier = Modifier.size(19.dp)
                         )
                     }
@@ -84,24 +85,24 @@ fun CategoriesScreen(
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
-                                .background(Color.White, shape = CircleShape),
+                                .background(colorScheme.surface, shape = CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.bell),
                                 contentDescription = "Notifications",
                                 modifier = Modifier.size(20.dp),
-                                tint = Void
+                                tint = colorScheme.onBackground
                             )
                         }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Caribbean_green
+                    containerColor = colorScheme.background
                 )
             )
         },
-        containerColor = Caribbean_green
+        containerColor = colorScheme.background
     ) { paddingValues ->
         Column(
             modifier = modifier
@@ -119,7 +120,7 @@ fun CategoriesScreen(
                     .padding(top = 16.dp)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew)
+                    .background(colorScheme.surface)
                     .padding(horizontal = 10.dp, vertical = 28.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),

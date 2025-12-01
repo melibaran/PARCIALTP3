@@ -52,6 +52,7 @@ fun AccountBalanceScreen(navController: NavController) {
     val coloresDeCirculo = remember {
         listOf(Light_blue, Vivid_blue, Ocean_blue, Vivid_blue, Light_blue)
     }
+    val colorScheme = MaterialTheme.colorScheme
 
     Scaffold(
         topBar = {
@@ -62,10 +63,10 @@ fun AccountBalanceScreen(navController: NavController) {
                     popUpTo("home") { inclusive = true }
                 } },
                 onNotificationClick = { navController.navigate("notifications") },
-                containerColor = Caribbean_green
+                containerColor = colorScheme.background
             )
         },
-        containerColor = Caribbean_green
+        containerColor = colorScheme.background
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -113,7 +114,7 @@ fun AccountBalanceScreen(navController: NavController) {
                     .weight(1f)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp))
-                    .background(Honeydew)
+                    .background(colorScheme.surface)
                     .padding(16.dp)
             ) {
                 // Transactions header
@@ -129,12 +130,12 @@ fun AccountBalanceScreen(navController: NavController) {
                             text = stringResource(R.string.transactions),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            color = Fence_green
+                            color = colorScheme.onBackground
                         )
                         TextButton(onClick = { /* TODO */ }) {
                             Text(
                                 text = stringResource(R.string.see_all),
-                                color = Fence_green
+                                color = colorScheme.primary
                             )
                         }
                     }
@@ -194,10 +195,11 @@ private fun IncomeExpenseCard(
     modifier: Modifier = Modifier,
     isExpense: Boolean = false
 ) {
+    val colorScheme = MaterialTheme.colorScheme
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = colorScheme.surface)
     ) {
         Column(
             modifier = Modifier
@@ -214,13 +216,13 @@ private fun IncomeExpenseCard(
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onBackground
+                color = colorScheme.onBackground
             )
             Text(
                 text = amount,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = if (isExpense) Ocean_blue else MaterialTheme.colorScheme.onBackground
+                color = if (isExpense) Ocean_blue else colorScheme.onBackground
             )
         }
     }
