@@ -1,74 +1,104 @@
 # Finance App
 
-Una aplicación Android de finanzas personales construida con Jetpack Compose y arquitectura MVVM.
+Una aplicación Android de finanzas personales construida con Jetpack Compose, arquitectura MVVM y Firebase.
 
-## 🔑 Usuario por Defecto
+##  Configuración y Pruebas con Firebase
 
-La aplicación incluye un usuario de prueba creado automáticamente:
+Esta aplicación utiliza Firebase para la autenticación de usuarios y el almacenamiento de datos. Funciona en dos modos:
 
-- **Email:** `test@email.com`
-- **Password:** `123456`
+---
 
-Puedes usar estas credenciales para iniciar sesión sin necesidad de registrarte.
+### 1. Modo Desarrollo (Pruebas Locales con Emuladores)
 
-## 💰 Aclaracion
-Para ir a las transactions de la seccion 9.3.2 , ir a Transaction y hacer click en "Total Balance"
+Este es el modo que usarás para correr el proyecto desde Android Studio. Los datos se guardan localmente en tu computadora y no en la nube.
 
-<img width="227" height="158" alt="Captura de pantalla 2025-11-05 a la(s) 1 10 26 a  m" src="https://github.com/user-attachments/assets/5e896819-5b44-423a-8a29-3b28fdec5ca4" />
+**Pasos para ejecutar:**
 
-## 📱 Instrucciones de Uso
+1.  **Inicia los emuladores de Firebase**: Abre una terminal en la raíz del proyecto y ejecuta:
+    ```bash
+    firebase emulators:start --only auth,firestore
+    ```
+    Esto levantará los servicios de Autenticación y Base de Datos localmente.
 
-### Primer Uso
+2.  **Ejecuta la aplicación**: Abre el proyecto en Android Studio y presiona el botón "Run" (▶️) para instalar la app en tu emulador o dispositivo Android.
+
+3.  **Usuario de Prueba Automático**: La primera vez que inicies la app, se creará automáticamente un usuario de prueba:
+    - **Email:** `test@email.com`
+    - **Password:** `123456`
+    Puedes iniciar sesión directamente con estas credenciales.
+
+4.  **Registra nuevos usuarios**: También puedes ir a "Sign Up" para crear más usuarios.
+
+5.  **Verifica los datos**: Para ver todos los usuarios que has creado (incluido el de prueba), abre la siguiente dirección en tu navegador:
+    - **URL:** `http://localhost:4000`
+    Navega a las pestañas **Authentication** y **Firestore** para ver los datos en tiempo real.
+
+---
+
+### 2. Modo Producción (Conexión a la Nube de Firebase)
+
+Este modo es para generar una versión final de la app (`.apk`) que se conecta a la nube real de Firebase.
+
+**Pasos para ejecutar:**
+
+1.  **Genera el APK de Release**:
+    - En Android Studio, ve a **Build > Generate Signed Bundle / APK...**.
+    - Selecciona **APK** y sigue los pasos para firmar la aplicación. El proyecto ya incluye un `release.keystore` de prueba.
+    - El archivo se generará en `app/build/outputs/apk/release/app-release.apk`.
+
+2.  **Instala el APK**: Instala el `app-release.apk` en un dispositivo físico o emulador.
+
+3.  **Prueba en la Nube**: Al abrir esta versión, los usuarios que registres (incluido el de prueba automático) se guardarán en la consola de Firebase en la nube, la cual puedes consultar en [console.firebase.google.com](https://console.firebase.google.com).
+
+📱 Instrucciones de Uso
+Primer Uso
 Para utilizar la aplicación por primera vez, debes seguir estos pasos:
 
-1. **Registro de Usuario**
-   - Al abrir la aplicación, verás la pantalla de Login
-   - Presiona el botón "Sign Up" para crear una cuenta
-   - Completa el formulario con:
-     - Nombre completo
-     - Email (será tu identificador único)
-     - Contraseña (mínimo 6 caracteres)
-     - Confirmación de contraseña
-   - Presiona "Sign Up" para crear tu cuenta
+Registro de Usuario
 
-2. **Inicio de Sesión**
-   - Después del registro, serás redirigido a la pantalla de inicio de sesión
-   - Ingresa tu email y contraseña
-   - Presiona "Log In" para acceder a la aplicación
+Al abrir la aplicación, verás la pantalla de Login
+Presiona el botón "Sign Up" para crear una cuenta
+Completa el formulario con:
+Nombre completo
+Email (será tu identificador único)
+Contraseña (mínimo 6 caracteres)
+Confirmación de contraseña
+Presiona "Sign Up" para crear tu cuenta
+Inicio de Sesión
 
-3. **Uso de la Aplicación**
-   - Una vez autenticado, podrás acceder a todas las funcionalidades de la app
+Después del registro, serás redirigido a la pantalla de inicio de sesión
+Ingresa tu email y contraseña
+Presiona "Log In" para acceder a la aplicación
+Uso de la Aplicación
 
-## 🗄️ Persistencia de Datos con Room
+Una vez autenticado, podrás acceder a todas las funcionalidades de la app
+🗄️ Persistencia de Datos con Room
+La aplicación utiliza Room Database para la persistencia local de datos de usuario.
 
-La aplicación utiliza **Room Database** para la persistencia local de datos de usuario.
+Modelo de Datos
+La entidad User almacena la información del usuario:
 
-#### Modelo de Datos
-La entidad `User` almacena la información del usuario:
-```kotlin
 @Entity(tableName = "user")
 data class User(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    @ColumnInfo(name = "email")
-    val email: String,
-    @ColumnInfo(name = "first_name")
-    val firstName: String,
-    @ColumnInfo(name = "last_name")
-    val lastName: String,
-    @ColumnInfo(name = "password")
-    val password: String
+@PrimaryKey(autoGenerate = true)
+val id: Int = 0,
+@ColumnInfo(name = "email")
+val email: String,
+@ColumnInfo(name = "first_name")
+val firstName: String,
+@ColumnInfo(name = "last_name")
+val lastName: String,
+@ColumnInfo(name = "password")
+val password: String
 )
-```
+Capa de Acceso a Datos (DAO)
+UserDao define las operaciones de base de datos:
 
-#### Capa de Acceso a Datos (DAO)
-`UserDao` define las operaciones de base de datos:
-```kotlin
 @Dao
 interface UserDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUser(user: User): Long
-    
+@Insert(onConflict = OnConflictStrategy.REPLACE)
+suspend fun insertUser(user: User): Long
+
     @Query("SELECT * FROM user WHERE email = :email LIMIT 1")
     suspend fun getUserByEmail(email: String): User?
     
@@ -81,111 +111,43 @@ interface UserDao {
     @Query("DELETE FROM user WHERE email = :email")
     suspend fun deleteUserByEmail(email: String): Int
 }
-```
+Repository Pattern
+UserRepository abstrae el acceso a datos:
 
-#### Repository Pattern
-`UserRepository` abstrae el acceso a datos:
-```kotlin
 interface UserRepository {
-    suspend fun insertUser(user: User): Long
-    suspend fun getUserByEmail(email: String): User?
-    suspend fun updatePassword(email: String, newPassword: String): Int
-    suspend fun getUserById(userId: Int): User?
-    suspend fun deleteUser(email: String): Int
+suspend fun insertUser(user: User): Long
+suspend fun getUserByEmail(email: String): User?
+suspend fun updatePassword(email: String, newPassword: String): Int
+suspend fun getUserById(userId: Int): User?
+suspend fun deleteUser(email: String): Int
 }
-```
+Base de Datos
+AppDatabase configura la base de datos Room:
 
-#### Base de Datos
-`AppDatabase` configura la base de datos Room:
-```kotlin
 @Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): UserDao
+abstract fun userDao(): UserDao
 }
-```
-
-### Flujo de Registro y Login
-
-#### Registro (SignUp)
-1. El usuario completa el formulario de registro
-2. `SignUpViewModel` valida los datos:
-   - Campos obligatorios completos
-   - Contraseñas coinciden
-   - Contraseña tiene al menos 6 caracteres
-   - Email no está duplicado en la base de datos
-3. Si las validaciones pasan, se crea un objeto `User`
-4. `UserRepository.insertUser()` guarda el usuario en Room
-5. El usuario es redirigido a la siguiente pantalla
-
-#### Login
-1. El usuario ingresa email y contraseña
-2. `LoginViewModel` busca el usuario por email usando `UserRepository.getUserByEmail()`
-3. Si el usuario existe, verifica que la contraseña coincida
-4. Si las credenciales son correctas, el usuario accede a la aplicación
-5. Si no, se muestra un mensaje de error específico
-
+Flujo de Registro y Login
+Registro (SignUp)
+El usuario completa el formulario de registro
+SignUpViewModel valida los datos:
+Campos obligatorios completos
+Contraseñas coinciden
+Contraseña tiene al menos 6 caracteres
+Email no está duplicado en la base de datos
+Si las validaciones pasan, se crea un objeto User
+UserRepository.insertUser() guarda el usuario en Room
+El usuario es redirigido a la siguiente pantalla
+Login
+El usuario ingresa email y contraseña
+LoginViewModel busca el usuario por email usando UserRepository.getUserByEmail()
+Si el usuario existe, verifica que la contraseña coincida
+Si las credenciales son correctas, el usuario accede a la aplicación
+Si no, se muestra un mensaje de error específico
 ## 🔐 Seguridad
 
-**Nota Importante**: En un entorno de producción, las contraseñas deberían ser hasheadas antes de almacenarse. Esta implementación actual almacena contraseñas en texto plano únicamente con fines educativos.
-Otro detalle, es que se indica si el usuario no existe al hacer login o si la password es invalida. Entendemos que es un error grave en cuanto a la seguridad, esto lo hicimos asi solo a fines de demostrar
-que se persiste un usuario y que se va a un local storage a buscar a dicho usuario y evidenciar que se valida la password si existe.
+**Nota Importante**: En un entorno de producción real, las contraseñas deberían ser hasheadas antes de almacenarse. Esta implementación actual almacena contraseñas en texto plano únicamente con fines educativos.
 
-## ☁️ Integración Firebase (Auth + Firestore)
-La app utiliza Firebase como backend centralizado para registro/login apoyándose **exclusivamente** en los **Firebase Emulators** durante esta etapa del proyecto.
+Además, por motivos de demostración, el sistema de login indica explícitamente si un usuario no existe o si la contraseña es incorrecta, una práctica que se debe evitar en producción para no dar pistas a posibles atacantes.
 
-### ¿Qué aporta esta capa?
-- **Firebase Authentication** con email/contraseña: validaciones de credenciales desde cualquier dispositivo.
-- **Firestore** para guardar el perfil básico del usuario al crear la cuenta y dejar lista la colección para más entidades (transacciones, metas, etc.).
-- **Jetpack Compose** reacciona al estado de Firebase (`Loading/Success/Error`) mostrando errores legibles (email inválido, password débil, usuario existente).
-- **Sesión persistente**: si `FirebaseAuth` detecta un usuario activo, la app lo mantiene logueado hasta que cierre sesión.
-
-### Prerrequisitos del entorno
-1. **JDK 21 obligatorio para Firebase CLI**
-   ```bash
-   brew install openjdk@21
-   sudo ln -sfn /opt/homebrew/opt/openjdk@21 /Library/Java/JavaVirtualMachines/openjdk-21.jdk
-   ```
-2. **Variable de entorno al iniciar una terminal**
-   ```bash
-   export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
-   export PATH="$JAVA_HOME/bin:$PATH"
-   ```
-3. **Firebase CLI** actualizado (`npm install -g firebase-tools`). Inicia sesión con `firebase login` y selecciona tu proyecto (`firebase use <project-id>`).
-
-### Arrancar emuladores (Auth + Firestore)
-```bash
-cd /Users/solangeguerrero/StudioProjects/PARCIALTP3
-firebase emulators:start --only auth,firestore --project <project-id>
-```
-- Si ya hay procesos usando los puertos por defecto (9099 para Auth, 8080 para Firestore, 4000 para la UI), puedes liberar el puerto (`sudo lsof -i :9099` + `kill -9 <PID>`) o definir puertos alternativos en `firebase.json`:
-  ```json
-  {
-    "emulators": {
-      "auth": { "host": "127.0.0.1", "port": 9098 },
-      "firestore": { "host": "127.0.0.1", "port": 8079 },
-      "ui": { "host": "127.0.0.1", "port": 4001 }
-    }
-  }
-  ```
-- La app está configurada para conectarse a `10.0.2.2` (loopback del emulador Android). Asegúrate de que los puertos definidos arriba coincidan con los que usas aquí:
-  ```kotlin
-  if (BuildConfig.DEBUG) {
-      Firebase.auth.useEmulator("10.0.2.2", 9099)
-      Firebase.firestore.useEmulator("10.0.2.2", 8080)
-  }
-  ```
-
-### Verificar usuarios creados
-- **Emulator UI**: abre `http://localhost:4000` (o el puerto configurado) y navega a las pestañas **Authentication** o **Firestore** para ver los registros locales.
-
-> Nota: trabajamos únicamente con emuladores, por lo que los usuarios **no** aparecerán en la consola en la nube; sólo viven en la instancia local mostrada en la UI del emulador.
-
-### Flujo resumido
-1. Ejecuta los emuladores (`firebase emulators:start ...`).
-2. Inicia la app en modo `debug`. Verás en Logcat mensajes como `✅ Firebase Auth Emulator conectado`.
-3. Registra un usuario desde la pantalla Sign Up:
-   - Auth crea el usuario (`FirebaseAuthService` lo loguea automáticamente).
-   - Firestore guarda el documento básico con nombre, email y timestamps.
-4. Verifica el resultado directamente en el Emulator UI (`localhost:4000`).
-
----
