@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.example.financeapp.R
 import com.example.financeapp.ui.navigation.BottomNavItem
 import com.example.financeapp.ui.theme.Honeydew
+import androidx.compose.ui.platform.LocalConfiguration
 
 private val navItems = listOf(
     BottomNavItem(R.drawable.home, "Home", "home", 25.dp, 31.dp),
@@ -42,6 +43,8 @@ fun FinanceBottomBar(
     onNavigate: (String) -> Unit = {}
 ) {
     val colorScheme = MaterialTheme.colorScheme
+    val configuration = LocalConfiguration.current
+    val barHeight = if (configuration.screenWidthDp > 600) 72.dp else 56.dp
     Surface(
         modifier = modifier
             .fillMaxWidth(),
@@ -53,7 +56,7 @@ fun FinanceBottomBar(
         Row(
             modifier = Modifier
                 .padding(horizontal = 12.dp, vertical = 8.dp)
-                .height(56.dp),
+                .height(barHeight),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {

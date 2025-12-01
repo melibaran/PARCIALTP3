@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -53,6 +54,9 @@ fun CategoriesScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val colorScheme = MaterialTheme.colorScheme
+    val configuration = LocalConfiguration.current
+    val isExpanded = configuration.screenWidthDp > 600
+    val columns = if (isExpanded) 4 else 3
 
     Scaffold(
         topBar = {
@@ -114,7 +118,7 @@ fun CategoriesScreen(
             BalanceHeader( totalBalance = 7783.00, totalExpense = 1187.40, budget = 20000.00, progressPercentage = 30)
             // Categories Grid
             LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
+                columns = GridCells.Fixed(columns),
                 modifier = Modifier
                     .weight(1f)
                     .padding(top = 16.dp)

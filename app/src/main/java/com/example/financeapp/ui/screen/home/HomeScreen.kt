@@ -66,6 +66,8 @@ fun HomeScreen(navController: NavController) {
         listOf(Light_blue, Vivid_blue, Ocean_blue, Vivid_blue, Light_blue)
     }
     val colorScheme = MaterialTheme.colorScheme
+    val configuration = LocalConfiguration.current
+    val isExpanded = configuration.screenWidthDp > 600
     Scaffold(
         topBar = {
             TopBar(
@@ -78,284 +80,353 @@ fun HomeScreen(navController: NavController) {
         },
         containerColor = colorScheme.background
     ) { innerPadding ->
-        val layoutDirection = androidx.compose.ui.platform.LocalLayoutDirection.current
-        var headerHeightPx by remember { mutableStateOf(0) }
-        val density = LocalDensity.current
-
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                start = innerPadding.calculateStartPadding(layoutDirection),
-                top = innerPadding.calculateTopPadding(),
-
-            )
-        ) {
-            val headerHeightDp = with(density) { headerHeightPx.toDp() }
-            val surfaceTopPadding = headerHeightDp + 12.dp
-
-            Surface(
+        if (isExpanded) {
+            Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = surfaceTopPadding)
-                    .align(Alignment.BottomStart),
-                shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-                color = colorScheme.surface,
-                tonalElevation = 0.dp
+                    .padding(innerPadding)
             ) {
-                val lazyState = rememberLazyListState()
-                LazyColumn(
-                    state = lazyState,
+                // Panel izquierdo: BalanceHeader y Savings Card
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    BalanceHeader(
+                        totalBalance = 7783.00,
+                        totalExpense = 1187.40,
+                        budget = 20000.00,
+                        progressPercentage = 30
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    SavingsCard(colorScheme)
+                }
+                // Panel derecho: Tabs y Transaction List
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Tabs(colorScheme)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(bottom = 80.dp)
+                    ) {
+                        // TransactionList(navController, coloresDeCirculo, colorScheme)
+                        itemsIndexed(sampleTransactions.filter { it.titleResId != R.string.transport }) { index, tx ->
+                            val iconId = getIconForCategory(tx.titleResId)
+                            val mapped = TxItem(
+                                id = "tx_$index",
+                                iconId = iconId,
+                                title = stringResource(tx.titleResId),
+                                dateTime = stringResource(tx.dateResId),
+                                category = stringResource(tx.categoryResId),
+                                amount = tx.amount,
+                                isIncome = tx.amount >= 0,
+                                month = ""
+                            )
+
+                            val circleColor =
+                                coloresDeCirculo.getOrElse(index % coloresDeCirculo.size) { Light_blue }
+
+                            TransactionListItem(
+                                transaction = mapped,
+                                circleBgColor = circleColor,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 6.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        } else {
+            val layoutDirection = androidx.compose.ui.platform.LocalLayoutDirection.current
+            var headerHeightPx by remember { mutableStateOf(0) }
+            val density = LocalDensity.current
+
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    start = innerPadding.calculateStartPadding(layoutDirection),
+                    top = innerPadding.calculateTopPadding(),
+
+                )
+            ) {
+                val headerHeightDp = with(density) { headerHeightPx.toDp() }
+                val surfaceTopPadding = headerHeightDp + 12.dp
+
+                Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(24.dp),
-                    contentPadding = PaddingValues(bottom = 80.dp),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(top = surfaceTopPadding)
+                        .align(Alignment.BottomStart),
+                    shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
+                    color = colorScheme.surface,
+                    tonalElevation = 0.dp
                 ) {
+                    val lazyState = rememberLazyListState()
+                    LazyColumn(
+                        state = lazyState,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(24.dp),
+                        contentPadding = PaddingValues(bottom = 80.dp),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
 
-                    // Card de Savings y Revenue/Food
-                    item {
-                        val config = LocalConfiguration.current
-                        val circleSize = when {
-                            config.screenWidthDp < 600 -> 60.dp
-                            config.screenWidthDp < 840 -> 70.dp
-                            else -> 80.dp
+                        // Card de Savings y Revenue/Food
+                        item {
+                            SavingsCard(colorScheme)
                         }
-                        val innerCircleSize = circleSize * 0.8f
-                        val iconSize = circleSize * 0.4f
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = colorScheme.primary)
-                        ) {
-                            Row(
+
+                        item {
+                            Tabs(colorScheme)
+                        }
+
+                        // Lista de transacciones
+                        val filtered = sampleTransactions.filter { it.titleResId != R.string.transport }
+                        itemsIndexed(filtered) { index, tx ->
+                            val iconId = getIconForCategory(tx.titleResId)
+                            val mapped = TxItem(
+                                id = "tx_$index",
+                                iconId = iconId,
+                                title = stringResource(tx.titleResId),
+                                dateTime = stringResource(tx.dateResId),
+                                category = stringResource(tx.categoryResId),
+                                amount = tx.amount,
+                                isIncome = tx.amount >= 0,
+                                month = ""
+                            )
+
+                            val circleColor =
+                                coloresDeCirculo.getOrElse(index % coloresDeCirculo.size) { Light_blue }
+
+                            TransactionListItem(
+                                transaction = mapped,
+                                circleBgColor = circleColor,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                // Círculo con borde bicolor y texto debajo
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier.padding(end = 8.dp)
-                                ) {
-                                    Box(
-                                        modifier = Modifier.size(circleSize),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        // Círculo exterior mitad blanco/azul
-                                        Box(
-                                            modifier = Modifier
-                                                .size(circleSize)
-                                                .clip(CircleShape)
-                                        ) {
-                                            Row(modifier = Modifier.fillMaxSize()) {
-                                                Box(
-                                                    modifier = Modifier
-                                                        .weight(1f)
-                                                        .fillMaxHeight()
-                                                        .background(colorScheme.onPrimary)
-                                                )
-                                                Box(
-                                                    modifier = Modifier
-                                                        .weight(1f)
-                                                        .fillMaxHeight()
-                                                        .background(Vivid_blue)
-                                                )
-                                            }
-                                        }
-                                        // Círculo interior verde
-                                        Box(
-                                            modifier = Modifier
-                                                .size(innerCircleSize)
-                                                .clip(CircleShape)
-                                                .background(colorScheme.primary),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            Image(
-                                                painter = painterResource(id = R.drawable.car),
-                                                contentDescription = null,
-                                                modifier = Modifier.size(iconSize)
-                                            )
-                                        }
-                                    }
-                                    Spacer(modifier = Modifier.height(4.dp))
-                                    Text(
-                                        text = "Savings\nOn Goals",
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = Color.Black,
-                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                                        lineHeight = 14.sp
-                                    )
-                                }
-
-                                Spacer(modifier = Modifier.width(8.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .width(2.dp)
-                                        .fillMaxHeight()
-                                        .background(colorScheme.onPrimary)
-                                )
-
-                                Spacer(modifier = Modifier.width(16.dp))
-
-                                Column(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalArrangement = Arrangement.Center
-                                ) {
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Image(
-                                            painter = painterResource(id = R.drawable.salary),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(28.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Column {
-                                            Text(
-                                                text = stringResource(R.string.revenue_last_week),
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = MaterialTheme.colorScheme.onBackground
-                                            )
-                                            Text(
-                                                text = "$4,000.00",
-                                                style = MaterialTheme.typography.bodyMedium,
-                                                fontWeight = FontWeight.Bold,
-                                                color = MaterialTheme.colorScheme.onBackground
-                                            )
-                                        }
-                                    }
-
-                                    Spacer(modifier = Modifier.height(8.dp))
-
-                                    HorizontalDivider(
-                                        color = colorScheme.onPrimary.copy(alpha = 0.9f),
-                                        thickness = 1.dp
-                                    )
-
-                                    Spacer(modifier = Modifier.height(8.dp))
-
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Image(
-                                            painter = painterResource(id = R.drawable.food),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(28.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Column {
-                                            Text(
-                                                text = stringResource(R.string.food_last_week),
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = MaterialTheme.colorScheme.onBackground
-                                            )
-                                            Text(
-                                                text = "-$100.00",
-                                                style = MaterialTheme.typography.bodyMedium,
-                                                color = Ocean_blue
-                                            )
-                                        }
-                                    }
-                                }
-                            }
+                                    .padding(vertical = 6.dp)
+                            )
                         }
                     }
+                }
 
-                    item {
-                        // Tabs
-                        Surface(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 16.dp),
-                            shape = RoundedCornerShape(50),
-                            color = colorScheme.surfaceVariant,
-                            shadowElevation = 4.dp
-                        ) {
-                            Row(
+                // BalanceHeader superpuesto arriba, sobre el Surface
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .onGloballyPositioned { coordinates ->
+                            headerHeightPx = coordinates.size.height
+                        }
+                ) {
+                    BalanceHeader(
+                        totalBalance = 7783.00,
+                        totalExpense = 1187.40,
+                        budget = 20000.00,
+                        progressPercentage = 30
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SavingsCard(colorScheme: androidx.compose.material3.ColorScheme) {
+    val config = LocalConfiguration.current
+    val circleSize = when {
+        config.screenWidthDp < 600 -> 60.dp
+        config.screenWidthDp < 840 -> 70.dp
+        else -> 80.dp
+    }
+    val innerCircleSize = circleSize * 0.8f
+    val iconSize = circleSize * 0.4f
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = colorScheme.primary)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Círculo con borde bicolor y texto debajo
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(end = 8.dp)
+            ) {
+                Box(
+                    modifier = Modifier.size(circleSize),
+                    contentAlignment = Alignment.Center
+                ) {
+                    // Círculo exterior mitad blanco/azul
+                    Box(
+                        modifier = Modifier
+                            .size(circleSize)
+                            .clip(CircleShape)
+                    ) {
+                        Row(modifier = Modifier.fillMaxSize()) {
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(6.dp),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                var selectedIndex by remember { mutableStateOf(2) }
-                                val tabs = listOf(
-                                    stringResource(R.string.daily),
-                                    stringResource(R.string.weekly),
-                                    stringResource(R.string.monthly)
-                                )
-                                tabs.forEachIndexed { i, t ->
-                                    val selected = i == selectedIndex
-                                    Box(
-                                        modifier = Modifier
-                                            .weight(1f)
-                                            .clip(RoundedCornerShape(50))
-                                            .background(if (selected) colorScheme.primary else Color.Transparent)
-                                            .clickable { selectedIndex = i }
-                                            .padding(vertical = 10.dp),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Text(
-                                            text = t,
-                                            color = if (selected) colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal
-                                        )
-                                    }
-                                }
-                            }
+                                    .weight(1f)
+                                    .fillMaxHeight()
+                                    .background(colorScheme.onPrimary)
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxHeight()
+                                    .background(Vivid_blue)
+                            )
                         }
                     }
-
-                    // Lista de transacciones
-                    val filtered = sampleTransactions.filter { it.titleResId != R.string.transport }
-                    itemsIndexed(filtered) { index, tx ->
-                        val iconId = getIconForCategory(tx.titleResId)
-                        val mapped = TxItem(
-                            id = "tx_$index",
-                            iconId = iconId,
-                            title = stringResource(tx.titleResId),
-                            dateTime = stringResource(tx.dateResId),
-                            category = stringResource(tx.categoryResId),
-                            amount = tx.amount,
-                            isIncome = tx.amount >= 0,
-                            month = ""
+                    // Círculo interior verde
+                    Box(
+                        modifier = Modifier
+                            .size(innerCircleSize)
+                            .clip(CircleShape)
+                            .background(colorScheme.primary),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.car),
+                            contentDescription = null,
+                            modifier = Modifier.size(iconSize)
                         )
+                    }
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Savings\nOn Goals",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.Black,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    lineHeight = 14.sp
+                )
+            }
 
-                        val circleColor =
-                            coloresDeCirculo.getOrElse(index % coloresDeCirculo.size) { Light_blue }
+            Spacer(modifier = Modifier.width(8.dp))
 
-                        TransactionListItem(
-                            transaction = mapped,
-                            circleBgColor = circleColor,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 6.dp)
+            Box(
+                modifier = Modifier
+                    .width(2.dp)
+                    .fillMaxHeight()
+                    .background(colorScheme.onPrimary)
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.salary),
+                        contentDescription = null,
+                        modifier = Modifier.size(28.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Column {
+                        Text(
+                            text = stringResource(R.string.revenue_last_week),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                        Text(
+                            text = "$4,000.00",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                HorizontalDivider(
+                    color = colorScheme.onPrimary.copy(alpha = 0.9f),
+                    thickness = 1.dp
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.food),
+                        contentDescription = null,
+                        modifier = Modifier.size(28.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Column {
+                        Text(
+                            text = stringResource(R.string.food_last_week),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                        Text(
+                            text = "-$100.00",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Ocean_blue
                         )
                     }
                 }
             }
+        }
+    }
+}
 
-            // BalanceHeader superpuesto arriba, sobre el Surface
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .onGloballyPositioned { coordinates ->
-                        headerHeightPx = coordinates.size.height
-                    }
-            ) {
-                BalanceHeader(
-                    totalBalance = 7783.00,
-                    totalExpense = 1187.40,
-                    budget = 20000.00,
-                    progressPercentage = 30
-                )
+@Composable
+fun Tabs(colorScheme: androidx.compose.material3.ColorScheme) {
+    // Tabs
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 16.dp),
+        shape = RoundedCornerShape(50),
+        color = colorScheme.surfaceVariant,
+        shadowElevation = 4.dp
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(6.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            var selectedIndex by remember { mutableStateOf(2) }
+            val tabs = listOf(
+                stringResource(R.string.daily),
+                stringResource(R.string.weekly),
+                stringResource(R.string.monthly)
+            )
+            tabs.forEachIndexed { i, t ->
+                val selected = i == selectedIndex
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clip(RoundedCornerShape(50))
+                        .background(if (selected) colorScheme.primary else Color.Transparent)
+                        .clickable { selectedIndex = i }
+                        .padding(vertical = 10.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = t,
+                        color = if (selected) colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal
+                    )
+                }
             }
         }
     }
