@@ -33,8 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.financeapp.R
 import com.example.financeapp.ui.components.TopBar
-import com.example.financeapp.ui.theme.Caribbean_green
-import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Ocean_blue
 
 data class NotificationItem(
@@ -246,9 +244,8 @@ private fun NotificationItemCard(notification: NotificationItem) {
         Spacer(modifier = Modifier.height(12.dp))
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth(),
-            color = colorScheme.primary.copy(alpha = 0.3f),
+            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
             thickness = 1.dp
         )
     }
 }
-

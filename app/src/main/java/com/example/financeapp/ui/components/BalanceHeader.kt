@@ -30,6 +30,7 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
+import com.example.financeapp.ui.theme.LocalThemeController
 import com.example.financeapp.ui.theme.Ocean_blue
 import java.text.NumberFormat
 import java.util.Locale
@@ -44,6 +45,8 @@ fun BalanceHeader(
     progressText: String = "$progressPercentage%"
 ) {
     val colorScheme = MaterialTheme.colorScheme
+    val themeController = LocalThemeController.current
+    val isDark = themeController.isDarkMode
     val formatter = NumberFormat.getNumberInstance(Locale.US).apply {
         minimumFractionDigits = 2
         maximumFractionDigits = 2
@@ -151,7 +154,7 @@ fun BalanceHeader(
                             .fillMaxHeight()
                             .clip(RoundedCornerShape(20.dp))
                             .fillMaxWidth(progressPercentage / 100f)
-                            .background(colorScheme.primary)
+                            .background(if (isDark) MaterialTheme.colorScheme.primary else Color.Black)
                     )
                     Row(
                         modifier = Modifier.fillMaxSize(),
@@ -161,14 +164,14 @@ fun BalanceHeader(
                         Text(
                             text = progressText,
                             modifier = Modifier.padding(start = 8.dp),
-                            color = colorScheme.onPrimary,
+                            color = if (isDark) MaterialTheme.colorScheme.onPrimary else Color.White,
                             style = MaterialTheme.typography.labelSmall
                         )
                         Text(
                             text = "$${formatter.format(budget)}",
                             modifier = Modifier.padding(end = 8.dp),
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = colorScheme.onSurface
+                                color = if (isDark) MaterialTheme.colorScheme.onBackground else Fence_green
                             )
                         )
                     }
@@ -191,7 +194,7 @@ fun BalanceHeader(
                 Text(
                     text = stringResource(R.string.goal_description),
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = colorScheme.onSurface
+                        color = if (isDark) MaterialTheme.colorScheme.onBackground else Fence_green
                     )
                 )
             }
