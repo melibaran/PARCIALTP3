@@ -1,5 +1,6 @@
 package com.example.financeapp.ui.screen.login
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,21 +54,30 @@ fun SignUpScreen(
     val signUpState by viewModel.signUpState.collectAsState()
 
     LaunchedEffect(signUpState) {
+        Log.d("SignUpScreen", "🚀 LaunchedEffect triggered. State is: ${signUpState::class.simpleName}")
         when (val state = signUpState) {
             is SignUpState.Success -> {
+                Log.d("SignUpScreen", "✅ SignUpState is Success. Navigating now...")
                 onSignUpClick()
                 viewModel.resetState()
+                Log.d("SignUpScreen", "✅ Navigation called and state reset.")
             }
             is SignUpState.Error -> {
+                Log.e("SignUpScreen", "❌ SignUpState is Error: ${state.message}")
                 errorMessage = state.message
             }
-            else -> {
+            is SignUpState.Loading -> {
+                Log.d("SignUpScreen", "⏳ SignUpState is Loading...")
+                errorMessage = null
+            }
+            is SignUpState.Idle -> {
+                Log.d("SignUpScreen", "🧘 SignUpState is Idle.")
                 errorMessage = null
             }
         }
     }
 
-    val formValid = fullName.isNotBlank() && email.isNotBlank() && mobileNumber.isNotBlank() && dateOfBirth.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
+    val formValid = fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
 
     AuthScreenLayout(title = "Create Account") {
 

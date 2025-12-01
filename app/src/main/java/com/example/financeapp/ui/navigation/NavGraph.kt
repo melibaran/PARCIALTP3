@@ -1,6 +1,14 @@
 package com.example.financeapp.ui.navigation
 
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,12 +25,41 @@ import com.example.financeapp.ui.screen.onBoarding.OnBoardingScreen
 import com.example.financeapp.ui.screen.onBoarding.SuccessScreenInicio
 
 
-private val bottomBarRoutes = listOf("home_tab", "analytics_tab", "transfer_tab", "layers_tab", "notifications_tab")
 @Composable
-fun NavGraph(startDestination: String = "inicio-pre") {
+fun NavGraph(
+    startDestination: String = "auth_check",
+    authViewModel: AuthenticationViewModel = hiltViewModel()
+) {
     val navController = rememberNavController()
+    val authState by authViewModel.authState.collectAsState()
 
     NavHost(navController = navController, startDestination = startDestination) {
+        // Pantalla de verificación de autenticación
+        composable(route = "auth_check") {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                when (authState) {
+                    is AuthState.Loading -> {
+                        CircularProgressIndicator()
+                    }
+                    is AuthState.Authenticated -> {
+                        // Usuario ya autenticado, ir a la pantalla principal
+                        navController.navigate("main_app") {
+                            popUpTo("auth_check") { inclusive = true }
+                        }
+                    }
+                    is AuthState.Unauthenticated -> {
+                        // Usuario no autenticado, ir al onboarding
+                        navController.navigate("inicio-pre") {
+                            popUpTo("auth_check") { inclusive = true }
+                        }
+                    }
+                }
+            }
+        }
+
         composable(route= "inicio-pre"){
             SuccessScreenInicio("FinWise",
                 onComplete = {navController.navigate("inicio") {
@@ -65,7 +102,8 @@ fun NavGraph(startDestination: String = "inicio-pre") {
         composable("signup") {
             SignUpScreen(
                 onSignUpClick = {
-                    navController.navigate("login") {
+                    // Después de registrarse exitosamente, ir directamente a main_app
+                    navController.navigate("main_app") {
                         popUpTo("signup") { inclusive = true }
                     }
                 },
@@ -111,6 +149,7 @@ fun NavGraph(startDestination: String = "inicio-pre") {
         composable("main_app") {
             MainScreen(
                 onLogout = {
+                    authViewModel.logout()
                     navController.navigate("login") {
                         popUpTo("main_app") { inclusive = true }
                     }

@@ -30,6 +30,7 @@ import com.example.financeapp.R
 import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_green
+import com.example.financeapp.ui.theme.LocalThemeController
 import com.example.financeapp.ui.theme.Ocean_blue
 import java.text.NumberFormat
 import java.util.Locale
@@ -43,6 +44,9 @@ fun BalanceHeader(
     modifier: Modifier = Modifier,
     progressText: String = "$progressPercentage%"
 ) {
+    val colorScheme = MaterialTheme.colorScheme
+    val themeController = LocalThemeController.current
+    val isDark = themeController.isDarkMode
     val formatter = NumberFormat.getNumberInstance(Locale.US).apply {
         minimumFractionDigits = 2
         maximumFractionDigits = 2
@@ -75,7 +79,7 @@ fun BalanceHeader(
                     Text(
                         text = stringResource(R.string.total_balance),
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = colorScheme.onBackground
                         )
                     )
                 }
@@ -83,7 +87,7 @@ fun BalanceHeader(
                     text = "$${formatter.format(totalBalance)}",
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = colorScheme.onBackground
                     )
                 )
             }
@@ -93,7 +97,7 @@ fun BalanceHeader(
                     .height(40.dp)
                     .padding(horizontal = 14.dp),
                 thickness = 1.dp,
-                color = Light_green
+                color = colorScheme.surfaceVariant
             )
 
             Column(
@@ -114,7 +118,7 @@ fun BalanceHeader(
                     Text(
                         text = stringResource(R.string.total_expense),
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = colorScheme.onBackground
                         )
                     )
                 }
@@ -143,14 +147,14 @@ fun BalanceHeader(
                         .weight(1f)
                         .height(16.dp)
                         .clip(RoundedCornerShape(20.dp))
-                        .background(Honeydew)
+                        .background(colorScheme.surface)
                 ) {
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
                             .clip(RoundedCornerShape(20.dp))
                             .fillMaxWidth(progressPercentage / 100f)
-                            .background(Fence_green)
+                            .background(if (isDark) MaterialTheme.colorScheme.primary else Color.Black)
                     )
                     Row(
                         modifier = Modifier.fillMaxSize(),
@@ -160,14 +164,14 @@ fun BalanceHeader(
                         Text(
                             text = progressText,
                             modifier = Modifier.padding(start = 8.dp),
-                            color = Honeydew,
+                            color = if (isDark) MaterialTheme.colorScheme.onPrimary else Color.White,
                             style = MaterialTheme.typography.labelSmall
                         )
                         Text(
                             text = "$${formatter.format(budget)}",
                             modifier = Modifier.padding(end = 8.dp),
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = Fence_green
+                                color = if (isDark) MaterialTheme.colorScheme.onBackground else Fence_green
                             )
                         )
                     }
@@ -190,7 +194,7 @@ fun BalanceHeader(
                 Text(
                     text = stringResource(R.string.goal_description),
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = Fence_green
+                        color = if (isDark) MaterialTheme.colorScheme.onBackground else Fence_green
                     )
                 )
             }

@@ -25,15 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.financeapp.R
 import com.example.financeapp.ui.navigation.BottomNavItem
-import com.example.financeapp.ui.theme.Caribbean_green
 import com.example.financeapp.ui.theme.Honeydew
-import com.example.financeapp.ui.theme.Light_green
-import com.example.financeapp.ui.theme.Void
-
-
-private val BarBackground = Honeydew
-private val ActiveTurquoise = Caribbean_green
-private val InactiveIcon = Color(0xFFA0A0A0)
+import androidx.compose.ui.platform.LocalConfiguration
 
 private val navItems = listOf(
     BottomNavItem(R.drawable.home, "Home", "home", 25.dp, 31.dp),
@@ -49,24 +42,26 @@ fun FinanceBottomBar(
     currentRoute: String?,
     onNavigate: (String) -> Unit = {}
 ) {
+    val colorScheme = MaterialTheme.colorScheme
+    val configuration = LocalConfiguration.current
+    val barHeight = if (configuration.screenWidthDp > 600) 72.dp else 56.dp
     Surface(
         modifier = modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-        color = Light_green,
+        color = colorScheme.surfaceVariant,
         tonalElevation = 0.dp,
-        contentColor = Color.Transparent)
-
-     {
+        contentColor = Color.Transparent
+    ) {
         Row(
             modifier = Modifier
                 .padding(horizontal = 12.dp, vertical = 8.dp)
-                .height(56.dp),
+                .height(barHeight),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
             navItems.forEach { item ->
-                BottomNavItem(
+                BottomNavItemButton(
                     item = item,
                     isSelected = currentRoute == item.route,
                     onItemClick = {
@@ -80,7 +75,7 @@ fun FinanceBottomBar(
 }
 
 @Composable
-private fun BottomNavItem(
+private fun BottomNavItemButton(
     item: BottomNavItem,
     isSelected: Boolean,
     onItemClick: () -> Unit
@@ -90,18 +85,19 @@ private fun BottomNavItem(
             .fillMaxHeight(),
         contentAlignment = Alignment.Center
     ) {
+        val colorScheme = MaterialTheme.colorScheme
         Box(
             modifier = Modifier
                 .size(48.dp)
                 .clip(if (isSelected) CircleShape else RoundedCornerShape(0.dp))
-                .background(if (isSelected) ActiveTurquoise else Color.Transparent)
+                .background(if (isSelected) colorScheme.primary else Color.Transparent)
                 .clickable(onClick = onItemClick),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 painter = painterResource(id = item.icon),
                 contentDescription = item.label,
-                tint = if (isSelected) Void else Void,
+                tint = if (isSelected) colorScheme.onPrimary else colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(width = item.width, height = item.height)
             )
         }
@@ -112,7 +108,7 @@ private fun BottomNavItem(
 @Composable
 fun FinanceBottomBarPreview() {
     MaterialTheme {
-        Surface(color = com.example.financeapp.ui.theme.Honeydew) {
+        Surface(color = Honeydew) {
             FinanceBottomBar(currentRoute = "home")
         }
     }

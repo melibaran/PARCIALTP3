@@ -50,7 +50,6 @@ import com.example.financeapp.ui.components.TopBar
 import com.example.financeapp.ui.components.TransactionListItem
 import com.example.financeapp.ui.screen.categories.arquitectura.CategoryDatePicker
 import com.example.financeapp.ui.theme.Caribbean_green
-import com.example.financeapp.ui.theme.Fence_green
 import com.example.financeapp.ui.theme.Honeydew
 import com.example.financeapp.ui.theme.Light_blue
 import com.example.financeapp.ui.theme.Ocean_blue
@@ -93,7 +92,7 @@ fun TransactionDetailScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Caribbean_green)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         TopBar(
             title = "Transaction",
@@ -101,7 +100,7 @@ fun TransactionDetailScreen(
             centerTitle = true,
             onBackClick = { navController.navigateUp() },
             onNotificationClick = { navController.navigate("notifications") },
-            containerColor = Caribbean_green
+            containerColor = MaterialTheme.colorScheme.background
         )
 
         // Total Balance:
@@ -122,7 +121,7 @@ fun TransactionDetailScreen(
                         text = "Total Balance",
                         style = TextStyle(
                             fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                            color = Fence_green,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 15.sp,
                             textAlign = TextAlign.Center
                         )
@@ -242,7 +241,7 @@ fun TransactionDetailScreen(
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = Fence_green)
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
         } else if (uiState.error != null) {
             Box(
@@ -306,7 +305,7 @@ fun TransactionDetailScreen(
                                     month,
                                     style = TextStyle(
                                         fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                                        color = Fence_green,
+                                        color = MaterialTheme.colorScheme.onSurface,
                                         fontSize = 20.sp,
                                     ),
                                     modifier = Modifier.weight(1f)

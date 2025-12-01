@@ -7,9 +7,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.financeapp.data.dao.UserDao
 import com.example.financeapp.data.repository.UserRepositoryImpl
 import com.example.financeapp.domain.infrastructure.api.ApiClient
+import com.example.financeapp.domain.infrastructure.firebase.FirebaseAuthService
+import com.example.financeapp.domain.infrastructure.firebase.FirestoreService
 import com.example.financeapp.domain.repository.UserRepository
 import com.example.financeapp.infrastructure.AppDatabase
 import com.example.financeapp.infrastructure.api.ApiClientMockServer
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,6 +60,30 @@ import javax.inject.Singleton
     @Singleton
     fun provideApiClient(): ApiClient {
         return ApiClientMockServer()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuthService(firebaseAuth: FirebaseAuth): FirebaseAuthService {
+        return FirebaseAuthService(firebaseAuth)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirestoreService(firestore: FirebaseFirestore): FirestoreService {
+        return FirestoreService(firestore)
     }
 
 }

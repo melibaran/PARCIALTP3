@@ -1,26 +1,28 @@
 package com.example.financeapp.ui.screen.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.financeapp.R
-import com.example.financeapp.core.ResourceProvider
-import com.example.financeapp.domain.infrastructure.api.ApiClient
-import com.example.financeapp.domain.model.User
-import com.example.financeapp.domain.repository.UserRepository
+import com.example.financeapp.domain.infrastructure.firebase.FirebaseAuthService
+import com.example.financeapp.domain.infrastructure.firebase.FirestoreService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import com.example.financeapp.domain.model.SignUpRequest as DomainSignUpRequest
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val apiClient: ApiClient,
-    private val resourceProvider: ResourceProvider
+    private val firebaseAuthService: FirebaseAuthService,
+    private val firestoreService: FirestoreService
 ) : ViewModel() {
+
+    companion object {
+        private const val TAG = "SignUpViewModel"
+    }
 
     private val _signUpState = MutableStateFlow<SignUpState>(SignUpState.Idle)
     val signUpState: StateFlow<SignUpState> = _signUpState.asStateFlow()
@@ -34,76 +36,91 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _signUpState.value = SignUpState.Loading
+                Log.d(TAG, "🚀 Iniciando proceso de registro")
 
-                if (fullName.isBlank() || email.isBlank() || password.isBlank()) {
+                // Validar que los campos no estén vacíos
+                if (fullName.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
+                    Log.w(TAG, "⚠️ Campos vacíos")
                     _signUpState.value = SignUpState.Error(
-                        resourceProvider.getString(R.string.error_all_fields_required)
+                        "Por favor completa todos los campos"
                     )
                     return@launch
                 }
 
+                // Validar que las contraseñas coincidan
                 if (password != confirmPassword) {
+                    Log.w(TAG, "⚠️ Contraseñas no coinciden")
                     _signUpState.value = SignUpState.Error(
-                        resourceProvider.getString(R.string.error_passwords_mismatch)
+                        "Las contraseñas no coinciden"
                     )
                     return@launch
                 }
 
+                // Validar longitud mínima de contraseña
                 if (password.length < 6) {
+                    Log.w(TAG, "⚠️ Contraseña muy corta")
                     _signUpState.value = SignUpState.Error(
-                        resourceProvider.getString(R.string.error_password_min_length)
+                        "La contraseña debe tener al menos 6 caracteres"
                     )
                     return@launch
                 }
 
-                val existingUser = userRepository.getUserByEmail(email)
-                if (existingUser != null) {
+                // Validar formato de email
+                if (!isValidEmail(email)) {
+                    Log.w(TAG, "⚠️ Email inválido: $email")
                     _signUpState.value = SignUpState.Error(
-                        resourceProvider.getString(R.string.error_email_already_in_use)
+                        "El email no es válido"
                     )
                     return@launch
                 }
 
-                val nameParts = fullName.trim().split(" ", limit = 2)
-                val firstName = nameParts.getOrNull(0) ?: ""
-                val lastName = nameParts.getOrNull(1) ?: ""
+                Log.d(TAG, "✅ Validaciones completadas")
 
-                val newUser = User(
+                // Crear usuario en Firebase Auth
+                Log.d(TAG, "🔐 Creando usuario en Firebase Auth")
+                val uid = firebaseAuthService.signUp(
                     email = email,
-                    firstName = firstName,
-                    lastName = lastName,
-                    password = password
+                    password = password,
+                    displayName = fullName
                 )
+                Log.d(TAG, "✅ Usuario creado en Firebase Auth con UID: $uid")
 
-                val userId = userRepository.insertUser(newUser)
-
-                if (userId > 0) {
-                    val signUpRequest = DomainSignUpRequest(
-                        id = userId.toInt(),
-                        username = fullName,
-                        email = email,
-                        password = password
-                    )
-                    val userProfile = apiClient.signUp(signUpRequest)
-
-                    _signUpState.value = SignUpState.Success(
-                        userId = userId.toInt(),
-                        email = email,
-                        fullName = fullName,
-                        userProfile = userProfile
-                    )
-                } else {
-                    _signUpState.value = SignUpState.Error(
-                        resourceProvider.getString(R.string.error_create_user_failed)
-                    )
+                // Usar NonCancellable para garantizar que esta operación se complete
+                withContext(NonCancellable) {
+                    Log.d(TAG, "💾 INICIANDO guardado en Firestore dentro de NonCancellable")
+                    try {
+                        firestoreService.saveUser(
+                            uid = uid,
+                            email = email,
+                            displayName = fullName
+                        )
+                        Log.d(TAG, "✅ Usuario guardado en Firestore (NonCancellable)")
+                    } catch (e: Exception) {
+                        Log.e(TAG, "❌ Error CRÍTICO al guardar en Firestore: ${e.message}", e)
+                    }
                 }
+
+                // Emitir éxito DESPUÉS de que el bloque NonCancellable se complete
+                _signUpState.value = SignUpState.Success(
+                    uid = uid,
+                    email = email,
+                    fullName = fullName
+                )
+                Log.d(TAG, "🎉 Registro completado. Estado Success emitido.")
 
             } catch (e: Exception) {
-                _signUpState.value = SignUpState.Error(
-                    e.message ?: resourceProvider.getString(R.string.error_unknown_signup)
-                )
+                val errorMsg = e.message ?: "Error desconocido en el registro"
+                Log.e(TAG, "❌ Error en el flujo de registro: $errorMsg", e)
+                _signUpState.value = SignUpState.Error(errorMsg)
             }
         }
+    }
+
+    /**
+     * Valida el formato básico del email
+     */
+    private fun isValidEmail(email: String): Boolean {
+        return email.contains("@") && email.contains(".")
     }
 
     fun resetState() {
@@ -115,10 +132,9 @@ sealed class SignUpState {
     data object Idle : SignUpState()
     data object Loading : SignUpState()
     data class Success(
-        val userId: Int,
+        val uid: String,
         val email: String,
-        val fullName: String,
-        val userProfile: com.example.financeapp.domain.model.UserProfile? = null
+        val fullName: String
     ) : SignUpState()
     data class Error(val message: String) : SignUpState()
 }
